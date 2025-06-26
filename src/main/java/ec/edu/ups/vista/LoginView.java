@@ -7,14 +7,14 @@ public class LoginView extends JFrame {
     private JPanel panelSecundario;
     private JTextField txtUsername;
     private JPasswordField txtContrasenia;
-    private JButton btnIniciarSesion;
     private JButton btnRegistrarse;
+    private JButton btnIniciarSesion;
 
     public LoginView() {
         setContentPane(panelPrincipal);
-        setTitle("Iniciar Sesión");
+        setTitle("YANDRI STORE");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 400);
+        setSize(350, 300);
         setLocationRelativeTo(null);
     }
 
@@ -50,9 +50,7 @@ public class LoginView extends JFrame {
         this.txtContrasenia = txtContrasenia;
     }
 
-    public JButton getBtnIniciarSesion() {
-        return btnIniciarSesion;
-    }
+    public JButton getBtnIniciarSesion() { return btnIniciarSesion; }
 
     public void setBtnIniciarSesion(JButton btnIniciarSesion) {
         this.btnIniciarSesion = btnIniciarSesion;

@@ -21,14 +21,16 @@ import java.awt.event.WindowEvent;
 public class Main {
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
 
                 //Iniciar sesión
                 UsuarioDAO usuarioDAO = new UsuarioDAOMemoria();
                 LoginView loginView = new LoginView();
+                RegisterView registerView = new RegisterView();
                 loginView.setVisible(true);
 
-                UsuarioController usuarioController = new UsuarioController(usuarioDAO, loginView);
+                UsuarioController usuarioController = new UsuarioController(usuarioDAO, loginView, registerView);
 
                 loginView.addWindowListener(new WindowAdapter() {
                     @Override
@@ -45,7 +47,6 @@ public class Main {
                             ProductoAnadirView productoAnadirView = new ProductoAnadirView();
                             ProductoListaView productoListaView = new ProductoListaView();
                             CarritoAnadirView carritoAnadirView = new CarritoAnadirView();
-
 
                             //instanciamos Controladores
                             ProductoController productoController = new ProductoController(productoDAO, productoAnadirView, productoListaView, carritoAnadirView);

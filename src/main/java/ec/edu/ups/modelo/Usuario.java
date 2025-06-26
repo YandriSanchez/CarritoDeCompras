@@ -1,6 +1,7 @@
 package ec.edu.ups.modelo;
 
 public class Usuario {
+
     private String username;
     private String contrasenia;
     private Rol rol;
