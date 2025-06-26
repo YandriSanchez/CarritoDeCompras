@@ -1,38 +1,37 @@
 package ec.edu.ups.vista;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MenuPrincipalView extends JFrame {
-    private JMenuBar menuBar;
 
+    private JMenuBar menuBar;
     private JMenu menuProducto;
     private JMenu menuCarrito;
-
+    private JMenu menuCuenta;
     private JMenuItem menuItemCrearProducto;
     private JMenuItem menuItemEliminarProducto;
     private JMenuItem menuItemActualizarProducto;
     private JMenuItem menuItemBuscarProducto;
-
     private JMenuItem menuItemCrearCarrito;
-
+    private JMenuItem menuItemCerrarSesion;
     private JDesktopPane jDesktopPane;
 
     public MenuPrincipalView() {
         jDesktopPane = new JDesktopPane();
-        menuBar = new JMenuBar();
+        jDesktopPane.setBackground(Color.BLUE);
 
+        menuBar = new JMenuBar();
         menuProducto = new JMenu("Producto");
         menuCarrito = new JMenu("Carrito");
+        menuCuenta = new JMenu("Cuenta");
 
         menuItemCrearProducto = new JMenuItem("Crear Producto");
         menuItemEliminarProducto = new JMenuItem("Eliminar Producto");
         menuItemActualizarProducto = new JMenuItem("Actualizar Producto");
         menuItemBuscarProducto = new JMenuItem("Buscar Producto");
-
         menuItemCrearCarrito = new JMenuItem("Crear Carrito");
-
-        menuBar.add(menuProducto);
-        menuBar.add(menuCarrito);
+        menuItemCerrarSesion = new JMenuItem("Cerrar Sesion");
 
         menuProducto.add(menuItemCrearProducto);
         menuProducto.add(menuItemEliminarProducto);
@@ -41,14 +40,21 @@ public class MenuPrincipalView extends JFrame {
 
         menuCarrito.add(menuItemCrearCarrito);
 
+        menuCuenta.add(menuItemCerrarSesion);
+
+        menuBar.add(menuProducto);
+        menuBar.add(menuCarrito);
+        menuBar.add(Box.createHorizontalGlue());
+        menuBar.add(menuCuenta);
         setJMenuBar(menuBar);
+
         setContentPane(jDesktopPane);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Sistema de Carrito de Compras En Línea");
+        setTitle("YANDRI STORE");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
-
     }
+
 
     public JMenuItem getMenuItemCrearProducto() {
         return menuItemCrearProducto;
@@ -104,6 +110,10 @@ public class MenuPrincipalView extends JFrame {
 
     public void setMenuItemCrearCarrito(JMenuItem menuItemCrearCarrito) {
         this.menuItemCrearCarrito = menuItemCrearCarrito;
+    }
+
+    public JMenuItem getMenuItemCerrarSesion() {
+        return menuItemCerrarSesion;
     }
 
     public JDesktopPane getjDesktopPane() {

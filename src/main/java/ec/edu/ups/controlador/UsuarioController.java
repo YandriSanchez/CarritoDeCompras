@@ -37,7 +37,7 @@ public class UsuarioController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 registerView.setVisible(true);
-                loginView.dispose();
+                loginView.setVisible(false);
             }
         });
 

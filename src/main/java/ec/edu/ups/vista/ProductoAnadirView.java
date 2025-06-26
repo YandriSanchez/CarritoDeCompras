@@ -15,19 +15,18 @@ public class ProductoAnadirView extends JInternalFrame {
     private JTextField txtCodigo;
     private JButton btnAceptar;
     private JButton btnLimpiar;
+    private JButton btnCerrar;
 
     public ProductoAnadirView() {
 
         setContentPane(panelPrincipal);
         setTitle("Datos del Producto");
         setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
-        setSize(500, 500);
+        setSize(465, 400);
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
-        //setLocationRelativeTo(null);
-        //setVisible(true);
-        //pack();
+        btnLimpiar.setVisible(false);
 
         btnLimpiar.addActionListener(new ActionListener() {
             @Override
@@ -89,6 +88,14 @@ public class ProductoAnadirView extends JInternalFrame {
         JOptionPane.showMessageDialog(this, mensaje);
     }
 
+    public JButton getBtnCerrar() {
+        return btnCerrar;
+    }
+
+    public void setBtnCerrar(JButton btnCerrar) {
+        this.btnCerrar = btnCerrar;
+    }
+
     public void limpiarCampos() {
         txtCodigo.setText("");
         txtNombre.setText("");
@@ -96,6 +103,7 @@ public class ProductoAnadirView extends JInternalFrame {
     }
 
     public void mostrarProductos(List<Producto> productos) {
+        System.out.println();
         for (Producto producto : productos) {
             System.out.println(producto);
         }

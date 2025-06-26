@@ -15,7 +15,7 @@ public class RegisterView extends  JFrame{
         setContentPane(panelPrincipal);
         setTitle("YANDRI STORE");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(350, 300);
+        setSize(370, 300);
         setLocationRelativeTo(null);
     }
 
