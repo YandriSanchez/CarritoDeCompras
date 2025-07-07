@@ -1,0 +1,141 @@
+package ec.edu.ups.poo.vista;
+
+import ec.edu.ups.poo.util.FormateadorUtils;
+import ec.edu.ups.poo.util.MensajeInternacionalizacionHandler;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import java.awt.*;
+import java.util.Locale;
+
+public class CarritoEliminarView extends JInternalFrame {
+    private JPanel panelTitle;
+    private JLabel lblTitulo;
+    private JPanel panelProduct;
+    private JTextField txtCodigo;
+    private JButton btnBuscar;
+    private JScrollPane scroll;
+    private JTable tblProducts;
+    private JTextField txtIva;
+    private JTextField txtTotal;
+    private JTextField txtSubTotal;
+    private JButton btnEliminar;
+    private JPanel panelAll;
+    private JLabel lblCodigo;
+    private JLabel lblSubTotal;
+    private JLabel lblIva;
+    private JLabel lblTotal;
+    private JPanel panelFinal;
+    private MensajeInternacionalizacionHandler tipoIdioma;
+    private double subtotal = 0.0;
+    private double iva = 0.0;
+    private double total = 0.0;
+
+    public CarritoEliminarView(MensajeInternacionalizacionHandler tipoIdioma) {
+        this.tipoIdioma = tipoIdioma;
+        setContentPane(panelAll);
+        setTitle("YANDRI STORE");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(450, 420);
+        setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
+
+        Color fondo = new Color(132,148,229);
+
+        tblProducts.setModel(new DefaultTableModel(
+                new Object[][]{},
+                new String[]{"Código", "Nombre", "Precio", "Cantidad", "Total Item"}
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+
+        tblProducts.setBackground(fondo);
+        tblProducts.setForeground(Color.BLACK);
+        scroll.getViewport().setBackground(fondo);
+        scroll.setBackground(fondo);
+
+        JTableHeader header = tblProducts.getTableHeader();
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+
+        aplicarIdioma();
+    }
+
+    public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
+        Object[] botones = {tipoIdioma.get("mensaje.confirmacion"), tipoIdioma.get("mensaje.cancelacion")};
+        return JOptionPane.showOptionDialog(
+                this, mensaje, titulo,
+                JOptionPane.DEFAULT_OPTION, tipo,
+                null, botones, botones[0]);
+    }
+
+    public void mostrarMensaje(String mensaje, String titulo, int tipo) {
+        JOptionPane.showMessageDialog(this, mensaje, titulo, tipo);
+    }
+
+    public void aplicarIdioma(){
+        setTitle(tipoIdioma.get("carrito.eliminar.title"));
+        lblTitulo.setText(tipoIdioma.get("carrito.eliminar.lbl.Titulo"));
+        lblCodigo.setText(tipoIdioma.get("carrito.eliminar.lbl.Codigo"));
+        btnBuscar.setText(tipoIdioma.get("carrito.eliminar.btn.Buscar"));
+        btnEliminar.setText(tipoIdioma.get("carrito.eliminar.btn.Eliminar"));
+        tblProducts.getColumnModel().getColumn(0).setHeaderValue(tipoIdioma.get("carrito.eliminar.tbl.Codigo"));
+        tblProducts.getColumnModel().getColumn(1).setHeaderValue(tipoIdioma.get("carrito.eliminar.tbl.Nombre"));
+        tblProducts.getColumnModel().getColumn(2).setHeaderValue(tipoIdioma.get("carrito.eliminar.tbl.Precio"));
+        tblProducts.getColumnModel().getColumn(3).setHeaderValue(tipoIdioma.get("carrito.eliminar.tbl.Cantidad"));
+        tblProducts.getColumnModel().getColumn(4).setHeaderValue(tipoIdioma.get("carrito.eliminar.tbl.TotalItem"));
+        tblProducts.getTableHeader().repaint();
+    }
+
+    public void refrescarResumenValores(Locale locale) {
+        txtIva.setText(FormateadorUtils.formatearMoneda(iva, locale));
+        txtTotal.setText(FormateadorUtils.formatearMoneda(total, locale));
+        txtSubTotal.setText(FormateadorUtils.formatearMoneda(subtotal, locale));
+    }
+
+    public void refrescarTabla() {
+        ((DefaultTableModel) tblProducts.getModel()).fireTableDataChanged();
+        tblProducts.getTableHeader().repaint();
+    }
+
+    public JPanel getPanelTitle() { return panelTitle; }
+    public void setPanelTitle(JPanel panelTitle) { this.panelTitle = panelTitle; }
+    public JLabel getLblTitulo() { return lblTitulo; }
+    public void setLblTitulo(JLabel lblTitulo) { this.lblTitulo = lblTitulo; }
+    public JPanel getPanelProduct() { return panelProduct; }
+    public void setPanelProduct(JPanel panelProduct) { this.panelProduct = panelProduct; }
+    public JTextField getTxtCodigo() { return txtCodigo; }
+    public void setTxtCodigo(JTextField txtCodigo) { this.txtCodigo = txtCodigo; }
+    public JButton getBtnBuscar() { return btnBuscar; }
+    public void setBtnBuscar(JButton btnBuscar) { this.btnBuscar = btnBuscar; }
+    public JScrollPane getScroll() { return scroll; }
+    public void setScroll(JScrollPane scroll) { this.scroll = scroll; }
+    public JTable getTblProducts() { return tblProducts; }
+    public void setTblProducts(JTable tblProducts) { this.tblProducts = tblProducts; }
+    public JTextField getTxtIva() { return txtIva; }
+    public void setTxtIva(JTextField txtIva) { this.txtIva = txtIva; }
+    public JTextField getTxtTotal() { return txtTotal; }
+    public void setTxtTotal(JTextField txtTotal) { this.txtTotal = txtTotal; }
+    public JTextField getTxtSubTotal() { return txtSubTotal; }
+    public void setTxtSubTotal(JTextField txtSubTotal) { this.txtSubTotal = txtSubTotal; }
+    public JButton getBtnEliminar() { return btnEliminar; }
+    public void setBtnEliminar(JButton btnEliminar) { this.btnEliminar = btnEliminar; }
+    public JPanel getPanelAll() { return panelAll; }
+    public void setPanelAll(JPanel panelAll) { this.panelAll = panelAll; }
+    public JLabel getLblCodigo() { return lblCodigo; }
+    public void setLblCodigo(JLabel lblCodigo) { this.lblCodigo = lblCodigo; }
+    public JLabel getLblSubTotal() { return lblSubTotal; }
+    public void setLblSubTotal(JLabel lblSubTotal) { this.lblSubTotal = lblSubTotal; }
+    public JLabel getLblIva() { return lblIva; }
+    public void setLblIva(JLabel lblIva) { this.lblIva = lblIva; }
+    public JLabel getLblTotal() { return lblTotal; }
+    public void setLblTotal(JLabel lblTotal) { this.lblTotal = lblTotal; }
+    public JPanel getPanelFinal() { return panelFinal; }
+    public void setPanelFinal(JPanel panelFinal) { this.panelFinal = panelFinal; }
+
+}

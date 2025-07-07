@@ -1,0 +1,241 @@
+package ec.edu.ups.poo.vista;
+
+import ec.edu.ups.poo.modelo.enums.Rol;
+import ec.edu.ups.poo.modelo.Usuario;
+import ec.edu.ups.poo.util.FormateadorUtils;
+import ec.edu.ups.poo.util.MensajeInternacionalizacionHandler;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import java.awt.*;
+import java.util.List;
+import java.util.Locale;
+
+public class UsuarioListarView extends JInternalFrame {
+
+    private JPanel panelSuperio;
+    private JButton btnListar;
+    private JPanel panelCentral;
+    private JTable tableUsers;
+    private JPanel panelAll;
+    private JScrollPane scroll;
+    private JPanel panelItulo;
+    private JLabel lblTitulo;
+    private JButton btnBuscar;
+    private JTextField txtUsuario;
+    private JComboBox<Object> cbxRol;
+    private JLabel lblUsuario;
+    private JLabel lblRol;
+    private DefaultTableModel modelo;
+    private MensajeInternacionalizacionHandler tipoIdioma;
+
+    public UsuarioListarView(MensajeInternacionalizacionHandler tipoIdioma) {
+        this.tipoIdioma = tipoIdioma;
+        setContentPane(panelAll);
+        setTitle("YANDRI STORE");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(595, 295);
+        setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
+        cargarTabla();
+        cargarRol();
+        aplicaraIdioma();
+
+    }
+
+    public void mostrarUsuarios(List<Usuario> usuarios) {
+        modelo.setRowCount(0);
+        Locale locale = tipoIdioma.getLocale();
+        for (Usuario usuario : usuarios) {
+            String fechaFormateada = "";
+            if (usuario.getFechaNacimiento() != null) {
+                fechaFormateada = FormateadorUtils.formatearFecha(usuario.getFechaNacimiento(), locale);
+            }
+            modelo.addRow(new Object[]{
+                    usuario.getUserName(),
+                    usuario.getContrasena(),
+                    usuario.getNombreCompleto(),
+                    fechaFormateada,
+                    usuario.getCorreo(),
+                    usuario.getTelefono(),
+                    usuario.getRol().name()
+            });
+        }
+    }
+
+    public void mostrarMensaje(String mensaje, String titulo, int tipo) {
+        JOptionPane.showMessageDialog(this, mensaje, titulo, tipo);
+    }
+
+    public void aplicaraIdioma() {
+        setTitle(tipoIdioma.get("usuario.listar.title"));
+        lblTitulo.setText(tipoIdioma.get("usuario.listar.titulo"));
+        lblUsuario.setText(tipoIdioma.get("usuario.listar.lbl.usuario"));
+        lblRol.setText(tipoIdioma.get("usuario.listar.lbl.rol"));
+        btnBuscar.setText(tipoIdioma.get("usuario.listar.btn.buscar"));
+        btnListar.setText(tipoIdioma.get("usuario.listar.btn.listar"));
+        tableUsers.getColumnModel().getColumn(0).setHeaderValue(tipoIdioma.get("usuario.listar.table.usuario"));
+        tableUsers.getColumnModel().getColumn(1).setHeaderValue(tipoIdioma.get("usuario.listar.table.contrasena"));
+        tableUsers.getColumnModel().getColumn(2).setHeaderValue(tipoIdioma.get("usuario.listar.table.nombreCompleto"));
+        tableUsers.getColumnModel().getColumn(3).setHeaderValue(tipoIdioma.get("usuario.listar.table.fechaNacimiento"));
+        tableUsers.getColumnModel().getColumn(4).setHeaderValue(tipoIdioma.get("usuario.listar.table.correo"));
+        tableUsers.getColumnModel().getColumn(5).setHeaderValue(tipoIdioma.get("usuario.listar.table.telefono"));
+        tableUsers.getColumnModel().getColumn(6).setHeaderValue(tipoIdioma.get("usuario.listar.table.rol"));
+        tableUsers.getTableHeader().repaint();
+    }
+
+    public void cargarRol(){
+        if (cbxRol != null) {
+            cbxRol.removeAllItems();
+            cbxRol.addItem("Todos");
+            for (Rol rol : Rol.values()) {
+                cbxRol.addItem(rol);
+            }
+        }
+    }
+
+    public void cargarTabla() {
+        modelo = new DefaultTableModel(
+                new Object[]{
+                        "Usuario",
+                        "Contrasena",
+                        "Nombre Completo",
+                        "Fecha Nacimiento",
+                        "Correo",
+                        "Telefono",
+                        "Rol"
+                }, 0
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tableUsers.setModel(modelo);
+
+        tableUsers.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+
+        Color fondo = new Color(132, 148, 229);
+        Color letras = Color.BLACK;
+
+        if (scroll == null && tableUsers != null) {
+            scroll = (JScrollPane) tableUsers.getParent().getParent();
+        }
+        if (scroll != null) {
+            scroll.getViewport().setBackground(fondo);
+            scroll.setBackground(fondo);
+            scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        }
+
+        if (tableUsers != null) {
+            tableUsers.setBackground(fondo);
+            tableUsers.setForeground(letras);
+            tableUsers.setSelectionBackground(new Color(50, 50, 60));
+            tableUsers.setSelectionForeground(Color.WHITE);
+            tableUsers.setGridColor(fondo);
+
+            JTableHeader header = tableUsers.getTableHeader();
+            header.setBackground(fondo);
+            header.setForeground(letras);
+            header.setFont(header.getFont().deriveFont(Font.BOLD));
+            ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+            centerRenderer.setForeground(letras);
+            centerRenderer.setBackground(fondo);
+            for (int i = 0; i < tableUsers.getColumnCount(); i++) {
+                tableUsers.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            }
+        }
+
+    }
+
+    public JPanel getPanelSuperio() {
+        return panelSuperio;
+    }
+    public void setPanelSuperio(JPanel panelSuperio) {
+        this.panelSuperio = panelSuperio;
+    }
+    public JButton getBtnListar() {
+        return btnListar;
+    }
+    public void setBtnListar(JButton btnListar) {
+        this.btnListar = btnListar;
+    }
+    public JPanel getPanelCentral() {
+        return panelCentral;
+    }
+    public void setPanelCentral(JPanel panelCentral) {
+        this.panelCentral = panelCentral;
+    }
+    public JTable getTableUsers() {
+        return tableUsers;
+    }
+    public void setTableUsers(JTable tableUsers) {
+        this.tableUsers = tableUsers;
+    }
+    public JPanel getPanelAll() {
+        return panelAll;
+    }
+    public void setPanelAll(JPanel panelAll) {
+        this.panelAll = panelAll;
+    }
+    public JScrollPane getScroll() {
+        return scroll;
+    }
+    public void setScroll(JScrollPane scroll) {
+        this.scroll = scroll;
+    }
+    public JPanel getPanelItulo() {
+        return panelItulo;
+    }
+    public void setPanelItulo(JPanel panelItulo) {
+        this.panelItulo = panelItulo;
+    }
+    public JLabel getTxtSettingsProduc() {
+        return lblTitulo;
+    }
+    public void setTxtSettingsProduc(JLabel txtSettingsProduc) {
+        this.lblTitulo = txtSettingsProduc;
+    }
+    public JButton getBtnBuscar() {
+        return btnBuscar;
+    }
+    public void setBtnBuscar(JButton btnBuscar) {
+        this.btnBuscar = btnBuscar;
+    }
+    public JTextField getTxtUsuario() {
+        return txtUsuario;
+    }
+    public void setTxtUsuario(JTextField txtUsuario) {
+        this.txtUsuario = txtUsuario;
+    }
+    public JComboBox<Object> getCbxRol() {
+        return cbxRol;
+    }
+    public void setCbxRol(JComboBox<Object> cbxRol) {
+        this.cbxRol = cbxRol;
+    }
+    public JLabel getLblUsuario() {
+        return lblUsuario;
+    }
+    public void setLblUsuario(JLabel lblUsuario) {
+        this.lblUsuario = lblUsuario;
+    }
+    public JLabel getLblRol() {
+        return lblRol;
+    }
+    public void setLblRol(JLabel lblRol) {
+        this.lblRol = lblRol;
+    }
+    public DefaultTableModel getModelo() {
+        return modelo;
+    }
+    public void setModelo(DefaultTableModel modelo) {
+        this.modelo = modelo;
+    }
+}
