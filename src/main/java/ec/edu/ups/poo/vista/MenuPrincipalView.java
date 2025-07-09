@@ -48,17 +48,17 @@ public class MenuPrincipalView extends JFrame {
         setLayout(new BorderLayout());
 
         desktop = new MiJDesktopPane();
-        desktop.setBackground(new Color(33, 37, 43));
+        desktop.setBackground(new Color(132, 148, 229));
 
         JPanel panelNorth = new JPanel(new BorderLayout());
-        panelNorth.setBackground(new Color(35, 38, 43));
+        panelNorth.setBackground(new Color(132, 148, 229));
 
         JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         centerPanel.setOpaque(false);
 
-        lblBienvenida = new JLabel("Un gusto volverte a ver: " + usuarioAutenticado.getUserName(), SwingConstants.CENTER);
-        lblBienvenida.setFont(new Font("JetBrains Mono", Font.BOLD, 30));
-        lblBienvenida.setForeground(Color.WHITE);
+        lblBienvenida = new JLabel("Bienvenido al Carrito de Compras: " + usuarioAutenticado.getUserName(), SwingConstants.CENTER);
+        lblBienvenida.setFont(new Font("Century", Font.BOLD, 30));
+        lblBienvenida.setForeground(Color.BLACK);
         lblBienvenida.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));
         lblBienvenida.setOpaque(false);
         centerPanel.add(lblBienvenida);
@@ -66,7 +66,7 @@ public class MenuPrincipalView extends JFrame {
         panelNorth.add(centerPanel, BorderLayout.CENTER);
 
         menuBar = new JMenuBar();
-        menuBar.setBackground(new Color(29, 30, 32));
+        menuBar.setBackground(Color.BLUE);
         menuBar.setForeground(Color.WHITE);
 
         menuProducto = new JMenu("Producto");

@@ -68,7 +68,7 @@ public class CarritoListarItemsView extends JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
-        setSize(420, 480);
+        setSize(465, 485);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         btnSalir.addActionListener(new ActionListener() {

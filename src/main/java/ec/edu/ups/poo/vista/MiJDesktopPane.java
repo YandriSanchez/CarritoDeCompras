@@ -35,10 +35,10 @@ public class MiJDesktopPane extends JDesktopPane {
 
     private void drawSilhouetteCart(Graphics2D g2, int w, int h) {
         // Fondo amarillo
-        g2.setColor(Color.YELLOW);
+        g2.setColor(Color.BLUE);
         g2.fillRoundRect(0, 0, w, h, 60, 60);
 
-        g2.setColor(Color.BLACK);
+        g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(8));
         g2.drawRoundRect(0, 0, w, h, 60, 60);
 
@@ -46,7 +46,7 @@ public class MiJDesktopPane extends JDesktopPane {
         int baseX = w / 4;
         int baseY = h / 2 + 50;
 
-        g2.setColor(Color.BLACK);
+        g2.setColor(Color.WHITE);
         g2.setStroke(new BasicStroke(20, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
         // Cabeza
