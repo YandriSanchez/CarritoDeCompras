@@ -15,7 +15,7 @@ public class LogInController {
     private final UsuarioDAO usuarioDAO;
     private final PreguntaDAO preguntaDAO;
     private final LogInView logInView;
-    private final MensajeInternacionalizacionHandler tipoIdioma;
+    private final MensajeInternacionalizacionHandler i18n;
     private final MainAppCallback mainAppCallback;
 
     public interface MainAppCallback {
@@ -23,11 +23,11 @@ public class LogInController {
         void mostrarLogin();
     }
 
-    public LogInController(UsuarioDAO usuarioDAO, PreguntaDAO preguntaDAO, LogInView logInView, MensajeInternacionalizacionHandler tipoIdioma, MainAppCallback callback) {
+    public LogInController(UsuarioDAO usuarioDAO, PreguntaDAO preguntaDAO, LogInView logInView, MensajeInternacionalizacionHandler i18n, MainAppCallback callback) {
         this.usuarioDAO = usuarioDAO;
         this.preguntaDAO = preguntaDAO;
         this.logInView = logInView;
-        this.tipoIdioma = tipoIdioma;
+        this.i18n = i18n;
         this.mainAppCallback = callback;
         configurarEventos();
     }
@@ -46,16 +46,16 @@ public class LogInController {
             int selectedIndex = logInView.getCbxIdioma().getSelectedIndex();
             switch (selectedIndex) {
                 case 0:
-                    tipoIdioma.setLenguaje("es", "EC");
+                    i18n.setLenguaje("es", "EC");
                     break;
                 case 1:
-                    tipoIdioma.setLenguaje("en", "US");
+                    i18n.setLenguaje("en", "US");
                     break;
                 case 2:
-                    tipoIdioma.setLenguaje("fr", "FR");
+                    i18n.setLenguaje("fr", "FR");
                     break;
                 default:
-                    tipoIdioma.setLenguaje("en", "US");
+                    i18n.setLenguaje("en", "US");
             }
             logInView.aplicarIdioma();
             logInView.actualizarOpcionesIdioma();
@@ -69,8 +69,8 @@ public class LogInController {
             Usuario usuario = usuarioDAO.autenticarUsuario(user, pass);
             if (usuario == null) {
                 logInView.mostrarMensaje(
-                        tipoIdioma.get("login.error.usuario_o_contrasena"),
-                        tipoIdioma.get("global.error"),
+                        i18n.get("login.error.usuario_o_contrasena"),
+                        i18n.get("global.error"),
                         JOptionPane.ERROR_MESSAGE
                 );
                 return;
@@ -78,14 +78,14 @@ public class LogInController {
 
             if (usuario.getPreguntaValidacion() == null || usuario.getPreguntaValidacion().isEmpty()) {
                 int res = logInView.mostrarMensajeAlert(
-                        tipoIdioma.get("login.warning.llene_preguntas_validacion"),
-                        tipoIdioma.get("global.warning"),
+                        i18n.get("login.warning.llene_preguntas_validacion"),
+                        i18n.get("global.warning"),
                         JOptionPane.WARNING_MESSAGE
                 );
                 logInView.dispose();
                 if (res == 0) {
-                    PreguntasValidacionView preguntasView = new PreguntasValidacionView(usuario, usuarioDAO, tipoIdioma);
-                    new PreguntasValidacionController(usuario, usuarioDAO, preguntaDAO, preguntasView, tipoIdioma);
+                    PreguntasValidacionView preguntasView = new PreguntasValidacionView(usuario, usuarioDAO, i18n);
+                    new PreguntasValidacionController(usuario, usuarioDAO, preguntaDAO, preguntasView, i18n);
                     preguntasView.setVisible(true);
                     preguntasView.addWindowListener(new java.awt.event.WindowAdapter() {
                         @Override
@@ -105,8 +105,8 @@ public class LogInController {
 
     private void configurarRegistro() {
         logInView.getBtnRegister().addActionListener(e -> {
-            RegisterView registerView = new RegisterView(tipoIdioma);
-            new RegisterController(usuarioDAO, preguntaDAO, registerView, tipoIdioma);
+            RegisterView registerView = new RegisterView(i18n);
+            new RegisterController(usuarioDAO, preguntaDAO, registerView, i18n);
             registerView.setVisible(true);
         });
     }
@@ -116,8 +116,8 @@ public class LogInController {
             String username = logInView.getTxtUserName().getText().trim();
             if (username.isEmpty()) {
                 logInView.mostrarMensaje(
-                        tipoIdioma.get("login.warning.ingrese_usuario"),
-                        tipoIdioma.get("global.warning"),
+                        i18n.get("login.warning.ingrese_usuario"),
+                        i18n.get("global.warning"),
                         JOptionPane.WARNING_MESSAGE
                 );
                 return;
@@ -125,23 +125,23 @@ public class LogInController {
             Usuario usuario = usuarioDAO.buscarUsuario(username);
             if (usuario == null) {
                 logInView.mostrarMensaje(
-                        tipoIdioma.get("login.error.usuario_no_encontrado"),
-                        tipoIdioma.get("global.error"),
+                        i18n.get("login.error.usuario_no_encontrado"),
+                        i18n.get("global.error"),
                         JOptionPane.ERROR_MESSAGE
                 );
                 return;
             }
             if (usuario.getPreguntaValidacion() == null || usuario.getPreguntaValidacion().isEmpty()) {
                 logInView.mostrarMensaje(
-                        tipoIdioma.get("login.error.usuario_sin_preguntas"),
-                        tipoIdioma.get("global.error"),
+                        i18n.get("login.error.usuario_sin_preguntas"),
+                        i18n.get("global.error"),
                         JOptionPane.ERROR_MESSAGE
                 );
                 return;
             }
 
-            PreguntasValidacionView preguntasView = new PreguntasValidacionView(usuario, usuarioDAO, tipoIdioma);
-            new PreguntasRecuperacionController(usuario, usuarioDAO, preguntasView, tipoIdioma);
+            PreguntasValidacionView preguntasView = new PreguntasValidacionView(usuario, usuarioDAO, i18n);
+            new PreguntasRecuperacionController(usuario, usuarioDAO, preguntasView, i18n);
             preguntasView.setVisible(true);
         });
     }

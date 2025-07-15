@@ -29,10 +29,10 @@ public class UsuarioListarView extends JInternalFrame {
     private JLabel lblUsuario;
     private JLabel lblRol;
     private DefaultTableModel modelo;
-    private MensajeInternacionalizacionHandler tipoIdioma;
+    private MensajeInternacionalizacionHandler i18n;
 
-    public UsuarioListarView(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+    public UsuarioListarView(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
         setContentPane(panelAll);
         setTitle("YANDRI STORE");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -48,7 +48,7 @@ public class UsuarioListarView extends JInternalFrame {
 
     public void mostrarUsuarios(List<Usuario> usuarios) {
         modelo.setRowCount(0);
-        Locale locale = tipoIdioma.getLocale();
+        Locale locale = i18n.getLocale();
         for (Usuario usuario : usuarios) {
             String fechaFormateada = "";
             if (usuario.getFechaNacimiento() != null) {
@@ -71,19 +71,19 @@ public class UsuarioListarView extends JInternalFrame {
     }
 
     public void aplicaraIdioma() {
-        setTitle(tipoIdioma.get("usuario.listar.title"));
-        lblTitulo.setText(tipoIdioma.get("usuario.listar.titulo"));
-        lblUsuario.setText(tipoIdioma.get("usuario.listar.lbl.usuario"));
-        lblRol.setText(tipoIdioma.get("usuario.listar.lbl.rol"));
-        btnBuscar.setText(tipoIdioma.get("usuario.listar.btn.buscar"));
-        btnListar.setText(tipoIdioma.get("usuario.listar.btn.listar"));
-        tableUsers.getColumnModel().getColumn(0).setHeaderValue(tipoIdioma.get("usuario.listar.table.usuario"));
-        tableUsers.getColumnModel().getColumn(1).setHeaderValue(tipoIdioma.get("usuario.listar.table.contrasena"));
-        tableUsers.getColumnModel().getColumn(2).setHeaderValue(tipoIdioma.get("usuario.listar.table.nombreCompleto"));
-        tableUsers.getColumnModel().getColumn(3).setHeaderValue(tipoIdioma.get("usuario.listar.table.fechaNacimiento"));
-        tableUsers.getColumnModel().getColumn(4).setHeaderValue(tipoIdioma.get("usuario.listar.table.correo"));
-        tableUsers.getColumnModel().getColumn(5).setHeaderValue(tipoIdioma.get("usuario.listar.table.telefono"));
-        tableUsers.getColumnModel().getColumn(6).setHeaderValue(tipoIdioma.get("usuario.listar.table.rol"));
+        setTitle(i18n.get("usuario.listar.title"));
+        lblTitulo.setText(i18n.get("usuario.listar.titulo"));
+        lblUsuario.setText(i18n.get("usuario.listar.lbl.usuario"));
+        lblRol.setText(i18n.get("usuario.listar.lbl.rol"));
+        btnBuscar.setText(i18n.get("usuario.listar.btn.buscar"));
+        btnListar.setText(i18n.get("usuario.listar.btn.listar"));
+        tableUsers.getColumnModel().getColumn(0).setHeaderValue(i18n.get("usuario.listar.table.usuario"));
+        tableUsers.getColumnModel().getColumn(1).setHeaderValue(i18n.get("usuario.listar.table.contrasena"));
+        tableUsers.getColumnModel().getColumn(2).setHeaderValue(i18n.get("usuario.listar.table.nombreCompleto"));
+        tableUsers.getColumnModel().getColumn(3).setHeaderValue(i18n.get("usuario.listar.table.fechaNacimiento"));
+        tableUsers.getColumnModel().getColumn(4).setHeaderValue(i18n.get("usuario.listar.table.correo"));
+        tableUsers.getColumnModel().getColumn(5).setHeaderValue(i18n.get("usuario.listar.table.telefono"));
+        tableUsers.getColumnModel().getColumn(6).setHeaderValue(i18n.get("usuario.listar.table.rol"));
         tableUsers.getTableHeader().repaint();
     }
 

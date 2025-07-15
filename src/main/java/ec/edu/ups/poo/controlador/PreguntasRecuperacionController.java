@@ -15,19 +15,19 @@ public class PreguntasRecuperacionController {
     private final Usuario usuario;
     private final UsuarioDAO usuarioDAO;
     private final PreguntasValidacionView preguntasView;
-    private final MensajeInternacionalizacionHandler tipoIdioma;
+    private final MensajeInternacionalizacionHandler i18n;
     private boolean estado;
 
     public PreguntasRecuperacionController(
             Usuario usuario,
             UsuarioDAO usuarioDAO,
             PreguntasValidacionView preguntasView,
-            MensajeInternacionalizacionHandler tipoIdioma
+            MensajeInternacionalizacionHandler i18n
     ) {
         this.usuario = usuario;
         this.usuarioDAO = usuarioDAO;
         this.preguntasView = preguntasView;
-        this.tipoIdioma = tipoIdioma;
+        this.i18n = i18n;
         this.estado = false;
 
         inicializarVista();
@@ -72,8 +72,8 @@ public class PreguntasRecuperacionController {
 
         if (respuesta1.isEmpty() || respuesta2.isEmpty() || respuesta3.isEmpty()) {
             preguntasView.mostrarMensaje(
-                    tipoIdioma.get("preguntas.recuperacion.error.responder_todas"),
-                    tipoIdioma.get("global.error"),
+                    i18n.get("preguntas.recuperacion.error.responder_todas"),
+                    i18n.get("global.error"),
                     JOptionPane.ERROR_MESSAGE
             );
             return;
@@ -86,15 +86,15 @@ public class PreguntasRecuperacionController {
 
         if (correcto) {
             preguntasView.mostrarMensaje(
-                    tipoIdioma.get("preguntas.recuperacion.exito.respuestas_correctas"),
-                    tipoIdioma.get("global.success"),
+                    i18n.get("preguntas.recuperacion.exito.respuestas_correctas"),
+                    i18n.get("global.success"),
                     JOptionPane.INFORMATION_MESSAGE
             );
             mostrarCambioContrasena();
         } else {
             preguntasView.mostrarMensaje(
-                    tipoIdioma.get("preguntas.recuperacion.error.respuesta_incorrecta"),
-                    tipoIdioma.get("global.error"),
+                    i18n.get("preguntas.recuperacion.error.respuesta_incorrecta"),
+                    i18n.get("global.error"),
                     JOptionPane.ERROR_MESSAGE
             );
         }
@@ -111,7 +111,7 @@ public class PreguntasRecuperacionController {
         preguntasView.getTxtPregunta2().setEnabled(false);
         preguntasView.getTxtPregunta3().setEnabled(false);
 
-        preguntasView.getBtnEnviar().setText(tipoIdioma.get("preguntas.recuperacion.btn.cambiar_contrasena"));
+        preguntasView.getBtnEnviar().setText(i18n.get("preguntas.recuperacion.btn.cambiar_contrasena"));
 
         // Limpiar y agregar solo el listener de cambio de contraseña
         for (ActionListener al : preguntasView.getBtnEnviar().getActionListeners()) {
@@ -124,8 +124,8 @@ public class PreguntasRecuperacionController {
         String nuevaContrasena = preguntasView.getTxtNuevaContra().getText().trim();
         if (nuevaContrasena.isEmpty()) {
             preguntasView.mostrarMensaje(
-                    tipoIdioma.get("preguntas.recuperacion.error.nueva_contrasena_vacia"),
-                    tipoIdioma.get("global.warning"),
+                    i18n.get("preguntas.recuperacion.error.nueva_contrasena_vacia"),
+                    i18n.get("global.warning"),
                     JOptionPane.WARNING_MESSAGE
             );
             return;
@@ -133,8 +133,8 @@ public class PreguntasRecuperacionController {
         usuario.setContrasena(nuevaContrasena);
         usuarioDAO.actualizar(usuario.getUserName(), usuario.getContrasena(), usuario.getRol());
         preguntasView.mostrarMensaje(
-                tipoIdioma.get("preguntas.recuperacion.exito.cambio_contrasena"),
-                tipoIdioma.get("global.success"),
+                i18n.get("preguntas.recuperacion.exito.cambio_contrasena"),
+                i18n.get("global.success"),
                 JOptionPane.INFORMATION_MESSAGE
         );
         preguntasView.dispose();

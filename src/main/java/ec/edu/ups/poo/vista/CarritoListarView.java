@@ -30,14 +30,14 @@ public class CarritoListarView extends JInternalFrame {
     private JLabel lblIvaResumen;
     private JLabel lblTotalResumen;
     private DefaultTableModel modelo;
-    private MensajeInternacionalizacionHandler tipoIdioma;
+    private MensajeInternacionalizacionHandler i18n;
     private double subtotal = 0.0;
     private double iva = 0.0;
     private double total = 0.0;
     private List<Carrito> carritosMostrados;
 
-    public CarritoListarView(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+    public CarritoListarView(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
         setContentPane(panelAll);
         setTitle("YANDRI STORE");
         setSize(475, 290);
@@ -116,7 +116,7 @@ public class CarritoListarView extends JInternalFrame {
 
     public void refrescarTabla() {
         if (carritosMostrados != null) {
-            mostrarCarritos(carritosMostrados, tipoIdioma.getLocale());
+            mostrarCarritos(carritosMostrados, i18n.getLocale());
         }
     }
 
@@ -127,7 +127,7 @@ public class CarritoListarView extends JInternalFrame {
     }
 
     public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
-        Object[] botones = {tipoIdioma.get("mensaje.confirmacion"), tipoIdioma.get("mensaje.cancelacion")};
+        Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
         return JOptionPane.showOptionDialog(
                 this, mensaje, titulo,
                 JOptionPane.DEFAULT_OPTION, tipo,
@@ -139,20 +139,20 @@ public class CarritoListarView extends JInternalFrame {
     }
 
     public void aplicarIdioma() {
-        setTitle(tipoIdioma.get("carrito.listar.title"));
-        lblTitulo.setText(tipoIdioma.get("carrito.listar.lbl.title"));
-        lblCodigo.setText(tipoIdioma.get("carrito.listar.lbl.codigo"));
-        btnBuscar.setText(tipoIdioma.get("carrito.listar.btn.buscar"));
-        btnListar.setText(tipoIdioma.get("carrito.listar.btn.listar"));
-        btnVerCarrito.setText(tipoIdioma.get("carrito.listarbtn..ver"));
-        tblCarritos.getColumnModel().getColumn(0).setHeaderValue(tipoIdioma.get("carrito.listar.tbl.codigo"));
-        tblCarritos.getColumnModel().getColumn(1).setHeaderValue(tipoIdioma.get("carrito.listar.tbl.usuario"));
-        tblCarritos.getColumnModel().getColumn(2).setHeaderValue(tipoIdioma.get("carrito.listar.tbl.fecha"));
-        tblCarritos.getColumnModel().getColumn(3).setHeaderValue(tipoIdioma.get("carrito.listar.tbl.subtotal"));
-        tblCarritos.getColumnModel().getColumn(4).setHeaderValue(tipoIdioma.get("carrito.listar.tbl.iva"));
-        tblCarritos.getColumnModel().getColumn(5).setHeaderValue(tipoIdioma.get("carrito.listar.tbl.total"));
+        setTitle(i18n.get("carrito.listar.title"));
+        lblTitulo.setText(i18n.get("carrito.listar.lbl.title"));
+        lblCodigo.setText(i18n.get("carrito.listar.lbl.codigo"));
+        btnBuscar.setText(i18n.get("carrito.listar.btn.buscar"));
+        btnListar.setText(i18n.get("carrito.listar.btn.listar"));
+        btnVerCarrito.setText(i18n.get("carrito.listarbtn..ver"));
+        tblCarritos.getColumnModel().getColumn(0).setHeaderValue(i18n.get("carrito.listar.tbl.codigo"));
+        tblCarritos.getColumnModel().getColumn(1).setHeaderValue(i18n.get("carrito.listar.tbl.usuario"));
+        tblCarritos.getColumnModel().getColumn(2).setHeaderValue(i18n.get("carrito.listar.tbl.fecha"));
+        tblCarritos.getColumnModel().getColumn(3).setHeaderValue(i18n.get("carrito.listar.tbl.subtotal"));
+        tblCarritos.getColumnModel().getColumn(4).setHeaderValue(i18n.get("carrito.listar.tbl.iva"));
+        tblCarritos.getColumnModel().getColumn(5).setHeaderValue(i18n.get("carrito.listar.tbl.total"));
         tblCarritos.getTableHeader().repaint();
-        refrescarResumenValores(tipoIdioma.getLocale());
+        refrescarResumenValores(i18n.getLocale());
     }
 
     public JPanel getPanelAll() { return panelAll; }

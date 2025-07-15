@@ -28,10 +28,10 @@ public class UsuarioElimiarView extends JInternalFrame {
     private JLabel lblCorreo;
     private JTextField txtTelefono;
     private JTextField txtCorreo;
-    private MensajeInternacionalizacionHandler tipoIdioma;
+    private MensajeInternacionalizacionHandler i18n;
 
-    public UsuarioElimiarView(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+    public UsuarioElimiarView(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
         setContentPane(panelAll);
         setTitle("YANDRO STORE");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -47,7 +47,7 @@ public class UsuarioElimiarView extends JInternalFrame {
     }
 
     public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
-        Object[] botones = {tipoIdioma.get("mensaje.confirmacion"), tipoIdioma.get("mensaje.cancelacion")};
+        Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
         return JOptionPane.showOptionDialog(
                 this, mensaje, titulo,
                 JOptionPane.DEFAULT_OPTION, tipo,
@@ -55,17 +55,17 @@ public class UsuarioElimiarView extends JInternalFrame {
     }
 
     public void aplicarIdioma() {
-        setTitle(tipoIdioma.get("usuario.listar.titulo"));
-        lblTitulo.setText(tipoIdioma.get("usuario.eliminar.titulo"));
-        lblUsuario.setText(tipoIdioma.get("usuario.eliminar.lbl.usuario"));
-        lblContrasena.setText(tipoIdioma.get("usuario.eliminar.lbl.contrasena"));
-        lblRol.setText(tipoIdioma.get("usuario.eliminar.lbl.rol"));
-        btnBuscar.setText(tipoIdioma.get("usuario.eliminar.btn.buscar"));
-        btnEliminar.setText(tipoIdioma.get("usuario.eliminar.btn.eliminar"));
-        lblNombreCompleto.setText(tipoIdioma.get("usuario.eliminar.lbl.nombreCompleto"));
-        lblFechaNacimiento.setText(tipoIdioma.get("usuario.eliminar.lbl.fechaNacimiento"));
-        lblTelefono.setText(tipoIdioma.get("usuario.eliminar.lbl.telefono"));
-        lblCorreo.setText(tipoIdioma.get("usuario.eliminar.lbl.correo"));
+        setTitle(i18n.get("usuario.listar.titulo"));
+        lblTitulo.setText(i18n.get("usuario.eliminar.titulo"));
+        lblUsuario.setText(i18n.get("usuario.eliminar.lbl.usuario"));
+        lblContrasena.setText(i18n.get("usuario.eliminar.lbl.contrasena"));
+        lblRol.setText(i18n.get("usuario.eliminar.lbl.rol"));
+        btnBuscar.setText(i18n.get("usuario.eliminar.btn.buscar"));
+        btnEliminar.setText(i18n.get("usuario.eliminar.btn.eliminar"));
+        lblNombreCompleto.setText(i18n.get("usuario.eliminar.lbl.nombreCompleto"));
+        lblFechaNacimiento.setText(i18n.get("usuario.eliminar.lbl.fechaNacimiento"));
+        lblTelefono.setText(i18n.get("usuario.eliminar.lbl.telefono"));
+        lblCorreo.setText(i18n.get("usuario.eliminar.lbl.correo"));
 
     }
 
@@ -208,9 +208,9 @@ public class UsuarioElimiarView extends JInternalFrame {
         this.txtCorreo = txtCorreo;
     }
     public MensajeInternacionalizacionHandler getI18n() {
-        return tipoIdioma;
+        return i18n;
     }
     public void setI18n(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+        this.i18n = tipoIdioma;
     }
 }

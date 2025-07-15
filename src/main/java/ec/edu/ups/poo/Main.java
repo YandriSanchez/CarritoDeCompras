@@ -25,12 +25,12 @@ public class Main {
     public static CarritoDAO carritoDAO;
     public static PreguntaDAO preguntaDAO;
     private static UsuarioController usuarioController;
-    private static MensajeInternacionalizacionHandler tipoIdioma;
+    private static MensajeInternacionalizacionHandler i18n;
 
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
-            tipoIdioma = new MensajeInternacionalizacionHandler("es", "EC");
-            preguntaDAO = new PreguntaDAOMemoria(tipoIdioma);
+            i18n = new MensajeInternacionalizacionHandler("es", "EC");
+            preguntaDAO = new PreguntaDAOMemoria(i18n);
             usuarioDAO = new UsuarioDAOMemoria(preguntaDAO.listarTodas());
             productoDAO = new ProductoDAOMemoria();
             carritoDAO = new CarritoDAOMemoria();
@@ -39,34 +39,34 @@ public class Main {
     }
 
     public static void mostrarLogin() {
-        LogInView logInView = new LogInView(tipoIdioma);
+        LogInView logInView = new LogInView(i18n);
 
-        new LogInController(usuarioDAO, preguntaDAO, logInView, tipoIdioma, new LogInController.MainAppCallback() {
+        new LogInController(usuarioDAO, preguntaDAO, logInView, i18n, new LogInController.MainAppCallback() {
             @Override
             public void mostrarMenuPrincipal(Usuario usuarioAutenticado) {
-                MenuPrincipalView principalView = new MenuPrincipalView(usuarioAutenticado, tipoIdioma);
+                MenuPrincipalView principalView = new MenuPrincipalView(usuarioAutenticado, i18n);
 
                 // PRODUCTO
-                ProductoAnadirView productoAnadirView = new ProductoAnadirView(tipoIdioma);
-                ProductoListarView productoListaView = new ProductoListarView(tipoIdioma);
-                ProductoEditarView productoGestionView = new ProductoEditarView(tipoIdioma);
-                ProductoEliminarView productoEliminarView = new ProductoEliminarView(tipoIdioma);
+                ProductoAnadirView productoAnadirView = new ProductoAnadirView(i18n);
+                ProductoListarView productoListaView = new ProductoListarView(i18n);
+                ProductoEditarView productoGestionView = new ProductoEditarView(i18n);
+                ProductoEliminarView productoEliminarView = new ProductoEliminarView(i18n);
 
                 // CARRITO
-                CarritoAnadirView carritoAnadirView = new CarritoAnadirView(tipoIdioma);
-                CarritoEditarView carritoEditarView = new CarritoEditarView(tipoIdioma);
-                CarritoEliminarView carritoEliminarView = new CarritoEliminarView(tipoIdioma);
-                CarritoListarView carritoListarView = new CarritoListarView(tipoIdioma);
+                CarritoAnadirView carritoAnadirView = new CarritoAnadirView(i18n);
+                CarritoEditarView carritoEditarView = new CarritoEditarView(i18n);
+                CarritoEliminarView carritoEliminarView = new CarritoEliminarView(i18n);
+                CarritoListarView carritoListarView = new CarritoListarView(i18n);
 
                 // USUARIO
-                UsuarioAnadirView usuarioAnadirView = new UsuarioAnadirView(tipoIdioma);
-                UsuarioListarView usuarioListarView = new UsuarioListarView(tipoIdioma);
-                UsuarioEditarView usuarioEditarView = new UsuarioEditarView(tipoIdioma);
-                UsuarioElimiarView usuarioElimiarView = new UsuarioElimiarView(tipoIdioma);
+                UsuarioAnadirView usuarioAnadirView = new UsuarioAnadirView(i18n);
+                UsuarioListarView usuarioListarView = new UsuarioListarView(i18n);
+                UsuarioEditarView usuarioEditarView = new UsuarioEditarView(i18n);
+                UsuarioElimiarView usuarioElimiarView = new UsuarioElimiarView(i18n);
 
-                usuarioController = new UsuarioController(usuarioDAO, preguntaDAO, tipoIdioma);
-                new ProductoController(productoDAO, productoAnadirView, productoListaView, productoGestionView, productoEliminarView, carritoAnadirView, tipoIdioma);
-                CarritoController carritoController = new CarritoController(carritoDAO, productoDAO, carritoAnadirView, carritoEditarView, usuarioAutenticado, tipoIdioma);
+                usuarioController = new UsuarioController(usuarioDAO, preguntaDAO, i18n);
+                new ProductoController(productoDAO, productoAnadirView, productoListaView, productoGestionView, productoEliminarView, carritoAnadirView, i18n);
+                CarritoController carritoController = new CarritoController(carritoDAO, productoDAO, carritoAnadirView, carritoEditarView, usuarioAutenticado, i18n);
 
                 if (usuarioAutenticado.getRol() == Rol.USUARIO) {
                     // PRODUCTOS
@@ -185,7 +185,7 @@ public class Main {
                 });
 
                 principalView.getMenuItemEspanol().addActionListener(event -> {
-                    tipoIdioma.setLenguaje("es", "EC");
+                    i18n.setLenguaje("es", "EC");
                     principalView.aplicarIdioma();
                     productoAnadirView.aplicarIdiomas();
                     productoListaView.aplicarIdioma();
@@ -200,25 +200,25 @@ public class Main {
                     usuarioEditarView.aplicarIdioma();
                     usuarioElimiarView.aplicarIdioma();
 
-                    carritoAnadirView.refrescarResumenValores(tipoIdioma.getLocale());
-                    carritoEditarView.refrescarResumenValores(tipoIdioma.getLocale());
-                    carritoEliminarView.refrescarResumenValores(tipoIdioma.getLocale());
-                    carritoListarView.refrescarResumenValores(tipoIdioma.getLocale());
+                    carritoAnadirView.refrescarResumenValores(i18n.getLocale());
+                    carritoEditarView.refrescarResumenValores(i18n.getLocale());
+                    carritoEliminarView.refrescarResumenValores(i18n.getLocale());
+                    carritoListarView.refrescarResumenValores(i18n.getLocale());
 
                     if (carritoAnadirView != null && carritoAnadirView.isVisible()) {
-                        carritoAnadirView.refrescarResumenValores(tipoIdioma.getLocale());
+                        carritoAnadirView.refrescarResumenValores(i18n.getLocale());
                         carritoAnadirView.refrescarTabla();
                     }
                     if (carritoEditarView != null && carritoEditarView.isVisible()) {
-                        carritoEditarView.refrescarResumenValores(tipoIdioma.getLocale());
+                        carritoEditarView.refrescarResumenValores(i18n.getLocale());
                         carritoEditarView.refrescarTabla();
                     }
                     if (carritoEliminarView != null && carritoEliminarView.isVisible()) {
-                        carritoEliminarView.refrescarResumenValores(tipoIdioma.getLocale());
+                        carritoEliminarView.refrescarResumenValores(i18n.getLocale());
                         carritoEliminarView.refrescarTabla();
                     }
                     if (carritoListarView != null && carritoListarView.isVisible()) {
-                        carritoListarView.refrescarResumenValores(tipoIdioma.getLocale());
+                        carritoListarView.refrescarResumenValores(i18n.getLocale());
                         carritoListarView.refrescarTabla();
                     }
                     if (carritoController.itemsView != null && carritoController.itemsView.isVisible()) {
@@ -226,7 +226,7 @@ public class Main {
                     }
                 });
                 principalView.getMenuItemIngles().addActionListener(event -> {
-                    tipoIdioma.setLenguaje("en", "US");
+                    i18n.setLenguaje("en", "US");
                     principalView.aplicarIdioma();
                     productoAnadirView.aplicarIdiomas();
                     productoListaView.aplicarIdioma();
@@ -241,25 +241,25 @@ public class Main {
                     usuarioEditarView.aplicarIdioma();
                     usuarioElimiarView.aplicarIdioma();
 
-                    carritoAnadirView.refrescarResumenValores(tipoIdioma.getLocale());
-                    carritoEditarView.refrescarResumenValores(tipoIdioma.getLocale());
-                    carritoEliminarView.refrescarResumenValores(tipoIdioma.getLocale());
-                    carritoListarView.refrescarResumenValores(tipoIdioma.getLocale());
+                    carritoAnadirView.refrescarResumenValores(i18n.getLocale());
+                    carritoEditarView.refrescarResumenValores(i18n.getLocale());
+                    carritoEliminarView.refrescarResumenValores(i18n.getLocale());
+                    carritoListarView.refrescarResumenValores(i18n.getLocale());
 
                     if (carritoAnadirView != null && carritoAnadirView.isVisible()) {
-                        carritoAnadirView.refrescarResumenValores(tipoIdioma.getLocale());
+                        carritoAnadirView.refrescarResumenValores(i18n.getLocale());
                         carritoAnadirView.refrescarTabla();
                     }
                     if (carritoEditarView != null && carritoEditarView.isVisible()) {
-                        carritoEditarView.refrescarResumenValores(tipoIdioma.getLocale());
+                        carritoEditarView.refrescarResumenValores(i18n.getLocale());
                         carritoEditarView.refrescarTabla();
                     }
                     if (carritoEliminarView != null && carritoEliminarView.isVisible()) {
-                        carritoEliminarView.refrescarResumenValores(tipoIdioma.getLocale());
+                        carritoEliminarView.refrescarResumenValores(i18n.getLocale());
                         carritoEliminarView.refrescarTabla();
                     }
                     if (carritoListarView != null && carritoListarView.isVisible()) {
-                        carritoListarView.refrescarResumenValores(tipoIdioma.getLocale());
+                        carritoListarView.refrescarResumenValores(i18n.getLocale());
                         carritoListarView.refrescarTabla();
                     }
                     if (carritoController.itemsView != null && carritoController.itemsView.isVisible()) {
@@ -267,7 +267,7 @@ public class Main {
                     }
                 });
                 principalView.getMenuItemFrances().addActionListener(event -> {
-                    tipoIdioma.setLenguaje("fr", "FR");
+                    i18n.setLenguaje("fr", "FR");
                     principalView.aplicarIdioma();
                     productoAnadirView.aplicarIdiomas();
                     productoListaView.aplicarIdioma();
@@ -282,25 +282,25 @@ public class Main {
                     usuarioEditarView.aplicarIdioma();
                     usuarioElimiarView.aplicarIdioma();
 
-                    carritoAnadirView.refrescarResumenValores(tipoIdioma.getLocale());
-                    carritoEditarView.refrescarResumenValores(tipoIdioma.getLocale());
-                    carritoEliminarView.refrescarResumenValores(tipoIdioma.getLocale());
-                    carritoListarView.refrescarResumenValores(tipoIdioma.getLocale());
+                    carritoAnadirView.refrescarResumenValores(i18n.getLocale());
+                    carritoEditarView.refrescarResumenValores(i18n.getLocale());
+                    carritoEliminarView.refrescarResumenValores(i18n.getLocale());
+                    carritoListarView.refrescarResumenValores(i18n.getLocale());
 
                     if (carritoAnadirView != null && carritoAnadirView.isVisible()) {
-                        carritoAnadirView.refrescarResumenValores(tipoIdioma.getLocale());
+                        carritoAnadirView.refrescarResumenValores(i18n.getLocale());
                         carritoAnadirView.refrescarTabla();
                     }
                     if (carritoEditarView != null && carritoEditarView.isVisible()) {
-                        carritoEditarView.refrescarResumenValores(tipoIdioma.getLocale());
+                        carritoEditarView.refrescarResumenValores(i18n.getLocale());
                         carritoEditarView.refrescarTabla();
                     }
                     if (carritoEliminarView != null && carritoEliminarView.isVisible()) {
-                        carritoEliminarView.refrescarResumenValores(tipoIdioma.getLocale());
+                        carritoEliminarView.refrescarResumenValores(i18n.getLocale());
                         carritoEliminarView.refrescarTabla();
                     }
                     if (carritoListarView != null && carritoListarView.isVisible()) {
-                        carritoListarView.refrescarResumenValores(tipoIdioma.getLocale());
+                        carritoListarView.refrescarResumenValores(i18n.getLocale());
                         carritoListarView.refrescarTabla();
                     }
                     if (carritoController.itemsView != null && carritoController.itemsView.isVisible()) {

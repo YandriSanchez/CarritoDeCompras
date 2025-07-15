@@ -20,10 +20,10 @@ public class LogInView extends JFrame {
     private JComboBox cbxIdioma;
     private JLabel lblIdioma;
     private JButton btnRecuContra;
-    private MensajeInternacionalizacionHandler tipoIdioma;
+    private MensajeInternacionalizacionHandler i18n;
 
-    public LogInView(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+    public LogInView(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
         setTitle("YANDRI STORE");
         setContentPane(panelAll);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,7 +39,7 @@ public class LogInView extends JFrame {
     }
 
     public int mostrarMensajeAlert(String mensaje, String titulo, int tipo) {
-        Object[] botones = {tipoIdioma.get("mensaje.confirmacion"), tipoIdioma.get("mensaje.cancelacion")};
+        Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
         return JOptionPane.showOptionDialog(
                 this, mensaje, titulo,
                 JOptionPane.DEFAULT_OPTION, tipo,
@@ -48,21 +48,21 @@ public class LogInView extends JFrame {
 
     public void actualizarOpcionesIdioma() {
         cbxIdioma.removeAllItems();
-        cbxIdioma.addItem(tipoIdioma.get("login.cbxIdioma.opcion.es"));
-        cbxIdioma.addItem(tipoIdioma.get("login.cbxIdioma.opcion.en"));
-        cbxIdioma.addItem(tipoIdioma.get("login.cbxIdioma.opcion.fr"));
+        cbxIdioma.addItem(i18n.get("login.cbxIdioma.opcion.es"));
+        cbxIdioma.addItem(i18n.get("login.cbxIdioma.opcion.en"));
+        cbxIdioma.addItem(i18n.get("login.cbxIdioma.opcion.fr"));
     }
 
     public void aplicarIdioma() {
-        setTitle(tipoIdioma.get("login.title"));
-        lblTitulo.setText(tipoIdioma.get("login.lblTitulo"));
-        lblIdioma.setText(tipoIdioma.get("login.lblIdioma"));
-        lblUsuario.setText(tipoIdioma.get("login.lblUsuario"));
-        lblContrasena.setText(tipoIdioma.get("login.lblContrasena"));
-        btnInicioSesion.setText(tipoIdioma.get("login.btnInicioSesion"));
-        btnSalir.setText(tipoIdioma.get("login.btnSalir"));
-        btnRegistro.setText(tipoIdioma.get("login.btnRegistro"));
-        btnRecuContra.setText(tipoIdioma.get("login.btnRecuContra"));
+        setTitle(i18n.get("login.title"));
+        lblTitulo.setText(i18n.get("login.lblTitulo"));
+        lblIdioma.setText(i18n.get("login.lblIdioma"));
+        lblUsuario.setText(i18n.get("login.lblUsuario"));
+        lblContrasena.setText(i18n.get("login.lblContrasena"));
+        btnInicioSesion.setText(i18n.get("login.btnInicioSesion"));
+        btnSalir.setText(i18n.get("login.btnSalir"));
+        btnRegistro.setText(i18n.get("login.btnRegistro"));
+        btnRecuContra.setText(i18n.get("login.btnRecuContra"));
     }
 
     public JButton getBtnRecuContra() {

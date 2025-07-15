@@ -36,10 +36,10 @@ public class RegisterView extends JFrame {
     private JLabel lblCorreo;
     private JTextField txtTelefono;
     private JLabel lblTelefono;
-    private MensajeInternacionalizacionHandler tipoIdioma;
+    private MensajeInternacionalizacionHandler i18n;
 
-    public RegisterView(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+    public RegisterView(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
         setTitle("YANDRI STORE");
         setContentPane(panelAll);
         setSize(710, 450);
@@ -54,7 +54,7 @@ public class RegisterView extends JFrame {
     }
 
     public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
-        Object[] botones = {tipoIdioma.get("mensaje.confirmacion"), tipoIdioma.get("mensaje.cancelacion")};
+        Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
         return JOptionPane.showOptionDialog(
                 this, mensaje, titulo,
                 JOptionPane.DEFAULT_OPTION, tipo,
@@ -62,21 +62,21 @@ public class RegisterView extends JFrame {
     }
 
     public void aplicarIdioma() {
-        setTitle(tipoIdioma.get("register.title"));
-        lblTitulo.setText(tipoIdioma.get("register.lbltitulo"));
-        lblUsuario.setText(tipoIdioma.get("register.lblUsuario"));
-        lblContrasena.setText(tipoIdioma.get("register.lblContrasena"));
-        lblNombreCompleto.setText(tipoIdioma.get("register.lblNombreCompleto"));
-        lblFechaNacimiento.setText(tipoIdioma.get("register.lblFechaNacimiento"));
-        lblCorreo.setText(tipoIdioma.get("register.lblCorreo"));
-        lblTelefono.setText(tipoIdioma.get("register.lblTelefono"));
-        lblTelefono.setText(tipoIdioma.get("register.lblTelefono"));
-        lblPregunta1.setText(tipoIdioma.get("register.lblPregunta1"));
-        lblPregunta2.setText(tipoIdioma.get("register.lblPregunta2"));
-        lblPregunta3.setText(tipoIdioma.get("register.lblPregunta3"));
-        btnRegistro.setText(tipoIdioma.get("register.btnRegistro"));
-        btnClean.setText(tipoIdioma.get("register.btnClean"));
-        btnSalir.setText(tipoIdioma.get("register.btnSalir"));
+        setTitle(i18n.get("register.title"));
+        lblTitulo.setText(i18n.get("register.lbltitulo"));
+        lblUsuario.setText(i18n.get("register.lblUsuario"));
+        lblContrasena.setText(i18n.get("register.lblContrasena"));
+        lblNombreCompleto.setText(i18n.get("register.lblNombreCompleto"));
+        lblFechaNacimiento.setText(i18n.get("register.lblFechaNacimiento"));
+        lblCorreo.setText(i18n.get("register.lblCorreo"));
+        lblTelefono.setText(i18n.get("register.lblTelefono"));
+        lblTelefono.setText(i18n.get("register.lblTelefono"));
+        lblPregunta1.setText(i18n.get("register.lblPregunta1"));
+        lblPregunta2.setText(i18n.get("register.lblPregunta2"));
+        lblPregunta3.setText(i18n.get("register.lblPregunta3"));
+        btnRegistro.setText(i18n.get("register.btnRegistro"));
+        btnClean.setText(i18n.get("register.btnClean"));
+        btnSalir.setText(i18n.get("register.btnSalir"));
 
     }
 
@@ -288,9 +288,9 @@ public class RegisterView extends JFrame {
         this.lblTelefono = lblTelefono;
     }
     public MensajeInternacionalizacionHandler gettipoIdioma() {
-        return tipoIdioma;
+        return i18n;
     }
     public void settipoIdioma(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+        this.i18n = tipoIdioma;
     }
 }

@@ -30,10 +30,10 @@ public class UsuarioAnadirView extends JInternalFrame {
     private JTextField txtTelefono;
     private JTextField txtCorreo;
     private JLabel lblCorreo;
-    private MensajeInternacionalizacionHandler tipoIdioma;
+    private MensajeInternacionalizacionHandler i18n;
 
-    public UsuarioAnadirView(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+    public UsuarioAnadirView(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
         setContentPane(panelAll);
         setTitle("YANDRI STORE");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -50,7 +50,7 @@ public class UsuarioAnadirView extends JInternalFrame {
     }
 
     public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
-        Object[] botones = {tipoIdioma.get("mensaje.confirmacion"), tipoIdioma.get("mensaje.cancelacion")};
+        Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
         return JOptionPane.showOptionDialog(
                 this, mensaje, titulo,
                 JOptionPane.DEFAULT_OPTION, tipo,
@@ -58,17 +58,17 @@ public class UsuarioAnadirView extends JInternalFrame {
     }
 
     public void aplicarIdioma() {
-        setTitle(tipoIdioma.get("usuario.anadir.titulo"));
-        lblTitulo.setText(tipoIdioma.get("usuario.anadir.lbl.titulo"));
-        lblUsuario.setText(tipoIdioma.get("usuario.anadir.lbl.usuario"));
-        lblContrasena.setText(tipoIdioma.get("usuario.anadir.lbl.contrasena"));
-        lblRol.setText(tipoIdioma.get("usuario.anadir.lbl.rol"));
-        btnRegistrar.setText(tipoIdioma.get("usuario.anadir.btn.registrar"));
-        btnClean.setText(tipoIdioma.get("usuario.anadir.btn.limpiar"));
-        lblNombreCompleto.setText(tipoIdioma.get("usuario.anadir.lbl.nombre.completo"));
-        lblFechaNacimiento.setText(tipoIdioma.get("usuario.anadir.lbl.fecha.nacimiento"));
-        lblTelefono.setText(tipoIdioma.get("usuario.anadir.lbl.telefono"));
-        lblCorreo.setText(tipoIdioma.get("usuario.anadir.lbl.correo"));
+        setTitle(i18n.get("usuario.anadir.titulo"));
+        lblTitulo.setText(i18n.get("usuario.anadir.lbl.titulo"));
+        lblUsuario.setText(i18n.get("usuario.anadir.lbl.usuario"));
+        lblContrasena.setText(i18n.get("usuario.anadir.lbl.contrasena"));
+        lblRol.setText(i18n.get("usuario.anadir.lbl.rol"));
+        btnRegistrar.setText(i18n.get("usuario.anadir.btn.registrar"));
+        btnClean.setText(i18n.get("usuario.anadir.btn.limpiar"));
+        lblNombreCompleto.setText(i18n.get("usuario.anadir.lbl.nombre.completo"));
+        lblFechaNacimiento.setText(i18n.get("usuario.anadir.lbl.fecha.nacimiento"));
+        lblTelefono.setText(i18n.get("usuario.anadir.lbl.telefono"));
+        lblCorreo.setText(i18n.get("usuario.anadir.lbl.correo"));
 
     }
 
@@ -244,9 +244,9 @@ public class UsuarioAnadirView extends JInternalFrame {
         this.lblCorreo = lblCorreo;
     }
     public MensajeInternacionalizacionHandler gettipoIdioma() {
-        return tipoIdioma;
+        return i18n;
     }
     public void settipoIdioma(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+        this.i18n = tipoIdioma;
     }
 }

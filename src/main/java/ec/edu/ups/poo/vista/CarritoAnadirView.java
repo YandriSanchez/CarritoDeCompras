@@ -48,14 +48,14 @@ public class CarritoAnadirView extends JInternalFrame {
     private JLabel lblTot;
     private JLabel lblSubTot;
     private DefaultTableModel modelo;
-    private MensajeInternacionalizacionHandler tipoIdioma;
+    private MensajeInternacionalizacionHandler i18n;
 
     private double subtotal = 0.0;
     private double iva = 0.0;
     private double total = 0.0;
 
-    public CarritoAnadirView(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+    public CarritoAnadirView(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
         setContentPane(panelAll);
         setTitle("YANDRI STORE");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -115,7 +115,7 @@ public class CarritoAnadirView extends JInternalFrame {
     public void mostrarProductos(List<Producto> productos) {
         if (productos != null && !productos.isEmpty()) {
             txtNombre.setText(productos.get(0).getNombre());
-            Locale locale = tipoIdioma.getLocale();
+            Locale locale = i18n.getLocale();
             String precioFormateado = FormateadorUtils.formatearMoneda(productos.get(0).getPrecio(), locale);
             txtPrecio.setText(precioFormateado);
         } else {
@@ -134,7 +134,7 @@ public class CarritoAnadirView extends JInternalFrame {
     }
     public void mostrarItemsCarrito(List<ItemCarrito> items) {
         modelo.setRowCount(0);
-        Locale locale = tipoIdioma.getLocale();
+        Locale locale = i18n.getLocale();
         for (ItemCarrito item : items) {
             Producto p = item.getProducto();
             String precioFormateado = FormateadorUtils.formatearMoneda(p.getPrecio(), locale);
@@ -149,7 +149,7 @@ public class CarritoAnadirView extends JInternalFrame {
         }
     }
     public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
-        Object[] botones = {tipoIdioma.get("mensaje.confirmacion"), tipoIdioma.get("mensaje.cancelacion")};
+        Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
         return JOptionPane.showOptionDialog(
                 this, mensaje, titulo,
                 JOptionPane.DEFAULT_OPTION, tipo,
@@ -157,22 +157,22 @@ public class CarritoAnadirView extends JInternalFrame {
     }
 
     public void aplicarIdioma() {
-        setTitle(tipoIdioma.get("carrito.anadir.tituloVentana"));
-        lblTitulo.setText(tipoIdioma.get("carrito.anadir.lbl.titulo"));
-        lblCodigoProducto.setText(tipoIdioma.get("carrito.anadir.lbl.codigoProducto"));
-        lblCantidad.setText(tipoIdioma.get("carrito.anadir.lbl.cantidad"));
-        lblNombre.setText(tipoIdioma.get("carrito.anadir.lbl.nombre"));
-        lblPrecio.setText(tipoIdioma.get("carrito.anadir.lbl.precio"));
-        btnAnadir.setText(tipoIdioma.get("carrito.anadir.btn.anadir"));
-        btnBuscar.setText(tipoIdioma.get("carrito.anadir.btn.buscar"));
-        btnSave.setText(tipoIdioma.get("carrito.anadir.btn.guardar"));
-        btnCancel.setText(tipoIdioma.get("carrito.anadir.btn.cancelar"));
-        btnEliminarItem.setText(tipoIdioma.get("carrito.anadir.btn.eliminar.item"));
-        tblProducts.getColumnModel().getColumn(0).setHeaderValue(tipoIdioma.get("carrito.anadir.tbl.Codigo"));
-        tblProducts.getColumnModel().getColumn(1).setHeaderValue(tipoIdioma.get("carrito.anadir.tbl.Nombre"));
-        tblProducts.getColumnModel().getColumn(2).setHeaderValue(tipoIdioma.get("carrito.anadir.tbl.Precio"));
-        tblProducts.getColumnModel().getColumn(3).setHeaderValue(tipoIdioma.get("carrito.anadir.tbl.Cantidad"));
-        tblProducts.getColumnModel().getColumn(4).setHeaderValue(tipoIdioma.get("carrito.anadir.tbl.TotalItem"));
+        setTitle(i18n.get("carrito.anadir.tituloVentana"));
+        lblTitulo.setText(i18n.get("carrito.anadir.lbl.titulo"));
+        lblCodigoProducto.setText(i18n.get("carrito.anadir.lbl.codigoProducto"));
+        lblCantidad.setText(i18n.get("carrito.anadir.lbl.cantidad"));
+        lblNombre.setText(i18n.get("carrito.anadir.lbl.nombre"));
+        lblPrecio.setText(i18n.get("carrito.anadir.lbl.precio"));
+        btnAnadir.setText(i18n.get("carrito.anadir.btn.anadir"));
+        btnBuscar.setText(i18n.get("carrito.anadir.btn.buscar"));
+        btnSave.setText(i18n.get("carrito.anadir.btn.guardar"));
+        btnCancel.setText(i18n.get("carrito.anadir.btn.cancelar"));
+        btnEliminarItem.setText(i18n.get("carrito.anadir.btn.eliminar.item"));
+        tblProducts.getColumnModel().getColumn(0).setHeaderValue(i18n.get("carrito.anadir.tbl.Codigo"));
+        tblProducts.getColumnModel().getColumn(1).setHeaderValue(i18n.get("carrito.anadir.tbl.Nombre"));
+        tblProducts.getColumnModel().getColumn(2).setHeaderValue(i18n.get("carrito.anadir.tbl.Precio"));
+        tblProducts.getColumnModel().getColumn(3).setHeaderValue(i18n.get("carrito.anadir.tbl.Cantidad"));
+        tblProducts.getColumnModel().getColumn(4).setHeaderValue(i18n.get("carrito.anadir.tbl.TotalItem"));
         tblProducts.getTableHeader().repaint();
     }
 

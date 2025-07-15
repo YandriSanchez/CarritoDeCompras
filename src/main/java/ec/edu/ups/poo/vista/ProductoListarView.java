@@ -26,10 +26,10 @@ public class ProductoListarView extends JInternalFrame{
     private JPanel panelAll;
     private JScrollPane scroll;
     private DefaultTableModel modelo;
-    private MensajeInternacionalizacionHandler tipoIdioma;
+    private MensajeInternacionalizacionHandler i18n;
 
-    public ProductoListarView(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+    public ProductoListarView(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
         setContentPane(panelAll);
         setTitle("YANDRI STORE");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -43,7 +43,7 @@ public class ProductoListarView extends JInternalFrame{
 
     public void mostrarProductos(List<Producto> productos) {
         modelo.setRowCount(0);
-        Locale locale = tipoIdioma.getLocale();
+        Locale locale = i18n.getLocale();
         for (Producto producto : productos) {
             String precioFormateado = FormateadorUtils.formatearMoneda(producto.getPrecio(), locale);
             modelo.addRow(new Object[]{
@@ -59,14 +59,14 @@ public class ProductoListarView extends JInternalFrame{
     }
 
     public void aplicarIdioma() {
-        setTitle(tipoIdioma.get("producto.listar.titulo"));
-        lblTitulo.setText(tipoIdioma.get("producto.listar.lbl.titulo"));
-        lblNombre.setText(tipoIdioma.get("producto.listar.lbl.nombre"));
-        btnBuscar.setText(tipoIdioma.get("producto.listar.btn.buscar"));
-        btnListar.setText(tipoIdioma.get("producto.listar.btn.listar"));
-        tableProdcuts.getColumnModel().getColumn(0).setHeaderValue(tipoIdioma.get("producto.listar.columna.codigo"));
-        tableProdcuts.getColumnModel().getColumn(1).setHeaderValue(tipoIdioma.get("producto.listar.columna.nombre"));
-        tableProdcuts.getColumnModel().getColumn(2).setHeaderValue(tipoIdioma.get("producto.listar.columna.precio"));
+        setTitle(i18n.get("producto.listar.titulo"));
+        lblTitulo.setText(i18n.get("producto.listar.lbl.titulo"));
+        lblNombre.setText(i18n.get("producto.listar.lbl.nombre"));
+        btnBuscar.setText(i18n.get("producto.listar.btn.buscar"));
+        btnListar.setText(i18n.get("producto.listar.btn.listar"));
+        tableProdcuts.getColumnModel().getColumn(0).setHeaderValue(i18n.get("producto.listar.columna.codigo"));
+        tableProdcuts.getColumnModel().getColumn(1).setHeaderValue(i18n.get("producto.listar.columna.nombre"));
+        tableProdcuts.getColumnModel().getColumn(2).setHeaderValue(i18n.get("producto.listar.columna.precio"));
         tableProdcuts.getTableHeader().repaint();
     }
 

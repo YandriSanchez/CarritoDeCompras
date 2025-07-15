@@ -21,10 +21,10 @@ public class ProductoAnadirView extends JInternalFrame {
     private JPanel panelCenter;
     private JPanel panelBottom;
     private JLabel lblTitulo;
-    private MensajeInternacionalizacionHandler tipoIdioma;
+    private MensajeInternacionalizacionHandler i18n;
 
-    public ProductoAnadirView(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+    public ProductoAnadirView(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
         setContentPane(panelAll);
         setTitle("YANDRI STORE");
         setSize(275, 235);
@@ -46,7 +46,7 @@ public class ProductoAnadirView extends JInternalFrame {
     }
 
     public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
-        Object[] botones = {tipoIdioma.get("mensaje.confirmacion"), tipoIdioma.get("mensaje.cancelacion")};
+        Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
         return JOptionPane.showOptionDialog(
                 this, mensaje, titulo,
                 JOptionPane.DEFAULT_OPTION, tipo,
@@ -73,13 +73,13 @@ public class ProductoAnadirView extends JInternalFrame {
     }
 
     public void aplicarIdiomas() {
-        setTitle(tipoIdioma.get("producto.anadir.titulo"));
-        lblTitulo.setText(tipoIdioma.get("producto.anadir.lbl.titulo"));
-        lblCodigo.setText(tipoIdioma.get("producto.anadir.lbl.codigo"));
-        lblNombre.setText(tipoIdioma.get("producto.anadir.lbl.nombre"));
-        lblPrecio.setText(tipoIdioma.get("producto.anadir.lbl.precio"));
-        btnGuardar.setText(tipoIdioma.get("producto.anadir.btn.guardar"));
-        btnNuevo.setText(tipoIdioma.get("producto.anadir.btn.nuevo"));
+        setTitle(i18n.get("producto.anadir.titulo"));
+        lblTitulo.setText(i18n.get("producto.anadir.lbl.titulo"));
+        lblCodigo.setText(i18n.get("producto.anadir.lbl.codigo"));
+        lblNombre.setText(i18n.get("producto.anadir.lbl.nombre"));
+        lblPrecio.setText(i18n.get("producto.anadir.lbl.precio"));
+        btnGuardar.setText(i18n.get("producto.anadir.btn.guardar"));
+        btnNuevo.setText(i18n.get("producto.anadir.btn.nuevo"));
     }
 
     public JPanel getPanelAll() {

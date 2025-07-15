@@ -50,13 +50,13 @@ public class CarritoEditarView extends JInternalFrame {
     private JLabel lblIva;
     private JLabel lblSubTot;
     private JButton btnDelateItem;
-    private MensajeInternacionalizacionHandler tipoIdioma;
+    private MensajeInternacionalizacionHandler i18n;
     private double subtotal = 0.0;
     private double iva = 0.0;
     private double total = 0.0;
 
-    public CarritoEditarView(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+    public CarritoEditarView(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
         setContentPane(panelAll);
         setTitle("YANDRI STORE");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -95,7 +95,7 @@ public class CarritoEditarView extends JInternalFrame {
 
     public void mostrarItemsCarrito(List<ItemCarrito> items) {
         modelo.setRowCount(0);
-        Locale locale = tipoIdioma.getLocale();
+        Locale locale = i18n.getLocale();
         for (ItemCarrito item : items) {
             Producto p = item.getProducto();
             String precioFormateado = FormateadorUtils.formatearMoneda(p.getPrecio(), locale);
@@ -111,7 +111,7 @@ public class CarritoEditarView extends JInternalFrame {
     }
 
     public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
-        Object[] botones = {tipoIdioma.get("mensaje.confirmacion"), tipoIdioma.get("mensaje.cancelacion")};
+        Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
         return JOptionPane.showOptionDialog(
                 this, mensaje, titulo,
                 JOptionPane.DEFAULT_OPTION, tipo,
@@ -168,24 +168,24 @@ public class CarritoEditarView extends JInternalFrame {
     }
 
     public void aplicarIdioma() {
-        setTitle(tipoIdioma.get("carrito.editar.tituloVentana"));
-        lblTitulo.setText(tipoIdioma.get("carrito.editar.lbl.titulo"));
-        lblCodigoProducto.setText(tipoIdioma.get("carrito.editar.lbl.codigoProducto"));
-        lblNombre.setText(tipoIdioma.get("carrito.editar.lbl.nombre"));
-        lblPrecio.setText(tipoIdioma.get("carrito.editar.precio"));
-        lblCantidad.setText(tipoIdioma.get("carrito.editar.cantidad"));
-        btnAnadir.setText(tipoIdioma.get("carrito.editar.btn.anadir"));
-        btnActualizar.setText(tipoIdioma.get("carrito.editar.btn.actualizar"));
-        btnBuscarProducto.setText(tipoIdioma.get("producto.buscar.btn.buscar.producto"));
-        btnBuscarCarrito.setText(tipoIdioma.get("carrito.buscar.buscar.btn.buscar.carrito"));
-        btnClean.setText(tipoIdioma.get("carrito.limpiar.btn.limpiar"));
-        btnEliminarItem.setText(tipoIdioma.get("carrito.editar.btn.eliminar.item"));
-        lblCordigocCarrito.setText(tipoIdioma.get("carrito.items.lbl.codigoCarrito"));
-        tblProducts.getColumnModel().getColumn(0).setHeaderValue(tipoIdioma.get("carrito.listar.item..tbl.codigo"));
-        tblProducts.getColumnModel().getColumn(1).setHeaderValue(tipoIdioma.get("carrito.listar.item..tbl.nombre"));
-        tblProducts.getColumnModel().getColumn(2).setHeaderValue(tipoIdioma.get("carrito.listar.item.tbl.precio"));
-        tblProducts.getColumnModel().getColumn(3).setHeaderValue(tipoIdioma.get("carrito.listar.item.tbl.cantidad"));
-        tblProducts.getColumnModel().getColumn(4).setHeaderValue(tipoIdioma.get("carrito.listar.item.tbl.totalItem"));
+        setTitle(i18n.get("carrito.editar.tituloVentana"));
+        lblTitulo.setText(i18n.get("carrito.editar.lbl.titulo"));
+        lblCodigoProducto.setText(i18n.get("carrito.editar.lbl.codigoProducto"));
+        lblNombre.setText(i18n.get("carrito.editar.lbl.nombre"));
+        lblPrecio.setText(i18n.get("carrito.editar.precio"));
+        lblCantidad.setText(i18n.get("carrito.editar.cantidad"));
+        btnAnadir.setText(i18n.get("carrito.editar.btn.anadir"));
+        btnActualizar.setText(i18n.get("carrito.editar.btn.actualizar"));
+        btnBuscarProducto.setText(i18n.get("producto.buscar.btn.buscar.producto"));
+        btnBuscarCarrito.setText(i18n.get("carrito.buscar.buscar.btn.buscar.carrito"));
+        btnClean.setText(i18n.get("carrito.limpiar.btn.limpiar"));
+        btnEliminarItem.setText(i18n.get("carrito.editar.btn.eliminar.item"));
+        lblCordigocCarrito.setText(i18n.get("carrito.items.lbl.codigoCarrito"));
+        tblProducts.getColumnModel().getColumn(0).setHeaderValue(i18n.get("carrito.listar.item..tbl.codigo"));
+        tblProducts.getColumnModel().getColumn(1).setHeaderValue(i18n.get("carrito.listar.item..tbl.nombre"));
+        tblProducts.getColumnModel().getColumn(2).setHeaderValue(i18n.get("carrito.listar.item.tbl.precio"));
+        tblProducts.getColumnModel().getColumn(3).setHeaderValue(i18n.get("carrito.listar.item.tbl.cantidad"));
+        tblProducts.getColumnModel().getColumn(4).setHeaderValue(i18n.get("carrito.listar.item.tbl.totalItem"));
         tblProducts.getTableHeader().repaint();
     }
 
@@ -410,9 +410,9 @@ public class CarritoEditarView extends JInternalFrame {
     public void setBtnDelateItem(JButton btnDelateItem) {
         this.btnDelateItem = btnDelateItem;
     }
-    public MensajeInternacionalizacionHandler tipoIdioma() {return tipoIdioma;}
+    public MensajeInternacionalizacionHandler tipoIdioma() {return i18n;}
     public void setI18n(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+        this.i18n = tipoIdioma;
     }
     public double getSubtotal() {
         return subtotal;

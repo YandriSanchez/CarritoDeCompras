@@ -23,11 +23,10 @@ public class PreguntasValidacionView extends JFrame{
     private JTextField txtNuevaContra;
     private JLabel lblNuevaContra;
     private JLabel lblTitulo;
+    private MensajeInternacionalizacionHandler i18n;
 
-    private MensajeInternacionalizacionHandler tipoIdioma;
-
-    public PreguntasValidacionView(Usuario usuario, UsuarioDAO usuarioDAO, MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+    public PreguntasValidacionView(Usuario usuario, UsuarioDAO usuarioDAO, MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
         setTitle("YANDRI STORE");
         setContentPane(panelAll);
         setSize(410, 350);
@@ -42,7 +41,7 @@ public class PreguntasValidacionView extends JFrame{
     }
 
     public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
-        Object[] botones = {tipoIdioma.get("mensaje.confirmacion"), tipoIdioma.get("mensaje.cancelacion")};
+        Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
         return JOptionPane.showOptionDialog(
                 this, mensaje, titulo,
                 JOptionPane.DEFAULT_OPTION, tipo,
@@ -50,14 +49,14 @@ public class PreguntasValidacionView extends JFrame{
     }
 
     public void aplicarIdiomas() {
-        setTitle(tipoIdioma.get("producto.aplicar.idiomas"));
-        lblTitulo.setText(tipoIdioma.get("preguntas.validacion.lbl.titulo"));
-        lblPregunta1.setText(tipoIdioma.get("preguntas.validacion.lbll.pregunta1"));
-        lblPregunta2.setText(tipoIdioma.get("preguntas.validacion.lbl.pregunta2"));
-        lblPregunta3.setText(tipoIdioma.get("preguntas.validacion.lbl.pregunta3"));
-        btnEnviar.setText(tipoIdioma.get("preguntas.validacion.btn.enviar"));
-        btnClean.setText(tipoIdioma.get("preguntas.validacion.btn.limpiar"));
-        lblNuevaContra.setText(tipoIdioma.get("preguntas.validacion.lbl.nueva.contra"));
+        setTitle(i18n.get("producto.aplicar.idiomas"));
+        lblTitulo.setText(i18n.get("preguntas.validacion.lbl.titulo"));
+        lblPregunta1.setText(i18n.get("preguntas.validacion.lbll.pregunta1"));
+        lblPregunta2.setText(i18n.get("preguntas.validacion.lbl.pregunta2"));
+        lblPregunta3.setText(i18n.get("preguntas.validacion.lbl.pregunta3"));
+        btnEnviar.setText(i18n.get("preguntas.validacion.btn.enviar"));
+        btnClean.setText(i18n.get("preguntas.validacion.btn.limpiar"));
+        lblNuevaContra.setText(i18n.get("preguntas.validacion.lbl.nueva.contra"));
     }
 
     public JPanel getPanelAll() {

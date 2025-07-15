@@ -39,7 +39,7 @@ public class CarritoListarItemsView extends JInternalFrame {
     private JPanel panelAll;
     private JTextField txtUsuario;
     private DefaultTableModel modelo;
-    private MensajeInternacionalizacionHandler tipoIdioma;
+    private MensajeInternacionalizacionHandler i18n;
     private double subtotal = 0.0;
     private double iva = 0.0;
     private double total = 0.0;
@@ -55,9 +55,9 @@ public class CarritoListarItemsView extends JInternalFrame {
             String username,
             Rol rol,
             String fecha,
-            MensajeInternacionalizacionHandler tipoIdioma){
+            MensajeInternacionalizacionHandler i18n){
 
-        this.tipoIdioma = tipoIdioma;
+        this.i18n = i18n;
         this.subtotal = subtotal;
         this.iva = iva;
         this.total = total;
@@ -96,7 +96,7 @@ public class CarritoListarItemsView extends JInternalFrame {
         this.iva = iva;
         this.total = total;
         this.currentItems = items;
-        Locale locale = tipoIdioma.getLocale();
+        Locale locale = i18n.getLocale();
 
         if (modelo != null) {
             modelo.setRowCount(0);
@@ -169,25 +169,25 @@ public class CarritoListarItemsView extends JInternalFrame {
     }
 
     public void aplicarIdioma() {
-        setTitle(tipoIdioma.get("carrito.listar.item.titulo"));
-        lblTitulo.setText(tipoIdioma.get("carrito.listar.item.lbl.titulo"));
-        lblCodigo.setText(tipoIdioma.get("carrito.listar.item.lbl.codigo"));
-        lblUsuario.setText(tipoIdioma.get("carrito.listar.item.lbl.usuario"));
-        btnSalir.setText(tipoIdioma.get("carrito.listar.item.btn.salir"));
-        lblFecha.setText(tipoIdioma.get("carrito.listar.item.lbl.fecha"));
+        setTitle(i18n.get("carrito.listar.item.titulo"));
+        lblTitulo.setText(i18n.get("carrito.listar.item.lbl.titulo"));
+        lblCodigo.setText(i18n.get("carrito.listar.item.lbl.codigo"));
+        lblUsuario.setText(i18n.get("carrito.listar.item.lbl.usuario"));
+        btnSalir.setText(i18n.get("carrito.listar.item.btn.salir"));
+        lblFecha.setText(i18n.get("carrito.listar.item.lbl.fecha"));
 
-        tblProducts.getColumnModel().getColumn(0).setHeaderValue(tipoIdioma.get("carrito.listar.item..tbl.codigo"));
-        tblProducts.getColumnModel().getColumn(1).setHeaderValue(tipoIdioma.get("carrito.listar.item..tbl.nombre"));
-        tblProducts.getColumnModel().getColumn(2).setHeaderValue(tipoIdioma.get("carrito.listar.item.tbl.precio"));
-        tblProducts.getColumnModel().getColumn(3).setHeaderValue(tipoIdioma.get("carrito.listar.item.tbl.cantidad"));
-        tblProducts.getColumnModel().getColumn(4).setHeaderValue(tipoIdioma.get("carrito.listar.item.tbl.totalItem"));
+        tblProducts.getColumnModel().getColumn(0).setHeaderValue(i18n.get("carrito.listar.item..tbl.codigo"));
+        tblProducts.getColumnModel().getColumn(1).setHeaderValue(i18n.get("carrito.listar.item..tbl.nombre"));
+        tblProducts.getColumnModel().getColumn(2).setHeaderValue(i18n.get("carrito.listar.item.tbl.precio"));
+        tblProducts.getColumnModel().getColumn(3).setHeaderValue(i18n.get("carrito.listar.item.tbl.cantidad"));
+        tblProducts.getColumnModel().getColumn(4).setHeaderValue(i18n.get("carrito.listar.item.tbl.totalItem"));
         tblProducts.getTableHeader().repaint();
 
         refrescarFormatoMoneda();
     }
 
     public void refrescarFormatoMoneda() {
-        Locale locale = tipoIdioma.getLocale();
+        Locale locale = i18n.getLocale();
         if (modelo != null) {
             modelo.setRowCount(0);
             if (currentItems != null) {

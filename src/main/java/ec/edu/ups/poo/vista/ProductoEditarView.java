@@ -21,10 +21,10 @@ public class ProductoEditarView extends JInternalFrame {
     private JPanel panelMenor;
     private JLabel lblTitulo;
     private JScrollPane scroll;
-    private MensajeInternacionalizacionHandler tipoIdioma;
+    private MensajeInternacionalizacionHandler i18n;
 
-    public ProductoEditarView(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+    public ProductoEditarView(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
         setContentPane(panelAll);
         setTitle("YANDRI STORE");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -40,7 +40,7 @@ public class ProductoEditarView extends JInternalFrame {
     }
 
     public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
-        Object[] botones = {tipoIdioma.get("mensaje.confirmacion"), tipoIdioma.get("mensaje.cancelacion")};
+        Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
         return JOptionPane.showOptionDialog(
                 this, mensaje, titulo,
                 JOptionPane.DEFAULT_OPTION, tipo,
@@ -54,13 +54,13 @@ public class ProductoEditarView extends JInternalFrame {
     }
 
     public void aplicarIdiomas() {
-        setTitle(tipoIdioma.get("producto.editar.titulo"));
-        lblTitulo.setText(tipoIdioma.get("producto.editar.lbl.titulo"));
-        lblCodigo.setText(tipoIdioma.get("producto.editar.lbl.codigo"));
-        lblNombre.setText(tipoIdioma.get("producto.editar.lbl.nombre"));
-        lblPrecio.setText(tipoIdioma.get("producto.editar.lbl.precio"));
-        btnBuscar.setText(tipoIdioma.get("producto.editar.btn.buscar"));
-        btnActualizar.setText(tipoIdioma.get("producto.editar.btn.actualizar"));
+        setTitle(i18n.get("producto.editar.titulo"));
+        lblTitulo.setText(i18n.get("producto.editar.lbl.titulo"));
+        lblCodigo.setText(i18n.get("producto.editar.lbl.codigo"));
+        lblNombre.setText(i18n.get("producto.editar.lbl.nombre"));
+        lblPrecio.setText(i18n.get("producto.editar.lbl.precio"));
+        btnBuscar.setText(i18n.get("producto.editar.btn.buscar"));
+        btnActualizar.setText(i18n.get("producto.editar.btn.actualizar"));
     }
 
     public void mostrarProductos(List<Producto> productos) {

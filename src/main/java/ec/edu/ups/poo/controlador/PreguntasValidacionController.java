@@ -18,20 +18,20 @@ public class PreguntasValidacionController {
     private final PreguntaDAO preguntaDAO;
     private final PreguntasValidacionView preguntasView;
     private final List<Pregunta> preguntasRandom;
-    private final MensajeInternacionalizacionHandler tipoIdioma;
+    private final MensajeInternacionalizacionHandler i18n;
 
     public PreguntasValidacionController(
             Usuario usuario,
             UsuarioDAO usuarioDAO,
             PreguntaDAO preguntaDAO,
             PreguntasValidacionView preguntasView,
-            MensajeInternacionalizacionHandler tipoIdioma
+            MensajeInternacionalizacionHandler i18n
     ) {
         this.usuario = usuario;
         this.usuarioDAO = usuarioDAO;
         this.preguntaDAO = preguntaDAO;
         this.preguntasView = preguntasView;
-        this.tipoIdioma = tipoIdioma;
+        this.i18n = i18n;
 
         preguntasRandom = getPreguntasRandom();
         mostrarPreguntasEnVista();
@@ -60,8 +60,8 @@ public class PreguntasValidacionController {
 
         if (respuesta1.isEmpty() || respuesta2.isEmpty() || respuesta3.isEmpty()) {
             preguntasView.mostrarMensaje(
-                    tipoIdioma.get("preguntas.validacion.error.responder_todas"),
-                    tipoIdioma.get("global.error"),
+                    i18n.get("preguntas.validacion.error.responder_todas"),
+                    i18n.get("global.error"),
                     JOptionPane.ERROR_MESSAGE
             );
             return;
@@ -76,8 +76,8 @@ public class PreguntasValidacionController {
         usuarioDAO.actualizar(usuario.getUserName(), usuario.getContrasena(), usuario.getRol());
 
         preguntasView.mostrarMensaje(
-                tipoIdioma.get("preguntas.validacion.exito.guardado"),
-                tipoIdioma.get("global.success"),
+                i18n.get("preguntas.validacion.exito.guardado"),
+                i18n.get("global.success"),
                 JOptionPane.INFORMATION_MESSAGE
         );
         preguntasView.dispose();

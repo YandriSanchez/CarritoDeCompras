@@ -20,10 +20,10 @@ public class ProductoEliminarView extends JInternalFrame {
     private JPanel panelAll;
     private JPanel JSuperior;
     private JLabel lblTitle;
-    private final MensajeInternacionalizacionHandler tipoIdioma;
+    private final MensajeInternacionalizacionHandler i18n;
 
-    public ProductoEliminarView(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+    public ProductoEliminarView(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
         setContentPane(panelAll);
         setTitle("YANDRI STORE");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -44,7 +44,7 @@ public class ProductoEliminarView extends JInternalFrame {
     }
 
     public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
-        Object[] botones = {tipoIdioma.get("mensaje.confirmacion"), tipoIdioma.get("mensaje.cancelacion")};
+        Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
         return JOptionPane.showOptionDialog(
                 this, mensaje, titulo,
                 JOptionPane.DEFAULT_OPTION, tipo,
@@ -59,13 +59,13 @@ public class ProductoEliminarView extends JInternalFrame {
 
     public void aplicarIdioma() {
 
-        setTitle(tipoIdioma.get("producto.eliminar.titulo"));
-        lblTitle.setText(tipoIdioma.get("producto.eliminar.lbltitulo"));
-        lblCodigo.setText(tipoIdioma.get("producto.eliminar.lbl.codigo"));
-        lblNombre.setText(tipoIdioma.get("producto.eliminar.lbl.nombre"));
-        lblPrecio.setText(tipoIdioma.get("producto.eliminar.lbl.precio"));
-        btnBuscar.setText(tipoIdioma.get("producto.eliminar.btn.buscar"));
-        btnEliminar.setText(tipoIdioma.get("producto.eliminar.btn.eliminar"));
+        setTitle(i18n.get("producto.eliminar.titulo"));
+        lblTitle.setText(i18n.get("producto.eliminar.lbltitulo"));
+        lblCodigo.setText(i18n.get("producto.eliminar.lbl.codigo"));
+        lblNombre.setText(i18n.get("producto.eliminar.lbl.nombre"));
+        lblPrecio.setText(i18n.get("producto.eliminar.lbl.precio"));
+        btnBuscar.setText(i18n.get("producto.eliminar.btn.buscar"));
+        btnEliminar.setText(i18n.get("producto.eliminar.btn.eliminar"));
     }
 
     public JPanel getJSuperior() {

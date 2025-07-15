@@ -29,10 +29,10 @@ public class UsuarioEditarView extends JInternalFrame {
     private JTextField txtCorreo;
     private JLabel lblTelefono;
     private JTextField txtTelefono;
-    private MensajeInternacionalizacionHandler tipoIdioma;
+    private MensajeInternacionalizacionHandler i18n;
 
-    public UsuarioEditarView(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.tipoIdioma = tipoIdioma;
+    public UsuarioEditarView(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
         setContentPane(panelAll);
         setTitle("YANDRI STORE");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -50,7 +50,7 @@ public class UsuarioEditarView extends JInternalFrame {
     }
 
     public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
-        Object[] botones = {tipoIdioma.get("mensaje.confirmacion"), tipoIdioma.get("mensaje.cancelacion")};
+        Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
         return JOptionPane.showOptionDialog(
                 this, mensaje, titulo,
                 JOptionPane.DEFAULT_OPTION, tipo,
@@ -58,18 +58,18 @@ public class UsuarioEditarView extends JInternalFrame {
     }
 
     public void aplicarIdioma() {
-        setTitle(tipoIdioma.get("usuario.editar.titulo"));
-        lblTitulo.setText(tipoIdioma.get("usuario.editar.lbl.titulo"));
-        lblUsuario.setText(tipoIdioma.get("usuario.editar.lbl.usuario"));
-        lblContrasena.setText(tipoIdioma.get("usuario.editar.lblcontrasena"));
-        lblRol.setText(tipoIdioma.get("usuario.editar.lbl.rol"));
-        btnActualizar.setText(tipoIdioma.get("usuario.editar.btn.actualizar"));
-        btnClean.setText(tipoIdioma.get("usuario.editar.btn.limpiar"));
-        btnBuscar.setText(tipoIdioma.get("usuario.editar.btn.buscar"));
-        lblNombreCompleto.setText(tipoIdioma.get("usuario.editar.lbl.nombrecompleto"));
-        lblFechaNacimiento.setText(tipoIdioma.get("usuario.editar.lbl.fechanacimiento"));
-        lblCorreo.setText(tipoIdioma.get("usuario.editar.lbl.correo"));
-        lblTelefono.setText(tipoIdioma.get("usuario.editar.lbl.telefono"));
+        setTitle(i18n.get("usuario.editar.titulo"));
+        lblTitulo.setText(i18n.get("usuario.editar.lbl.titulo"));
+        lblUsuario.setText(i18n.get("usuario.editar.lbl.usuario"));
+        lblContrasena.setText(i18n.get("usuario.editar.lblcontrasena"));
+        lblRol.setText(i18n.get("usuario.editar.lbl.rol"));
+        btnActualizar.setText(i18n.get("usuario.editar.btn.actualizar"));
+        btnClean.setText(i18n.get("usuario.editar.btn.limpiar"));
+        btnBuscar.setText(i18n.get("usuario.editar.btn.buscar"));
+        lblNombreCompleto.setText(i18n.get("usuario.editar.lbl.nombrecompleto"));
+        lblFechaNacimiento.setText(i18n.get("usuario.editar.lbl.fechanacimiento"));
+        lblCorreo.setText(i18n.get("usuario.editar.lbl.correo"));
+        lblTelefono.setText(i18n.get("usuario.editar.lbl.telefono"));
 
     }
 
@@ -150,6 +150,6 @@ public class UsuarioEditarView extends JInternalFrame {
     public void setLblTelefono(JLabel lblTelefono) {this.lblTelefono = lblTelefono;}
     public JTextField getTxtTelefono() {return txtTelefono;}
     public void setTxtTelefono(JTextField txtTelefono) {this.txtTelefono = txtTelefono;}
-    public MensajeInternacionalizacionHandler getI18n() {return tipoIdioma;}
-    public void setI18n(MensajeInternacionalizacionHandler tipoIdioma) {this.tipoIdioma = tipoIdioma;}
+    public MensajeInternacionalizacionHandler getI18n() {return i18n;}
+    public void setI18n(MensajeInternacionalizacionHandler tipoIdioma) {this.i18n = tipoIdioma;}
 }
