@@ -1,6 +1,6 @@
 package ec.edu.ups.poo.vista;
 
-import ec.edu.ups.poo.modelo.enums.Rol;
+import ec.edu.ups.poo.modelo.Rol;
 import ec.edu.ups.poo.modelo.Usuario;
 import ec.edu.ups.poo.util.FormateadorUtils;
 import ec.edu.ups.poo.util.MensajeInternacionalizacionHandler;
@@ -12,6 +12,7 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.util.List;
 import java.util.Locale;
+
 
 public class UsuarioListarView extends JInternalFrame {
 
@@ -43,27 +44,6 @@ public class UsuarioListarView extends JInternalFrame {
         cargarTabla();
         cargarRol();
         aplicaraIdioma();
-
-    }
-
-    public void mostrarUsuarios(List<Usuario> usuarios) {
-        modelo.setRowCount(0);
-        Locale locale = i18n.getLocale();
-        for (Usuario usuario : usuarios) {
-            String fechaFormateada = "";
-            if (usuario.getFechaNacimiento() != null) {
-                fechaFormateada = FormateadorUtils.formatearFecha(usuario.getFechaNacimiento(), locale);
-            }
-            modelo.addRow(new Object[]{
-                    usuario.getUserName(),
-                    usuario.getContrasena(),
-                    usuario.getNombreCompleto(),
-                    fechaFormateada,
-                    usuario.getCorreo(),
-                    usuario.getTelefono(),
-                    usuario.getRol().name()
-            });
-        }
     }
 
     public void mostrarMensaje(String mensaje, String titulo, int tipo) {
@@ -119,7 +99,7 @@ public class UsuarioListarView extends JInternalFrame {
         tableUsers.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
         Color fondo = new Color(132, 148, 229);
-        Color letras = Color.BLACK;
+        Color letras = Color.WHITE;
 
         if (scroll == null && tableUsers != null) {
             scroll = (JScrollPane) tableUsers.getParent().getParent();
@@ -157,85 +137,121 @@ public class UsuarioListarView extends JInternalFrame {
     public JPanel getPanelSuperio() {
         return panelSuperio;
     }
+
     public void setPanelSuperio(JPanel panelSuperio) {
         this.panelSuperio = panelSuperio;
     }
+
     public JButton getBtnListar() {
         return btnListar;
     }
+
     public void setBtnListar(JButton btnListar) {
         this.btnListar = btnListar;
     }
+
     public JPanel getPanelCentral() {
         return panelCentral;
     }
+
     public void setPanelCentral(JPanel panelCentral) {
         this.panelCentral = panelCentral;
     }
+
     public JTable getTableUsers() {
         return tableUsers;
     }
+
     public void setTableUsers(JTable tableUsers) {
         this.tableUsers = tableUsers;
     }
+
     public JPanel getPanelAll() {
         return panelAll;
     }
+
     public void setPanelAll(JPanel panelAll) {
         this.panelAll = panelAll;
     }
+
     public JScrollPane getScroll() {
         return scroll;
     }
+
     public void setScroll(JScrollPane scroll) {
         this.scroll = scroll;
     }
+
     public JPanel getPanelItulo() {
         return panelItulo;
     }
+
     public void setPanelItulo(JPanel panelItulo) {
         this.panelItulo = panelItulo;
     }
-    public JLabel getTxtSettingsProduc() {
+
+    public JLabel getLblTitulo() {
         return lblTitulo;
     }
-    public void setTxtSettingsProduc(JLabel txtSettingsProduc) {
-        this.lblTitulo = txtSettingsProduc;
+
+    public void setLblTitulo(JLabel lblTitulo) {
+        this.lblTitulo = lblTitulo;
     }
+
     public JButton getBtnBuscar() {
         return btnBuscar;
     }
+
     public void setBtnBuscar(JButton btnBuscar) {
         this.btnBuscar = btnBuscar;
     }
+
     public JTextField getTxtUsuario() {
         return txtUsuario;
     }
+
     public void setTxtUsuario(JTextField txtUsuario) {
         this.txtUsuario = txtUsuario;
     }
+
     public JComboBox<Object> getCbxRol() {
         return cbxRol;
     }
+
     public void setCbxRol(JComboBox<Object> cbxRol) {
         this.cbxRol = cbxRol;
     }
+
     public JLabel getLblUsuario() {
         return lblUsuario;
     }
+
     public void setLblUsuario(JLabel lblUsuario) {
         this.lblUsuario = lblUsuario;
     }
+
     public JLabel getLblRol() {
         return lblRol;
     }
+
     public void setLblRol(JLabel lblRol) {
         this.lblRol = lblRol;
     }
+
     public DefaultTableModel getModelo() {
         return modelo;
     }
+
     public void setModelo(DefaultTableModel modelo) {
         this.modelo = modelo;
     }
+
+    public MensajeInternacionalizacionHandler getI18n() {
+        return i18n;
+    }
+
+    public void setI18n(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
+    }
 }
+

@@ -1,7 +1,5 @@
 package ec.edu.ups.poo.vista;
 
-import ec.edu.ups.poo.modelo.Producto;
-import ec.edu.ups.poo.util.FormateadorUtils;
 import ec.edu.ups.poo.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
@@ -9,8 +7,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
-import java.util.List;
-import java.util.Locale;
 
 public class ProductoListarView extends JInternalFrame{
 
@@ -39,19 +35,6 @@ public class ProductoListarView extends JInternalFrame{
         setResizable(true);
         cargarTabla();
         aplicarIdioma();
-    }
-
-    public void mostrarProductos(List<Producto> productos) {
-        modelo.setRowCount(0);
-        Locale locale = i18n.getLocale();
-        for (Producto producto : productos) {
-            String precioFormateado = FormateadorUtils.formatearMoneda(producto.getPrecio(), locale);
-            modelo.addRow(new Object[]{
-                    producto.getCodigo(),
-                    producto.getNombre(),
-                    precioFormateado
-            });
-        }
     }
 
     public void mostrarMensaje(String mensaje, String titulo, int tipo) {
@@ -112,75 +95,104 @@ public class ProductoListarView extends JInternalFrame{
     public JPanel getPanelCenter() {
         return panelCenter;
     }
+
     public void setPanelCenter(JPanel panelCenter) {
         this.panelCenter = panelCenter;
     }
-    public JLabel getTxtNameProduct() {
+
+    public JLabel getLblNombre() {
         return lblNombre;
     }
-    public void setTxtNameProduct(JLabel txtNameProduct) {
-        this.lblNombre = txtNameProduct;
+
+    public void setLblNombre(JLabel lblNombre) {
+        this.lblNombre = lblNombre;
     }
-    public JTextField getLblNameProdcutSearch() {
+
+    public JTextField getTxtNombre() {
         return txtNombre;
     }
-    public void setLblNameProdcutSearch(JTextField lblNameProdcutSearch) {
-        this.txtNombre = lblNameProdcutSearch;
+
+    public void setTxtNombre(JTextField txtNombre) {
+        this.txtNombre = txtNombre;
     }
-    public JButton getBtnSearch() {
+
+    public JButton getBtnBuscar() {
         return btnBuscar;
     }
-    public void setBtnSearch(JButton btnSearch) {
-        this.btnBuscar = btnSearch;
+
+    public void setBtnBuscar(JButton btnBuscar) {
+        this.btnBuscar = btnBuscar;
     }
-    public JButton getBtnListProducts() {
+
+    public JButton getBtnListar() {
         return btnListar;
     }
-    public void setBtnListProducts(JButton btnListProducts) {
-        this.btnListar = btnListProducts;
+
+    public void setBtnListar(JButton btnListar) {
+        this.btnListar = btnListar;
     }
+
     public JPanel getPanelButtom() {
         return panelButtom;
     }
+
     public void setPanelButtom(JPanel panelButtom) {
         this.panelButtom = panelButtom;
     }
+
     public JTable getTableProdcuts() {
         return tableProdcuts;
     }
+
     public void setTableProdcuts(JTable tableProdcuts) {
         this.tableProdcuts = tableProdcuts;
     }
+
     public JPanel getPanelTop() {
         return panelTop;
     }
+
     public void setPanelTop(JPanel panelTop) {
         this.panelTop = panelTop;
     }
-    public JLabel getTxtSearchProdcut() {
+
+    public JLabel getLblTitulo() {
         return lblTitulo;
     }
-    public void setTxtSearchProdcut(JLabel txtSearchProdcut) {
-        this.lblTitulo = txtSearchProdcut;
+
+    public void setLblTitulo(JLabel lblTitulo) {
+        this.lblTitulo = lblTitulo;
     }
+
     public JPanel getPanelAll() {
         return panelAll;
     }
+
     public void setPanelAll(JPanel panelAll) {
         this.panelAll = panelAll;
     }
+
     public JScrollPane getScroll() {
         return scroll;
     }
+
     public void setScroll(JScrollPane scroll) {
         this.scroll = scroll;
     }
+
     public DefaultTableModel getModelo() {
         return modelo;
     }
+
     public void setModelo(DefaultTableModel modelo) {
         this.modelo = modelo;
     }
 
+    public MensajeInternacionalizacionHandler getI18n() {
+        return i18n;
+    }
 
+    public void setI18n(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
+    }
 }

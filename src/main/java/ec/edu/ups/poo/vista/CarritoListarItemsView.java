@@ -1,7 +1,7 @@
 package ec.edu.ups.poo.vista;
 
 import ec.edu.ups.poo.modelo.ItemCarrito;
-import ec.edu.ups.poo.modelo.enums.Rol;
+import ec.edu.ups.poo.modelo.Rol;
 import ec.edu.ups.poo.util.FormateadorUtils;
 import ec.edu.ups.poo.util.MensajeInternacionalizacionHandler;
 
@@ -38,13 +38,13 @@ public class CarritoListarItemsView extends JInternalFrame {
     private JButton btnSalir;
     private JPanel panelAll;
     private JTextField txtUsuario;
+    private JLabel lblItemsCarrito;
     private DefaultTableModel modelo;
     private MensajeInternacionalizacionHandler i18n;
     private double subtotal = 0.0;
     private double iva = 0.0;
     private double total = 0.0;
     private List<ItemCarrito> currentItems;
-
 
     public CarritoListarItemsView(
             int carritoId,
@@ -130,8 +130,8 @@ public class CarritoListarItemsView extends JInternalFrame {
         };
         tblProducts.setModel(modelo);
 
-        Color fondo = new Color(132, 148, 229);
-        Color letras = Color.BLACK;
+        Color fondo = new Color(29, 30, 32);
+        Color letras = Color.WHITE;
 
         if (scroll == null && tblProducts != null) {
             scroll = (JScrollPane) tblProducts.getParent().getParent();
@@ -174,6 +174,7 @@ public class CarritoListarItemsView extends JInternalFrame {
         lblCodigo.setText(i18n.get("carrito.listar.item.lbl.codigo"));
         lblUsuario.setText(i18n.get("carrito.listar.item.lbl.usuario"));
         btnSalir.setText(i18n.get("carrito.listar.item.btn.salir"));
+        lblItemsCarrito.setText(i18n.get("carrito.listar.items"));
         lblFecha.setText(i18n.get("carrito.listar.item.lbl.fecha"));
 
         tblProducts.getColumnModel().getColumn(0).setHeaderValue(i18n.get("carrito.listar.item..tbl.codigo"));
@@ -210,140 +211,233 @@ public class CarritoListarItemsView extends JInternalFrame {
     public JPanel getPanelTitle() {
         return panelTitle;
     }
+
     public void setPanelTitle(JPanel panelTitle) {
         this.panelTitle = panelTitle;
     }
+
     public JLabel getLblTitulo() {
         return lblTitulo;
     }
+
     public void setLblTitulo(JLabel lblTitulo) {
         this.lblTitulo = lblTitulo;
     }
+
     public JPanel getPanelProduct() {
         return panelProduct;
     }
+
     public void setPanelProduct(JPanel panelProduct) {
         this.panelProduct = panelProduct;
     }
+
     public JLabel getLblCodigo() {
         return lblCodigo;
     }
+
     public void setLblCodigo(JLabel lblCodigo) {
         this.lblCodigo = lblCodigo;
     }
+
     public JTextField getTxtCodigo() {
         return txtCodigo;
     }
+
     public void setTxtCodigo(JTextField txtCodigo) {
         this.txtCodigo = txtCodigo;
     }
+
     public JLabel getLblUsuario() {
         return lblUsuario;
     }
+
     public void setLblUsuario(JLabel lblUsuario) {
         this.lblUsuario = lblUsuario;
     }
+
     public JTextField getTxtRolUser() {
         return txtRolUser;
     }
+
     public void setTxtRolUser(JTextField txtRolUser) {
         this.txtRolUser = txtRolUser;
     }
+
     public JTextField getTxtFecha() {
         return txtFecha;
     }
+
     public void setTxtFecha(JTextField txtFecha) {
         this.txtFecha = txtFecha;
     }
+
     public JLabel getLblFecha() {
         return lblFecha;
     }
+
     public void setLblFecha(JLabel lblFecha) {
         this.lblFecha = lblFecha;
     }
+
     public JPanel getPanelItems() {
         return panelItems;
     }
+
     public void setPanelItems(JPanel panelItems) {
         this.panelItems = panelItems;
     }
+
     public JScrollPane getScroll() {
         return scroll;
     }
+
     public void setScroll(JScrollPane scroll) {
         this.scroll = scroll;
     }
+
     public JTable getTblProducts() {
         return tblProducts;
     }
+
     public void setTblProducts(JTable tblProducts) {
         this.tblProducts = tblProducts;
     }
+
     public JLabel getLblSubtotal() {
         return lblSubtotal;
     }
+
     public void setLblSubtotal(JLabel lblSubtotal) {
         this.lblSubtotal = lblSubtotal;
     }
+
     public JLabel getLblva() {
         return lblva;
     }
+
     public void setLblva(JLabel lblva) {
         this.lblva = lblva;
     }
+
     public JTextField getTxtIva() {
         return txtIva;
     }
+
     public void setTxtIva(JTextField txtIva) {
         this.txtIva = txtIva;
     }
+
     public JLabel getLblTotal() {
         return lblTotal;
     }
+
     public void setLblTotal(JLabel lblTotal) {
         this.lblTotal = lblTotal;
     }
+
     public JTextField getTxtTotal() {
         return txtTotal;
     }
+
     public void setTxtTotal(JTextField txtTotal) {
         this.txtTotal = txtTotal;
     }
+
     public JTextField getTxtSubTotal() {
         return txtSubTotal;
     }
+
     public void setTxtSubTotal(JTextField txtSubTotal) {
         this.txtSubTotal = txtSubTotal;
     }
+
     public JPanel getPanelInferior() {
         return panelInferior;
     }
+
     public void setPanelInferior(JPanel panelInferior) {
         this.panelInferior = panelInferior;
     }
+
     public JButton getBtnSalir() {
         return btnSalir;
     }
+
     public void setBtnSalir(JButton btnSalir) {
         this.btnSalir = btnSalir;
     }
+
     public JPanel getPanelAll() {
         return panelAll;
     }
+
     public void setPanelAll(JPanel panelAll) {
         this.panelAll = panelAll;
     }
+
     public JTextField getTxtUsuario() {
         return txtUsuario;
     }
+
     public void setTxtUsuario(JTextField txtUsuario) {
         this.txtUsuario = txtUsuario;
     }
+
+    public JLabel getLblItemsCarrito() {
+        return lblItemsCarrito;
+    }
+
+    public void setLblItemsCarrito(JLabel lblItemsCarrito) {
+        this.lblItemsCarrito = lblItemsCarrito;
+    }
+
     public DefaultTableModel getModelo() {
         return modelo;
     }
+
     public void setModelo(DefaultTableModel modelo) {
         this.modelo = modelo;
     }
 
+    public MensajeInternacionalizacionHandler getI18n() {
+        return i18n;
+    }
+
+    public void setI18n(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
+    }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public double getIva() {
+        return iva;
+    }
+
+    public void setIva(double iva) {
+        this.iva = iva;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public List<ItemCarrito> getCurrentItems() {
+        return currentItems;
+    }
+
+    public void setCurrentItems(List<ItemCarrito> currentItems) {
+        this.currentItems = currentItems;
+    }
 }
+

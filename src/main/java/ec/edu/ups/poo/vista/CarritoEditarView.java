@@ -43,6 +43,7 @@ public class CarritoEditarView extends JInternalFrame {
     private JButton btnBuscarCarrito;
     private JButton btnClean;
     private JPanel panelFinal;
+    private JLabel lblItemsCarrito;
     private JLabel lblCordigocCarrito;
     private JTextField txtSub;
     private JLabel lblTot;
@@ -86,6 +87,64 @@ public class CarritoEditarView extends JInternalFrame {
         JOptionPane.showMessageDialog(this, mensaje, titulo, tipo);
     }
 
+
+    public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
+        Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
+        return JOptionPane.showOptionDialog(
+                this, mensaje, titulo,
+                JOptionPane.DEFAULT_OPTION, tipo,
+                null, botones, botones[0]);
+    }
+
+    public void cargarTabla(){
+        modelo = new DefaultTableModel(new Object[]{"Código", "Nombre", "Precio", "Cantidad", "Total Item"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tblProducts.setModel(modelo);
+
+        Color fondo = new Color(29, 30, 32);
+        Color letras = Color.WHITE;
+
+        if (panelAll != null) panelAll.setBackground(fondo);
+        if (panelInferior != null) panelInferior.setBackground(fondo);
+        if (panelItems != null) panelItems.setBackground(fondo);
+        if (panelProduct != null) panelProduct.setBackground(fondo);
+        if (panelTitle != null) panelTitle.setBackground(fondo);
+
+        if (scroll == null && tblProducts != null) {
+            scroll = (JScrollPane) tblProducts.getParent().getParent();
+        }
+        if (scroll != null) {
+            scroll.getViewport().setBackground(fondo);
+            scroll.setBackground(fondo);
+        }
+
+        if (tblProducts != null) {
+            tblProducts.setBackground(fondo);
+            tblProducts.setForeground(letras);
+            tblProducts.setSelectionBackground(new Color(50, 50, 60));
+            tblProducts.setSelectionForeground(Color.WHITE);
+            tblProducts.setGridColor(fondo);
+
+            JTableHeader header = tblProducts.getTableHeader();
+            header.setBackground(fondo);
+            header.setForeground(letras);
+            header.setFont(header.getFont().deriveFont(Font.BOLD));
+            ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+            centerRenderer.setForeground(letras);
+            centerRenderer.setBackground(fondo);
+            for (int i = 0; i < tblProducts.getColumnCount(); i++) {
+                tblProducts.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            }
+        }
+    }
+
     public void limpiarCampos() {
         cbxCantidad.setSelectedIndex(0);
         txtCodigoProducto.setText("");
@@ -110,63 +169,6 @@ public class CarritoEditarView extends JInternalFrame {
         }
     }
 
-    public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
-        Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
-        return JOptionPane.showOptionDialog(
-                this, mensaje, titulo,
-                JOptionPane.DEFAULT_OPTION, tipo,
-                null, botones, botones[0]);
-    }
-
-    public void cargarTabla(){
-        modelo = new DefaultTableModel(new Object[]{"Código", "Nombre", "Precio", "Cantidad", "Total Item"}, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        tblProducts.setModel(modelo);
-
-        Color fondo = new Color(132, 148, 229);
-        Color letras = Color.BLACK;
-
-        if (panelAll != null) panelAll.setBackground(fondo);
-        if (panelInferior != null) panelInferior.setBackground(fondo);
-        if (panelItems != null) panelItems.setBackground(fondo);
-        if (panelProduct != null) panelProduct.setBackground(fondo);
-        if (panelTitle != null) panelTitle.setBackground(fondo);
-
-        if (scroll == null && tblProducts != null) {
-            scroll = (JScrollPane) tblProducts.getParent().getParent();
-        }
-        if (scroll != null) {
-            scroll.getViewport().setBackground(fondo);
-            scroll.setBackground(fondo);
-        }
-
-        if (tblProducts != null) {
-            tblProducts.setBackground(fondo);
-            tblProducts.setForeground(letras);
-            tblProducts.setSelectionBackground(new Color(132, 148, 229));
-            tblProducts.setSelectionForeground(Color.BLACK);
-            tblProducts.setGridColor(fondo);
-
-            JTableHeader header = tblProducts.getTableHeader();
-            header.setBackground(fondo);
-            header.setForeground(letras);
-            header.setFont(header.getFont().deriveFont(Font.BOLD));
-            ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
-
-            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-            centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-            centerRenderer.setForeground(letras);
-            centerRenderer.setBackground(fondo);
-            for (int i = 0; i < tblProducts.getColumnCount(); i++) {
-                tblProducts.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-            }
-        }
-    }
-
     public void aplicarIdioma() {
         setTitle(i18n.get("carrito.editar.tituloVentana"));
         lblTitulo.setText(i18n.get("carrito.editar.lbl.titulo"));
@@ -180,6 +182,7 @@ public class CarritoEditarView extends JInternalFrame {
         btnBuscarCarrito.setText(i18n.get("carrito.buscar.buscar.btn.buscar.carrito"));
         btnClean.setText(i18n.get("carrito.limpiar.btn.limpiar"));
         btnEliminarItem.setText(i18n.get("carrito.editar.btn.eliminar.item"));
+        lblItemsCarrito.setText(i18n.get("carrito.items.lbl.tituloItems"));
         lblCordigocCarrito.setText(i18n.get("carrito.items.lbl.codigoCarrito"));
         tblProducts.getColumnModel().getColumn(0).setHeaderValue(i18n.get("carrito.listar.item..tbl.codigo"));
         tblProducts.getColumnModel().getColumn(1).setHeaderValue(i18n.get("carrito.listar.item..tbl.nombre"));
@@ -197,240 +200,329 @@ public class CarritoEditarView extends JInternalFrame {
     public JPanel getPanelAll() {
         return panelAll;
     }
+
     public void setPanelAll(JPanel panelAll) {
         this.panelAll = panelAll;
     }
+
     public JTextField getTxtCodigoProducto() {
         return txtCodigoProducto;
     }
+
     public void setTxtCodigoProducto(JTextField txtCodigoProducto) {
         this.txtCodigoProducto = txtCodigoProducto;
     }
+
     public JTextField getTxtNombre() {
         return txtNombre;
     }
+
     public void setTxtNombre(JTextField txtNombre) {
         this.txtNombre = txtNombre;
     }
+
     public JTextField getTxtPrecio() {
         return txtPrecio;
     }
+
     public void setTxtPrecio(JTextField txtPrecio) {
         this.txtPrecio = txtPrecio;
     }
+
     public JTable getTblProducts() {
         return tblProducts;
     }
+
     public void setTblProducts(JTable tblProducts) {
         this.tblProducts = tblProducts;
     }
+
     public JButton getBtnAnadir() {
         return btnAnadir;
     }
+
     public void setBtnAnadir(JButton btnAnadir) {
         this.btnAnadir = btnAnadir;
     }
+
     public JComboBox getCbxCantidad() {
         return cbxCantidad;
     }
+
     public void setCbxCantidad(JComboBox cbxCantidad) {
         this.cbxCantidad = cbxCantidad;
     }
+
     public JButton getBtnActualizar() {
         return btnActualizar;
     }
+
     public void setBtnActualizar(JButton btnActualizar) {
         this.btnActualizar = btnActualizar;
     }
+
     public JLabel getTxtTotal() {
         return txtTotal;
     }
+
     public void setTxtTotal(JLabel txtTotal) {
         this.txtTotal = txtTotal;
     }
+
     public JLabel getTxtShoppingCart() {
         return txtShoppingCart;
     }
+
     public void setTxtShoppingCart(JLabel txtShoppingCart) {
         this.txtShoppingCart = txtShoppingCart;
     }
+
     public JLabel getLblCodigoProducto() {
         return lblCodigoProducto;
     }
+
     public void setLblCodigoProducto(JLabel lblCodigoProducto) {
         this.lblCodigoProducto = lblCodigoProducto;
     }
+
     public JLabel getLblNombre() {
         return lblNombre;
     }
+
     public void setLblNombre(JLabel lblNombre) {
         this.lblNombre = lblNombre;
     }
+
     public JLabel getLblPrecio() {
         return lblPrecio;
     }
+
     public void setLblPrecio(JLabel lblPrecio) {
         this.lblPrecio = lblPrecio;
     }
+
     public JLabel getLblCantidad() {
         return lblCantidad;
     }
+
     public void setLblCantidad(JLabel lblCantidad) {
         this.lblCantidad = lblCantidad;
     }
+
     public JButton getBtnBuscarProducto() {
         return btnBuscarProducto;
     }
+
     public void setBtnBuscarProducto(JButton btnBuscarProducto) {
         this.btnBuscarProducto = btnBuscarProducto;
     }
+
     public JLabel getTxtTax() {
         return txtTax;
     }
+
     public void setTxtTax(JLabel txtTax) {
         this.txtTax = txtTax;
     }
+
     public JTextField getTxtIva() {
         return txtIva;
     }
+
     public void setTxtIva(JTextField txtIva) {
         this.txtIva = txtIva;
     }
+
     public JPanel getPanelInferior() {
         return panelInferior;
     }
+
     public void setPanelInferior(JPanel panelInferior) {
         this.panelInferior = panelInferior;
     }
+
     public JPanel getPanelItems() {
         return panelItems;
     }
+
     public void setPanelItems(JPanel panelItems) {
         this.panelItems = panelItems;
     }
+
     public JPanel getPanelProduct() {
         return panelProduct;
     }
+
     public void setPanelProduct(JPanel panelProduct) {
         this.panelProduct = panelProduct;
     }
+
     public JPanel getPanelTitle() {
         return panelTitle;
     }
+
     public void setPanelTitle(JPanel panelTitle) {
         this.panelTitle = panelTitle;
     }
+
     public JScrollPane getScroll() {
         return scroll;
     }
+
     public void setScroll(JScrollPane scroll) {
         this.scroll = scroll;
     }
+
     public JButton getBtnEliminarItem() {
         return btnEliminarItem;
     }
+
     public void setBtnEliminarItem(JButton btnEliminarItem) {
         this.btnEliminarItem = btnEliminarItem;
     }
+
     public JLabel getLblTitulo() {
         return lblTitulo;
     }
+
     public void setLblTitulo(JLabel lblTitulo) {
         this.lblTitulo = lblTitulo;
     }
+
     public DefaultTableModel getModelo() {
         return modelo;
     }
+
     public void setModelo(DefaultTableModel modelo) {
         this.modelo = modelo;
     }
+
     public JTextField getTxtCodigoCarrito() {
         return txtCodigoCarrito;
     }
+
     public void setTxtCodigoCarrito(JTextField txtCodigoCarrito) {
         this.txtCodigoCarrito = txtCodigoCarrito;
     }
+
     public JButton getBtnBuscarCarrito() {
         return btnBuscarCarrito;
     }
+
     public void setBtnBuscarCarrito(JButton btnBuscarCarrito) {
         this.btnBuscarCarrito = btnBuscarCarrito;
     }
+
     public JButton getBtnClean() {
         return btnClean;
     }
+
     public void setBtnClean(JButton btnClean) {
         this.btnClean = btnClean;
     }
+
     public JPanel getPanelFinal() {
         return panelFinal;
     }
+
     public void setPanelFinal(JPanel panelFinal) {
         this.panelFinal = panelFinal;
     }
+
+    public JLabel getLblItemsCarrito() {
+        return lblItemsCarrito;
+    }
+
+    public void setLblItemsCarrito(JLabel lblItemsCarrito) {
+        this.lblItemsCarrito = lblItemsCarrito;
+    }
+
     public JLabel getLblCordigocCarrito() {
         return lblCordigocCarrito;
     }
+
     public void setLblCordigocCarrito(JLabel lblCordigocCarrito) {
         this.lblCordigocCarrito = lblCordigocCarrito;
     }
+
     public JTextField getTxtSub() {
         return txtSub;
     }
+
     public void setTxtSub(JTextField txtSub) {
         this.txtSub = txtSub;
     }
+
     public JLabel getLblTot() {
         return lblTot;
     }
+
     public void setLblTot(JLabel lblTot) {
         this.lblTot = lblTot;
     }
+
     public JTextField getTxtTot() {
         return txtTot;
     }
+
     public void setTxtTot(JTextField txtTot) {
         this.txtTot = txtTot;
     }
+
     public JLabel getLblIva() {
         return lblIva;
     }
+
     public void setLblIva(JLabel lblIva) {
         this.lblIva = lblIva;
     }
+
     public JLabel getLblSubTot() {
         return lblSubTot;
     }
+
     public void setLblSubTot(JLabel lblSubTot) {
         this.lblSubTot = lblSubTot;
     }
+
     public JButton getBtnDelateItem() {
         return btnDelateItem;
     }
+
     public void setBtnDelateItem(JButton btnDelateItem) {
         this.btnDelateItem = btnDelateItem;
     }
-    public MensajeInternacionalizacionHandler tipoIdioma() {return i18n;}
-    public void setI18n(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.i18n = tipoIdioma;
+
+    public MensajeInternacionalizacionHandler getI18n() {
+        return i18n;
     }
+
+    public void setI18n(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
+    }
+
     public double getSubtotal() {
         return subtotal;
     }
+
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
     }
+
     public double getIva() {
         return iva;
     }
+
     public void setIva(double iva) {
         this.iva = iva;
     }
+
     public double getTotal() {
         return total;
     }
+
     public void setTotal(double total) {
         this.total = total;
     }
-
 }
+

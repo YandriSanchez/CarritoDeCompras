@@ -27,6 +27,7 @@ public class CarritoEliminarView extends JInternalFrame {
     private JLabel lblSubTotal;
     private JLabel lblIva;
     private JLabel lblTotal;
+    private JLabel lblItemsCarrito;
     private JPanel panelFinal;
     private MensajeInternacionalizacionHandler i18n;
     private double subtotal = 0.0;
@@ -43,7 +44,9 @@ public class CarritoEliminarView extends JInternalFrame {
         setIconifiable(true);
         setResizable(true);
 
-        Color fondo = new Color(132,148,229);
+        Color fondoOscuro = new Color(132,148,229);
+
+        panelAll.setBackground(fondoOscuro);
 
         tblProducts.setModel(new DefaultTableModel(
                 new Object[][]{},
@@ -55,12 +58,14 @@ public class CarritoEliminarView extends JInternalFrame {
             }
         });
 
-        tblProducts.setBackground(fondo);
+        tblProducts.setBackground(fondoOscuro);
         tblProducts.setForeground(Color.BLACK);
-        scroll.getViewport().setBackground(fondo);
-        scroll.setBackground(fondo);
+        scroll.getViewport().setBackground(fondoOscuro);
+        scroll.setBackground(fondoOscuro);
 
         JTableHeader header = tblProducts.getTableHeader();
+        header.setBackground(Color.BLACK);
+        header.setForeground(Color.WHITE);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
 
         aplicarIdioma();
@@ -82,8 +87,11 @@ public class CarritoEliminarView extends JInternalFrame {
         setTitle(i18n.get("carrito.eliminar.title"));
         lblTitulo.setText(i18n.get("carrito.eliminar.lbl.Titulo"));
         lblCodigo.setText(i18n.get("carrito.eliminar.lbl.Codigo"));
+
+        lblItemsCarrito.setText(i18n.get("carrito.eliminar.lbl.ItemsCarrito"));
         btnBuscar.setText(i18n.get("carrito.eliminar.btn.Buscar"));
         btnEliminar.setText(i18n.get("carrito.eliminar.btn.Eliminar"));
+
         tblProducts.getColumnModel().getColumn(0).setHeaderValue(i18n.get("carrito.eliminar.tbl.Codigo"));
         tblProducts.getColumnModel().getColumn(1).setHeaderValue(i18n.get("carrito.eliminar.tbl.Nombre"));
         tblProducts.getColumnModel().getColumn(2).setHeaderValue(i18n.get("carrito.eliminar.tbl.Precio"));
@@ -103,39 +111,179 @@ public class CarritoEliminarView extends JInternalFrame {
         tblProducts.getTableHeader().repaint();
     }
 
-    public JPanel getPanelTitle() { return panelTitle; }
-    public void setPanelTitle(JPanel panelTitle) { this.panelTitle = panelTitle; }
-    public JLabel getLblTitulo() { return lblTitulo; }
-    public void setLblTitulo(JLabel lblTitulo) { this.lblTitulo = lblTitulo; }
-    public JPanel getPanelProduct() { return panelProduct; }
-    public void setPanelProduct(JPanel panelProduct) { this.panelProduct = panelProduct; }
-    public JTextField getTxtCodigo() { return txtCodigo; }
-    public void setTxtCodigo(JTextField txtCodigo) { this.txtCodigo = txtCodigo; }
-    public JButton getBtnBuscar() { return btnBuscar; }
-    public void setBtnBuscar(JButton btnBuscar) { this.btnBuscar = btnBuscar; }
-    public JScrollPane getScroll() { return scroll; }
-    public void setScroll(JScrollPane scroll) { this.scroll = scroll; }
-    public JTable getTblProducts() { return tblProducts; }
-    public void setTblProducts(JTable tblProducts) { this.tblProducts = tblProducts; }
-    public JTextField getTxtIva() { return txtIva; }
-    public void setTxtIva(JTextField txtIva) { this.txtIva = txtIva; }
-    public JTextField getTxtTotal() { return txtTotal; }
-    public void setTxtTotal(JTextField txtTotal) { this.txtTotal = txtTotal; }
-    public JTextField getTxtSubTotal() { return txtSubTotal; }
-    public void setTxtSubTotal(JTextField txtSubTotal) { this.txtSubTotal = txtSubTotal; }
-    public JButton getBtnEliminar() { return btnEliminar; }
-    public void setBtnEliminar(JButton btnEliminar) { this.btnEliminar = btnEliminar; }
-    public JPanel getPanelAll() { return panelAll; }
-    public void setPanelAll(JPanel panelAll) { this.panelAll = panelAll; }
-    public JLabel getLblCodigo() { return lblCodigo; }
-    public void setLblCodigo(JLabel lblCodigo) { this.lblCodigo = lblCodigo; }
-    public JLabel getLblSubTotal() { return lblSubTotal; }
-    public void setLblSubTotal(JLabel lblSubTotal) { this.lblSubTotal = lblSubTotal; }
-    public JLabel getLblIva() { return lblIva; }
-    public void setLblIva(JLabel lblIva) { this.lblIva = lblIva; }
-    public JLabel getLblTotal() { return lblTotal; }
-    public void setLblTotal(JLabel lblTotal) { this.lblTotal = lblTotal; }
-    public JPanel getPanelFinal() { return panelFinal; }
-    public void setPanelFinal(JPanel panelFinal) { this.panelFinal = panelFinal; }
+    public JPanel getPanelTitle() {
+        return panelTitle;
+    }
 
+    public void setPanelTitle(JPanel panelTitle) {
+        this.panelTitle = panelTitle;
+    }
+
+    public JLabel getLblTitulo() {
+        return lblTitulo;
+    }
+
+    public void setLblTitulo(JLabel lblTitulo) {
+        this.lblTitulo = lblTitulo;
+    }
+
+    public JPanel getPanelProduct() {
+        return panelProduct;
+    }
+
+    public void setPanelProduct(JPanel panelProduct) {
+        this.panelProduct = panelProduct;
+    }
+
+    public JTextField getTxtCodigo() {
+        return txtCodigo;
+    }
+
+    public void setTxtCodigo(JTextField txtCodigo) {
+        this.txtCodigo = txtCodigo;
+    }
+
+    public JButton getBtnBuscar() {
+        return btnBuscar;
+    }
+
+    public void setBtnBuscar(JButton btnBuscar) {
+        this.btnBuscar = btnBuscar;
+    }
+
+    public JScrollPane getScroll() {
+        return scroll;
+    }
+
+    public void setScroll(JScrollPane scroll) {
+        this.scroll = scroll;
+    }
+
+    public JTable getTblProducts() {
+        return tblProducts;
+    }
+
+    public void setTblProducts(JTable tblProducts) {
+        this.tblProducts = tblProducts;
+    }
+
+    public JTextField getTxtIva() {
+        return txtIva;
+    }
+
+    public void setTxtIva(JTextField txtIva) {
+        this.txtIva = txtIva;
+    }
+
+    public JTextField getTxtTotal() {
+        return txtTotal;
+    }
+
+    public void setTxtTotal(JTextField txtTotal) {
+        this.txtTotal = txtTotal;
+    }
+
+    public JTextField getTxtSubTotal() {
+        return txtSubTotal;
+    }
+
+    public void setTxtSubTotal(JTextField txtSubTotal) {
+        this.txtSubTotal = txtSubTotal;
+    }
+
+    public JButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
+    public void setBtnEliminar(JButton btnEliminar) {
+        this.btnEliminar = btnEliminar;
+    }
+
+    public JPanel getPanelAll() {
+        return panelAll;
+    }
+
+    public void setPanelAll(JPanel panelAll) {
+        this.panelAll = panelAll;
+    }
+
+    public JLabel getLblCodigo() {
+        return lblCodigo;
+    }
+
+    public void setLblCodigo(JLabel lblCodigo) {
+        this.lblCodigo = lblCodigo;
+    }
+
+    public JLabel getLblSubTotal() {
+        return lblSubTotal;
+    }
+
+    public void setLblSubTotal(JLabel lblSubTotal) {
+        this.lblSubTotal = lblSubTotal;
+    }
+
+    public JLabel getLblIva() {
+        return lblIva;
+    }
+
+    public void setLblIva(JLabel lblIva) {
+        this.lblIva = lblIva;
+    }
+
+    public JLabel getLblTotal() {
+        return lblTotal;
+    }
+
+    public void setLblTotal(JLabel lblTotal) {
+        this.lblTotal = lblTotal;
+    }
+
+    public JLabel getLblItemsCarrito() {
+        return lblItemsCarrito;
+    }
+
+    public void setLblItemsCarrito(JLabel lblItemsCarrito) {
+        this.lblItemsCarrito = lblItemsCarrito;
+    }
+
+    public JPanel getPanelFinal() {
+        return panelFinal;
+    }
+
+    public void setPanelFinal(JPanel panelFinal) {
+        this.panelFinal = panelFinal;
+    }
+
+    public MensajeInternacionalizacionHandler getI18n() {
+        return i18n;
+    }
+
+    public void setI18n(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
+    }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public double getIva() {
+        return iva;
+    }
+
+    public void setIva(double iva) {
+        this.iva = iva;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
 }

@@ -1,8 +1,11 @@
 package ec.edu.ups.poo.vista;
 
 import ec.edu.ups.poo.util.MensajeInternacionalizacionHandler;
-
 import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LogInView extends JFrame {
     private JPanel panelAll;
@@ -20,18 +23,44 @@ public class LogInView extends JFrame {
     private JComboBox cbxIdioma;
     private JLabel lblIdioma;
     private JButton btnRecuContra;
+    private JLabel lblUbicacionGuardar;
+    private JComboBox cbxUbicacionGuardar;
+    private JButton btnUbicacion;
+    private JLabel lblRuta;
+    private JTextField txtRuta;
     private MensajeInternacionalizacionHandler i18n;
+    private String look;
 
     public LogInView(MensajeInternacionalizacionHandler i18n) {
         this.i18n = i18n;
-        setTitle("YANDRI STORE");
         setContentPane(panelAll);
+        setTitle("YANDRI STORE");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(445, 295);
+        setSize(445, 395);
         setLocationRelativeTo(null);
 
         aplicarIdioma();
-        actualizarOpcionesIdioma();
+        //aplicarIconos();
+        actualizarOpcionesGuardado();
+    }
+
+    public void seleccionarDirectorio() {
+        JFileChooser fileChooser = new JFileChooser();
+
+        String userHome = System.getProperty("user.home");
+        File desktopDir = new File(userHome, "Desktop");
+        fileChooser.setCurrentDirectory(desktopDir);
+
+        fileChooser.setDialogTitle(i18n.get("select.directory"));
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+
+        int resultado = fileChooser.showOpenDialog(this);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File directorioSeleccionado = fileChooser.getSelectedFile();
+            String ruta = directorioSeleccionado.getAbsolutePath();
+            txtRuta.setText(ruta);
+        }
     }
 
     public void mostrarMensaje(String mensaje, String titulo, int tipo) {
@@ -47,10 +76,31 @@ public class LogInView extends JFrame {
     }
 
     public void actualizarOpcionesIdioma() {
+        String code = i18n.getCodigoIdioma();
         cbxIdioma.removeAllItems();
-        cbxIdioma.addItem(i18n.get("login.cbxIdioma.opcion.es"));
-        cbxIdioma.addItem(i18n.get("login.cbxIdioma.opcion.en"));
-        cbxIdioma.addItem(i18n.get("login.cbxIdioma.opcion.fr"));
+        cbxIdioma.addItem(i18n.get("idioma.espanol"));
+        cbxIdioma.addItem(i18n.get("idioma.ingles"));
+        cbxIdioma.addItem(i18n.get("idioma.frances"));
+
+        int idx = 0;
+        if (code.equals("en")) idx = 1;
+        else if (code.equals("fr")) idx = 2;
+        cbxIdioma.setSelectedIndex(idx);
+    }
+
+    public void actualizarOpcionesGuardado() {
+        int selected = cbxUbicacionGuardar.getSelectedIndex();
+
+        cbxUbicacionGuardar.removeAllItems();
+        cbxUbicacionGuardar.addItem(i18n.get("dao.memoria"));
+        cbxUbicacionGuardar.addItem(i18n.get("archivo.texto"));
+        cbxUbicacionGuardar.addItem(i18n.get("archivo.binario"));
+
+        if (selected >= 0 && selected < cbxUbicacionGuardar.getItemCount()) {
+            cbxUbicacionGuardar.setSelectedIndex(selected);
+        } else {
+            cbxUbicacionGuardar.setSelectedIndex(0);
+        }
     }
 
     public void aplicarIdioma() {
@@ -59,21 +109,34 @@ public class LogInView extends JFrame {
         lblIdioma.setText(i18n.get("login.lblIdioma"));
         lblUsuario.setText(i18n.get("login.lblUsuario"));
         lblContrasena.setText(i18n.get("login.lblContrasena"));
+        lblUbicacionGuardar.setText(i18n.get("login.lblUbicacionGuardar"));
+        lblRuta.setText(i18n.get("archivo.ruta"));
+        btnUbicacion.setText(i18n.get("login.btnUbicacion"));
         btnInicioSesion.setText(i18n.get("login.btnInicioSesion"));
         btnSalir.setText(i18n.get("login.btnSalir"));
         btnRegistro.setText(i18n.get("login.btnRegistro"));
         btnRecuContra.setText(i18n.get("login.btnRecuContra"));
+        actualizarOpcionesIdioma();
+        actualizarOpcionesGuardado();
     }
 
+    public JTextField getTxtRuta() {return txtRuta;}
+    public void setTxtRuta(JTextField txtRuta) {this.txtRuta = txtRuta;}
+    public JLabel getLblRuta() {return lblRuta;}
+    public void setLblRuta(JLabel lblRuta) {this.lblRuta = lblRuta;}
+    public JButton getBtnUbicacion() {return btnUbicacion;}
+    public void setBtnUbicacion(JButton btnUbicacion) {this.btnUbicacion = btnUbicacion;}
+    public JLabel getLblUbicacionGuardar() {return lblUbicacionGuardar;}
+    public void setLblUbicacionGuardar(JLabel lblUbicacionGuardar) {this.lblUbicacionGuardar = lblUbicacionGuardar;}
+    public JComboBox getCbxUbicacionGuardar() {return cbxUbicacionGuardar;}
+    public void setCbxUbicacionGuardar(JComboBox cbxUbicacionGuardar) {this.cbxUbicacionGuardar = cbxUbicacionGuardar;}
     public JButton getBtnRecuContra() {
         return btnRecuContra;
     }
     public void setBtnRecuContra(JButton btnRecuContra) {
         this.btnRecuContra = btnRecuContra;
     }
-    public JTextField getTxtUserName() {
-        return txtUserName;
-    }
+    public JTextField getTxtUserName() {return txtUserName;}
     public void setTxtUserName(JTextField txtUserName) {
         this.txtUserName = txtUserName;
     }
@@ -149,5 +212,4 @@ public class LogInView extends JFrame {
     }
     public JLabel getLblIdioma() {return lblIdioma;}
     public void setLblIdioma(JLabel lblIdioma) {this.lblIdioma = lblIdioma;}
-
 }

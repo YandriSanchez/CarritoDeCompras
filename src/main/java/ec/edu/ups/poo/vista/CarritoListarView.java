@@ -86,7 +86,6 @@ public class CarritoListarView extends JInternalFrame {
                 tblCarritos.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
             }
         }
-
         aplicarIdioma();
     }
 
@@ -99,7 +98,7 @@ public class CarritoListarView extends JInternalFrame {
             for (Carrito carrito : carritos) {
                 modelo.addRow(new Object[]{
                         carrito.getId(),
-                        carrito.getUsuario() != null ? carrito.getUsuario().getUserName() : "N/A",
+                        carrito.getUsuario() != null ? carrito.getUsuario().getCedula() : "N/A",
                         FormateadorUtils.formatearFecha(carrito.getFecha(), locale),
                         FormateadorUtils.formatearMoneda(carrito.getSubtotal(), locale),
                         FormateadorUtils.formatearMoneda(carrito.getIva(), locale),
@@ -155,39 +154,179 @@ public class CarritoListarView extends JInternalFrame {
         refrescarResumenValores(i18n.getLocale());
     }
 
-    public JPanel getPanelAll() { return panelAll; }
-    public void setPanelAll(JPanel panelAll) { this.panelAll = panelAll; }
-    public JPanel getPanelSuperior() { return panelSuperior; }
-    public void setPanelSuperior(JPanel panelSuperior) { this.panelSuperior = panelSuperior; }
-    public JLabel getLblTitulo() { return lblTitulo; }
-    public void setLblTitulo(JLabel lblTitulo) { this.lblTitulo = lblTitulo; }
-    public JPanel getPanelCenter() { return panelCenter; }
-    public void setPanelCenter(JPanel panelCenter) { this.panelCenter = panelCenter; }
-    public JLabel getLblCodigo() { return lblCodigo; }
-    public void setLblCodigo(JLabel lblCodigo) { this.lblCodigo = lblCodigo; }
-    public JTextField getTxtCodigo() { return txtCodigo; }
-    public void setTxtCodigo(JTextField txtCodigo) { this.txtCodigo = txtCodigo; }
-    public JButton getBtnBuscar() { return btnBuscar; }
-    public void setBtnBuscar(JButton btnBuscar) { this.btnBuscar = btnBuscar; }
-    public JButton getBtnListar() { return btnListar; }
-    public void setBtnListar(JButton btnListar) { this.btnListar = btnListar; }
-    public JTable getTblCarritos() { return tblCarritos; }
-    public void setTblCarritos(JTable tblCarritos) { this.tblCarritos = tblCarritos; }
-    public JButton getBtnVerCarrito() { return btnVerCarrito; }
-    public void setBtnVerCarrito(JButton btnVerCarrito) { this.btnVerCarrito = btnVerCarrito; }
-    public JPanel getPanelTabla() { return panelTabla; }
-    public void setPanelTabla(JPanel panelTabla) { this.panelTabla = panelTabla; }
-    public JScrollPane getScroll() { return scroll; }
-    public void setScroll(JScrollPane scroll) { this.scroll = scroll; }
-    public JPanel getPanelInferior() { return panelInferior; }
-    public void setPanelInferior(JPanel panelInferior) { this.panelInferior = panelInferior; }
-    public DefaultTableModel getModelo() { return modelo; }
-    public void setModelo(DefaultTableModel modelo) { this.modelo = modelo; }
-    public JLabel getLblSubtotalResumen() { return lblSubtotalResumen; }
-    public void setLblSubtotalResumen(JLabel lblSubtotalResumen) { this.lblSubtotalResumen = lblSubtotalResumen; }
-    public JLabel getLblIvaResumen() { return lblIvaResumen; }
-    public void setLblIvaResumen(JLabel lblIvaResumen) { this.lblIvaResumen = lblIvaResumen; }
-    public JLabel getLblTotalResumen() { return lblTotalResumen; }
-    public void setLblTotalResumen(JLabel lblTotalResumen) { this.lblTotalResumen = lblTotalResumen; }
+    public JPanel getPanelAll() {
+        return panelAll;
+    }
 
+    public void setPanelAll(JPanel panelAll) {
+        this.panelAll = panelAll;
+    }
+
+    public JPanel getPanelSuperior() {
+        return panelSuperior;
+    }
+
+    public void setPanelSuperior(JPanel panelSuperior) {
+        this.panelSuperior = panelSuperior;
+    }
+
+    public JLabel getLblTitulo() {
+        return lblTitulo;
+    }
+
+    public void setLblTitulo(JLabel lblTitulo) {
+        this.lblTitulo = lblTitulo;
+    }
+
+    public JPanel getPanelCenter() {
+        return panelCenter;
+    }
+
+    public void setPanelCenter(JPanel panelCenter) {
+        this.panelCenter = panelCenter;
+    }
+
+    public JLabel getLblCodigo() {
+        return lblCodigo;
+    }
+
+    public void setLblCodigo(JLabel lblCodigo) {
+        this.lblCodigo = lblCodigo;
+    }
+
+    public JTextField getTxtCodigo() {
+        return txtCodigo;
+    }
+
+    public void setTxtCodigo(JTextField txtCodigo) {
+        this.txtCodigo = txtCodigo;
+    }
+
+    public JButton getBtnBuscar() {
+        return btnBuscar;
+    }
+
+    public void setBtnBuscar(JButton btnBuscar) {
+        this.btnBuscar = btnBuscar;
+    }
+
+    public JButton getBtnListar() {
+        return btnListar;
+    }
+
+    public void setBtnListar(JButton btnListar) {
+        this.btnListar = btnListar;
+    }
+
+    public JTable getTblCarritos() {
+        return tblCarritos;
+    }
+
+    public void setTblCarritos(JTable tblCarritos) {
+        this.tblCarritos = tblCarritos;
+    }
+
+    public JButton getBtnVerCarrito() {
+        return btnVerCarrito;
+    }
+
+    public void setBtnVerCarrito(JButton btnVerCarrito) {
+        this.btnVerCarrito = btnVerCarrito;
+    }
+
+    public JPanel getPanelTabla() {
+        return panelTabla;
+    }
+
+    public void setPanelTabla(JPanel panelTabla) {
+        this.panelTabla = panelTabla;
+    }
+
+    public JScrollPane getScroll() {
+        return scroll;
+    }
+
+    public void setScroll(JScrollPane scroll) {
+        this.scroll = scroll;
+    }
+
+    public JPanel getPanelInferior() {
+        return panelInferior;
+    }
+
+    public void setPanelInferior(JPanel panelInferior) {
+        this.panelInferior = panelInferior;
+    }
+
+    public JLabel getLblSubtotalResumen() {
+        return lblSubtotalResumen;
+    }
+
+    public void setLblSubtotalResumen(JLabel lblSubtotalResumen) {
+        this.lblSubtotalResumen = lblSubtotalResumen;
+    }
+
+    public JLabel getLblIvaResumen() {
+        return lblIvaResumen;
+    }
+
+    public void setLblIvaResumen(JLabel lblIvaResumen) {
+        this.lblIvaResumen = lblIvaResumen;
+    }
+
+    public JLabel getLblTotalResumen() {
+        return lblTotalResumen;
+    }
+
+    public void setLblTotalResumen(JLabel lblTotalResumen) {
+        this.lblTotalResumen = lblTotalResumen;
+    }
+
+    public DefaultTableModel getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(DefaultTableModel modelo) {
+        this.modelo = modelo;
+    }
+
+    public MensajeInternacionalizacionHandler getI18n() {
+        return i18n;
+    }
+
+    public void setI18n(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
+    }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public double getIva() {
+        return iva;
+    }
+
+    public void setIva(double iva) {
+        this.iva = iva;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public List<Carrito> getCarritosMostrados() {
+        return carritosMostrados;
+    }
+
+    public void setCarritosMostrados(List<Carrito> carritosMostrados) {
+        this.carritosMostrados = carritosMostrados;
+    }
 }

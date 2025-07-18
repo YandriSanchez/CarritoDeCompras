@@ -1,10 +1,7 @@
 package ec.edu.ups.poo.vista;
 
-import ec.edu.ups.poo.modelo.Producto;
 import ec.edu.ups.poo.util.MensajeInternacionalizacionHandler;
-
 import javax.swing.*;
-import java.util.List;
 
 public class ProductoAnadirView extends JInternalFrame {
 
@@ -35,12 +32,6 @@ public class ProductoAnadirView extends JInternalFrame {
         aplicarIdiomas();
     }
 
-    public void limpiarCampos() {
-        txtCodigo.setText("");
-        txtNombre.setText("");
-        txtPrecio.setText("");
-    }
-
     public void mostrarMensaje(String mensaje, String titulo, int tipo) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, tipo);
     }
@@ -51,25 +42,6 @@ public class ProductoAnadirView extends JInternalFrame {
                 this, mensaje, titulo,
                 JOptionPane.DEFAULT_OPTION, tipo,
                 null, botones, botones[0]);
-    }
-
-    public void mostrarProductos(List<Producto> productos) {
-        for (Producto producto : productos) {
-            System.out.println(producto);
-        }
-    }
-
-    public void inhabilitarCampos() {
-        txtCodigo.setEnabled(false);
-        txtNombre.setEnabled(false);
-        txtPrecio.setEnabled(false);
-        btnGuardar.setEnabled(false);
-    }
-
-    public void habilitarCampos() {
-        txtNombre.setEnabled(true);
-        txtPrecio.setEnabled(true);
-        btnGuardar.setEnabled(true);
     }
 
     public void aplicarIdiomas() {
@@ -85,79 +57,112 @@ public class ProductoAnadirView extends JInternalFrame {
     public JPanel getPanelAll() {
         return panelAll;
     }
+
     public void setPanelAll(JPanel panelAll) {
         this.panelAll = panelAll;
     }
-    public JTextField getLblCodeProduct() {
+
+    public JTextField getTxtCodigo() {
         return txtCodigo;
     }
-    public void setLblCodeProduct(JTextField lblCodeProduct) {
-        this.txtCodigo = lblCodeProduct;
+
+    public void setTxtCodigo(JTextField txtCodigo) {
+        this.txtCodigo = txtCodigo;
     }
-    public JButton getBtnRegisterNewProduct() {
+
+    public JButton getBtnGuardar() {
         return btnGuardar;
     }
-    public void setBtnRegisterNewProduct(JButton btnRegisterNewProduct) {
-        this.btnGuardar = btnRegisterNewProduct;
+
+    public void setBtnGuardar(JButton btnGuardar) {
+        this.btnGuardar = btnGuardar;
     }
-    public JButton getBtnCleanInputs() {
+
+    public JButton getBtnNuevo() {
         return btnNuevo;
     }
-    public void setBtnCleanInputs(JButton btnCleanInputs) {
-        this.btnNuevo = btnCleanInputs;
+
+    public void setBtnNuevo(JButton btnNuevo) {
+        this.btnNuevo = btnNuevo;
     }
-    public JLabel getTxtCodeProduct() {
+
+    public JLabel getLblCodigo() {
         return lblCodigo;
     }
-    public void setTxtCodeProduct(JLabel txtCodeProduct) {
-        this.lblCodigo = txtCodeProduct;
+
+    public void setLblCodigo(JLabel lblCodigo) {
+        this.lblCodigo = lblCodigo;
     }
-    public JLabel getTxtNameProduct() {
+
+    public JLabel getLblNombre() {
         return lblNombre;
     }
-    public void setTxtNameProduct(JLabel txtNameProduct) {
-        this.lblNombre = txtNameProduct;
+
+    public void setLblNombre(JLabel lblNombre) {
+        this.lblNombre = lblNombre;
     }
-    public JLabel getTxtPriceProduct() {
+
+    public JLabel getLblPrecio() {
         return lblPrecio;
     }
-    public void setTxtPriceProduct(JLabel txtPriceProduct) {
-        this.lblPrecio = txtPriceProduct;
+
+    public void setLblPrecio(JLabel lblPrecio) {
+        this.lblPrecio = lblPrecio;
     }
-    public JTextField getLblNameProduct() {
+
+    public JTextField getTxtNombre() {
         return txtNombre;
     }
-    public void setLblNameProduct(JTextField lblNameProduct) {
-        this.txtNombre = lblNameProduct;
+
+    public void setTxtNombre(JTextField txtNombre) {
+        this.txtNombre = txtNombre;
     }
-    public JTextField getLblPriceProduct() {
+
+    public JTextField getTxtPrecio() {
         return txtPrecio;
     }
-    public void setLblPriceProduct(JTextField lblPriceProduct) {
-        this.txtPrecio = lblPriceProduct;
+
+    public void setTxtPrecio(JTextField txtPrecio) {
+        this.txtPrecio = txtPrecio;
     }
+
     public JPanel getPanelTop() {
         return panelTop;
     }
+
     public void setPanelTop(JPanel panelTop) {
         this.panelTop = panelTop;
     }
+
     public JPanel getPanelCenter() {
         return panelCenter;
     }
+
     public void setPanelCenter(JPanel panelCenter) {
         this.panelCenter = panelCenter;
     }
+
     public JPanel getPanelBottom() {
         return panelBottom;
     }
+
     public void setPanelBottom(JPanel panelBottom) {
         this.panelBottom = panelBottom;
     }
-    public JLabel getTxtRegisterNewProduct() {
+
+    public JLabel getLblTitulo() {
         return lblTitulo;
     }
-    public void setTxtRegisterNewProduct(JLabel txtRegisterNewProduct) {
-        this.lblTitulo = txtRegisterNewProduct;
+
+    public void setLblTitulo(JLabel lblTitulo) {
+        this.lblTitulo = lblTitulo;
+    }
+
+    public MensajeInternacionalizacionHandler getI18n() {
+        return i18n;
+    }
+
+    public void setI18n(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
     }
 }

@@ -1,10 +1,8 @@
 package ec.edu.ups.poo.vista;
 
-import ec.edu.ups.poo.modelo.Producto;
-import ec.edu.ups.poo.util.MensajeInternacionalizacionHandler;
 
+import ec.edu.ups.poo.util.MensajeInternacionalizacionHandler;
 import javax.swing.*;
-import java.util.List;
 
 public class ProductoEditarView extends JInternalFrame {
     private JPanel panelAll;
@@ -47,12 +45,6 @@ public class ProductoEditarView extends JInternalFrame {
                 null, botones, botones[0]);
     }
 
-    public void limpiarCampos() {
-        txtCodigo.setText("");
-        txtNombre.setText("");
-        txtPrecio.setText("");
-    }
-
     public void aplicarIdiomas() {
         setTitle(i18n.get("producto.editar.titulo"));
         lblTitulo.setText(i18n.get("producto.editar.lbl.titulo"));
@@ -63,93 +55,123 @@ public class ProductoEditarView extends JInternalFrame {
         btnActualizar.setText(i18n.get("producto.editar.btn.actualizar"));
     }
 
-    public void mostrarProductos(List<Producto> productos) {
-        txtNombre.setText(productos.get(0).getNombre());
-        txtPrecio.setText(String.valueOf(productos.get(0).getPrecio()));
-    }
-
     public JPanel getPanelAll() {
         return panelAll;
     }
+
     public void setPanelAll(JPanel panelAll) {
         this.panelAll = panelAll;
     }
+
     public JTextField getTxtCodigo() {
         return txtCodigo;
     }
+
     public void setTxtCodigo(JTextField txtCodigo) {
         this.txtCodigo = txtCodigo;
     }
+
     public JButton getBtnBuscar() {
         return btnBuscar;
     }
+
     public void setBtnBuscar(JButton btnBuscar) {
         this.btnBuscar = btnBuscar;
     }
+
     public JTextField getTxtNombre() {
         return txtNombre;
     }
+
     public void setTxtNombre(JTextField txtNombre) {
         this.txtNombre = txtNombre;
     }
-    public JLabel getTxtCodeTitle() {
+
+    public JLabel getLblCodigo() {
         return lblCodigo;
     }
-    public void setTxtCodeTitle(JLabel txtCodeTitle) {
-        this.lblCodigo = txtCodeTitle;
+
+    public void setLblCodigo(JLabel lblCodigo) {
+        this.lblCodigo = lblCodigo;
     }
+
     public JPanel getPanelCenter() {
         return panelCenter;
     }
+
     public void setPanelCenter(JPanel panelCenter) {
         this.panelCenter = panelCenter;
     }
+
     public JPanel getPanelTop() {
         return panelTop;
     }
+
     public void setPanelTop(JPanel panelTop) {
         this.panelTop = panelTop;
     }
+
     public JTextField getTxtPrecio() {
         return txtPrecio;
     }
+
     public void setTxtPrecio(JTextField txtPrecio) {
         this.txtPrecio = txtPrecio;
     }
+
     public JButton getBtnActualizar() {
         return btnActualizar;
     }
+
     public void setBtnActualizar(JButton btnActualizar) {
         this.btnActualizar = btnActualizar;
     }
-    public JLabel getTxtPriceTitle() {
+
+    public JLabel getLblPrecio() {
         return lblPrecio;
     }
-    public void setTxtPriceTitle(JLabel txtPriceTitle) {
-        this.lblPrecio = txtPriceTitle;
+
+    public void setLblPrecio(JLabel lblPrecio) {
+        this.lblPrecio = lblPrecio;
     }
-    public JLabel getTxtNameTitle() {
+
+    public JLabel getLblNombre() {
         return lblNombre;
     }
-    public void setTxtNameTitle(JLabel txtNameTitle) {
-        this.lblNombre = txtNameTitle;
+
+    public void setLblNombre(JLabel lblNombre) {
+        this.lblNombre = lblNombre;
     }
+
     public JPanel getPanelMenor() {
         return panelMenor;
     }
+
     public void setPanelMenor(JPanel panelMenor) {
         this.panelMenor = panelMenor;
     }
-    public JLabel getTxtSettingsProduc() {
+
+    public JLabel getLblTitulo() {
         return lblTitulo;
     }
-    public void setTxtSettingsProduc(JLabel txtSettingsProduc) {
-        this.lblTitulo = txtSettingsProduc;
+
+    public void setLblTitulo(JLabel lblTitulo) {
+        this.lblTitulo = lblTitulo;
     }
+
     public JScrollPane getScroll() {
         return scroll;
     }
+
     public void setScroll(JScrollPane scroll) {
         this.scroll = scroll;
+    }
+
+    public MensajeInternacionalizacionHandler getI18n() {
+        return i18n;
+    }
+
+    public void setI18n(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
     }
 }

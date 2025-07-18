@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class FormateadorUtils {
+
     public static String formatearMoneda(double cantidad, Locale locale) {
         NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(locale);
         return formatoMoneda.format(cantidad);

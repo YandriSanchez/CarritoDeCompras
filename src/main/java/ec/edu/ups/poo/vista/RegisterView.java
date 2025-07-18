@@ -11,13 +11,13 @@ public class RegisterView extends JFrame {
     private JPanel panelSuperior;
     private JLabel lblTitulo;
     private JPanel panelCentral;
-    private JTextField txtUsuario;
+    private JTextField txtCedula;
     private JTextField txtContrasena;
     private JButton btnRegistro;
     private JButton btnClean;
     private JButton btnSalir;
     private JPanel panelInferior;
-    private JLabel lblUsuario;
+    private JLabel lblCedula;
     private JLabel lblContrasena;
     private JPanel panelForm;
     private JLabel lblPregunta1;
@@ -36,6 +36,8 @@ public class RegisterView extends JFrame {
     private JLabel lblCorreo;
     private JTextField txtTelefono;
     private JLabel lblTelefono;
+    private JLabel lblIdioma;
+    private JComboBox cbxIdioma;
     private MensajeInternacionalizacionHandler i18n;
 
     public RegisterView(MensajeInternacionalizacionHandler i18n) {
@@ -44,9 +46,21 @@ public class RegisterView extends JFrame {
         setContentPane(panelAll);
         setSize(710, 450);
         setLocationRelativeTo(null);
-
         aplicarIdioma();
         inicializarCombosFechaNacimiento();
+    }
+
+    public void actualizarOpcionesIdioma() {
+        String code = i18n.getCodigoIdioma();
+        cbxIdioma.removeAllItems();
+        cbxIdioma.addItem(i18n.get("idioma.espanol"));
+        cbxIdioma.addItem(i18n.get("idioma.ingles"));
+        cbxIdioma.addItem(i18n.get("idioma.frances"));
+
+        int idx = 0;
+        if (code.equals("en")) idx = 1;
+        else if (code.equals("fr")) idx = 2;
+        cbxIdioma.setSelectedIndex(idx);
     }
 
     public void mostrarMensaje(String mensaje, String titulo, int tipo) {
@@ -63,8 +77,9 @@ public class RegisterView extends JFrame {
 
     public void aplicarIdioma() {
         setTitle(i18n.get("register.title"));
-        lblTitulo.setText(i18n.get("register.lbltitulo"));
-        lblUsuario.setText(i18n.get("register.lblUsuario"));
+        lblIdioma.setText(i18n.get("login.lblIdioma"));
+        lblTitulo.setText(i18n.get("register.title"));
+        lblCedula.setText(i18n.get("register.lblUsuario"));
         lblContrasena.setText(i18n.get("register.lblContrasena"));
         lblNombreCompleto.setText(i18n.get("register.lblNombreCompleto"));
         lblFechaNacimiento.setText(i18n.get("register.lblFechaNacimiento"));
@@ -77,6 +92,7 @@ public class RegisterView extends JFrame {
         btnRegistro.setText(i18n.get("register.btnRegistro"));
         btnClean.setText(i18n.get("register.btnClean"));
         btnSalir.setText(i18n.get("register.btnSalir"));
+        actualizarOpcionesIdioma();
 
     }
 
@@ -116,181 +132,256 @@ public class RegisterView extends JFrame {
     public JPanel getPanelAll() {
         return panelAll;
     }
+
     public void setPanelAll(JPanel panelAll) {
         this.panelAll = panelAll;
     }
+
     public JPanel getPanelSuperior() {
         return panelSuperior;
     }
+
     public void setPanelSuperior(JPanel panelSuperior) {
         this.panelSuperior = panelSuperior;
     }
+
     public JLabel getLblTitulo() {
         return lblTitulo;
     }
+
     public void setLblTitulo(JLabel lblTitulo) {
         this.lblTitulo = lblTitulo;
     }
+
     public JPanel getPanelCentral() {
         return panelCentral;
     }
+
     public void setPanelCentral(JPanel panelCentral) {
         this.panelCentral = panelCentral;
     }
-    public JTextField getTxtUsuario() {
-        return txtUsuario;
+
+    public JTextField getTxtCedula() {
+        return txtCedula;
     }
-    public void setTxtUsuario(JTextField txtUsuario) {
-        this.txtUsuario = txtUsuario;
+
+    public void setTxtCedula(JTextField txtCedula) {
+        this.txtCedula = txtCedula;
     }
+
     public JTextField getTxtContrasena() {
         return txtContrasena;
     }
+
     public void setTxtContrasena(JTextField txtContrasena) {
         this.txtContrasena = txtContrasena;
     }
+
     public JButton getBtnRegistro() {
         return btnRegistro;
     }
+
     public void setBtnRegistro(JButton btnRegistro) {
         this.btnRegistro = btnRegistro;
     }
+
     public JButton getBtnClean() {
         return btnClean;
     }
+
     public void setBtnClean(JButton btnClean) {
         this.btnClean = btnClean;
     }
+
     public JButton getBtnSalir() {
         return btnSalir;
     }
+
     public void setBtnSalir(JButton btnSalir) {
         this.btnSalir = btnSalir;
     }
+
     public JPanel getPanelInferior() {
         return panelInferior;
     }
+
     public void setPanelInferior(JPanel panelInferior) {
         this.panelInferior = panelInferior;
     }
-    public JLabel getLblUsuario() {
-        return lblUsuario;
+
+    public JLabel getLblCedula() {
+        return lblCedula;
     }
-    public void setLblUsuario(JLabel lblUsuario) {
-        this.lblUsuario = lblUsuario;
+
+    public void setLblCedula(JLabel lblCedula) {
+        this.lblCedula = lblCedula;
     }
+
     public JLabel getLblContrasena() {
         return lblContrasena;
     }
+
     public void setLblContrasena(JLabel lblContrasena) {
         this.lblContrasena = lblContrasena;
     }
+
     public JPanel getPanelForm() {
         return panelForm;
     }
+
     public void setPanelForm(JPanel panelForm) {
         this.panelForm = panelForm;
     }
+
     public JLabel getLblPregunta1() {
         return lblPregunta1;
     }
+
     public void setLblPregunta1(JLabel lblPregunta1) {
         this.lblPregunta1 = lblPregunta1;
     }
+
     public JTextField getTxtPregunta1() {
         return txtPregunta1;
     }
+
     public void setTxtPregunta1(JTextField txtPregunta1) {
         this.txtPregunta1 = txtPregunta1;
     }
+
     public JTextField getTxtPregunta2() {
         return txtPregunta2;
     }
+
     public void setTxtPregunta2(JTextField txtPregunta2) {
         this.txtPregunta2 = txtPregunta2;
     }
+
     public JTextField getTxtPregunta3() {
         return txtPregunta3;
     }
+
     public void setTxtPregunta3(JTextField txtPregunta3) {
         this.txtPregunta3 = txtPregunta3;
     }
+
     public JLabel getLblPregunta2() {
         return lblPregunta2;
     }
+
     public void setLblPregunta2(JLabel lblPregunta2) {
         this.lblPregunta2 = lblPregunta2;
     }
+
     public JLabel getLblPregunta3() {
         return lblPregunta3;
     }
+
     public void setLblPregunta3(JLabel lblPregunta3) {
         this.lblPregunta3 = lblPregunta3;
     }
+
     public JTextField getTxtNombreCompleto() {
         return txtNombreCompleto;
     }
+
     public void setTxtNombreCompleto(JTextField txtNombreCompleto) {
         this.txtNombreCompleto = txtNombreCompleto;
     }
+
     public JLabel getLblNombreCompleto() {
         return lblNombreCompleto;
     }
+
     public void setLblNombreCompleto(JLabel lblNombreCompleto) {
         this.lblNombreCompleto = lblNombreCompleto;
     }
+
     public JLabel getLblFechaNacimiento() {
         return lblFechaNacimiento;
     }
+
     public void setLblFechaNacimiento(JLabel lblFechaNacimiento) {
         this.lblFechaNacimiento = lblFechaNacimiento;
     }
+
     public JComboBox getCbxDia() {
         return cbxDia;
     }
+
     public void setCbxDia(JComboBox cbxDia) {
         this.cbxDia = cbxDia;
     }
+
     public JComboBox getCbxMes() {
         return cbxMes;
     }
+
     public void setCbxMes(JComboBox cbxMes) {
         this.cbxMes = cbxMes;
     }
+
     public JComboBox getCbxAnio() {
         return cbxAnio;
     }
+
     public void setCbxAnio(JComboBox cbxAnio) {
         this.cbxAnio = cbxAnio;
     }
+
     public JTextField getTxtCorreo() {
         return txtCorreo;
     }
+
     public void setTxtCorreo(JTextField txtCorreo) {
         this.txtCorreo = txtCorreo;
     }
+
     public JLabel getLblCorreo() {
         return lblCorreo;
     }
+
     public void setLblCorreo(JLabel lblCorreo) {
         this.lblCorreo = lblCorreo;
     }
+
     public JTextField getTxtTelefono() {
         return txtTelefono;
     }
+
     public void setTxtTelefono(JTextField txtTelefono) {
         this.txtTelefono = txtTelefono;
     }
+
     public JLabel getLblTelefono() {
         return lblTelefono;
     }
+
     public void setLblTelefono(JLabel lblTelefono) {
         this.lblTelefono = lblTelefono;
     }
-    public MensajeInternacionalizacionHandler gettipoIdioma() {
+
+    public JLabel getLblIdioma() {
+        return lblIdioma;
+    }
+
+    public void setLblIdioma(JLabel lblIdioma) {
+        this.lblIdioma = lblIdioma;
+    }
+
+    public JComboBox getCbxIdioma() {
+        return cbxIdioma;
+    }
+
+    public void setCbxIdioma(JComboBox cbxIdioma) {
+        this.cbxIdioma = cbxIdioma;
+    }
+
+    public MensajeInternacionalizacionHandler getI18n() {
         return i18n;
     }
-    public void settipoIdioma(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.i18n = tipoIdioma;
+
+    public void setI18n(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
     }
 }
