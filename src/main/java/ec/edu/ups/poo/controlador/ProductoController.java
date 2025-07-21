@@ -2,16 +2,19 @@ package ec.edu.ups.poo.controlador;
 
 import ec.edu.ups.poo.dao.ProductoDAO;
 import ec.edu.ups.poo.modelo.Producto;
-import ec.edu.ups.poo.vista.CarritoAnadirView;
-import ec.edu.ups.poo.vista.ProductoEditarView;
-import ec.edu.ups.poo.vista.ProductoEliminarView;
-import ec.edu.ups.poo.vista.ProductoAnadirView;
-import ec.edu.ups.poo.vista.ProductoListarView;
+import ec.edu.ups.poo.vista.*;
 import ec.edu.ups.poo.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * Controlador para gestionar las operaciones CRUD de productos y su interacción con las vistas.
+ * Administra el añadir, listar, editar, eliminar productos y buscar productos para añadir al carrito.
+ * Coordina los eventos de las vistas correspondientes.
+ */
 public class ProductoController {
 
     private final ProductoDAO productoDAO;
@@ -22,6 +25,19 @@ public class ProductoController {
     private final CarritoAnadirView carritoAnadirView;
     private final MensajeInternacionalizacionHandler i18n;
 
+    /**
+     * Constructor de ProductoController.
+     * Inicializa DAOs, vistas y el manejador de internacionalización.
+     * Configura los eventos para todas las vistas relacionadas con productos.
+     *
+     * @param productoDAO DAO para operaciones de productos.
+     * @param productoAnadirView Vista para añadir productos.
+     * @param productoListarView Vista para listar productos.
+     * @param productoEditarView Vista para editar productos.
+     * @param productoEliminarView Vista para eliminar productos.
+     * @param carritoAnadirView Vista para añadir productos al carrito.
+     * @param i18n Manejador de internacionalización de mensajes.
+     */
     public ProductoController(
             ProductoDAO productoDAO,
             ProductoAnadirView productoAnadirView,
@@ -41,6 +57,10 @@ public class ProductoController {
         configurarEventos();
     }
 
+    /**
+     * Configura todos los eventos de las distintas vistas relacionadas con productos.
+     * Llama a los métodos que configuran eventos específicos de cada vista.
+     */
     private void configurarEventos() {
         configurarEventosAnadir();
         configurarEventosListar();
@@ -49,42 +69,108 @@ public class ProductoController {
         configurarEventosCarrito();
     }
 
+    /**
+     * Configura los eventos de la vista para añadir un nuevo producto.
+     * No recibe parámetros ni retorna valores.
+     */
     private void configurarEventosAnadir() {
-        productoAnadirView.getBtnRegisterNewProduct().addActionListener(e -> guardarProducto());
-        productoAnadirView.getBtnCleanInputs().addActionListener(e -> {
-            productoAnadirView.limpiarCampos();
-            productoAnadirView.habilitarCampos();
-            setearNuevoIdProducto();
+        productoAnadirView.getBtnGuardar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                guardarProducto();
+            }
+        });
+        productoAnadirView.getBtnNuevo().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                productoAnadirView.limpiarCampos();
+                productoAnadirView.habilitarCampos();
+                setearNuevoIdProducto();
+            }
         });
         setearNuevoIdProducto();
     }
 
+    /**
+     * Configura los eventos de la vista para listar productos.
+     * No recibe parámetros ni retorna valores.
+     */
     private void configurarEventosListar() {
-        productoListarView.getBtnSearch().addActionListener(e ->
-                buscarProducto(productoListarView.getLblNameProdcutSearch().getText())
-        );
-        productoListarView.getBtnListProducts().addActionListener(e -> listarProductos());
+        productoListarView.getBtnBuscar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buscarProducto(productoListarView.getTxtNombre().getText());
+            }
+        });
+        productoListarView.getBtnListar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listarProductos();
+            }
+        });
     }
 
+    /**
+     * Configura los eventos de la vista para editar productos.
+     * No recibe parámetros ni retorna valores.
+     */
     private void configurarEventosEditar() {
-        productoEditarView.getBtnBuscar().addActionListener(e -> buscarProductoGestion());
-        productoEditarView.getBtnActualizar().addActionListener(e -> actualizarProducto());
+        productoEditarView.getBtnBuscar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buscarProductoGestion();
+            }
+        });
+        productoEditarView.getBtnActualizar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualistreamzarProducto();
+            }
+        });
     }
 
+    /**
+     * Configura los eventos de la vista para eliminar productos.
+     * No recibe parámetros ni retorna valores.
+     */
     private void configurarEventosEliminar() {
-        productoEliminarView.getBtnBuscar().addActionListener(e -> buscarProductoGestionDelete());
-        productoEliminarView.getBtnEliminar().addActionListener(e -> eliminarProductoDelete());
+        productoEliminarView.getBtnBuscar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buscarProductoGestionDelete();
+            }
+        });
+        productoEliminarView.getBtnEliminar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eliminarProductoDelete();
+            }
+        });
     }
 
+    /**
+     * Configura los eventos de la vista de añadir productos al carrito.
+     * No recibe parámetros ni retorna valores.
+     */
     private void configurarEventosCarrito() {
-        carritoAnadirView.getBtnBuscar().addActionListener(e -> buscarProductoEnCarrito());
+        carritoAnadirView.getBtnBuscar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buscarProductoEnCarrito();
+            }
+        });
     }
 
+    /**
+     * Guarda un nuevo producto en el sistema si los datos son válidos.
+     * Muestra mensajes de confirmación y error según corresponda.
+     * No recibe parámetros ni retorna valores.
+     */
     private void guardarProducto() {
         try {
-            int codigo = Integer.parseInt(productoAnadirView.getLblCodeProduct().getText());
-            String nombre = productoAnadirView.getLblNameProduct().getText();
-            double precio = Double.parseDouble(productoAnadirView.getLblPriceProduct().getText());
+            int codigo = Integer.parseInt(productoAnadirView.getTxtCodigo().getText());
+            String nombre = productoAnadirView.getTxtNombre().getText();
+            double precio = Double.parseDouble(productoAnadirView.getLblPrecio().getText());
 
             if (codigo <= 0) {
                 productoAnadirView.mostrarMensaje(
@@ -140,6 +226,11 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Busca productos por nombre y los muestra en la vista de listado.
+     *
+     * @param nombre Nombre del producto a buscar.
+     */
     private void buscarProducto(String nombre) {
         if (!nombre.isEmpty()) {
             List<Producto> productos = productoDAO.buscarPorNombre(nombre);
@@ -162,11 +253,19 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Lista todos los productos y los muestra en la vista de listado.
+     * No recibe parámetros ni retorna valores.
+     */
     public void listarProductos() {
         List<Producto> productos = productoDAO.listarTodos();
         productoListarView.mostrarProductos(productos);
     }
 
+    /**
+     * Busca un producto por código para la gestión de eliminación y lo muestra en la vista.
+     * No recibe parámetros ni retorna valores.
+     */
     private void buscarProductoGestionDelete() {
         String txtCod = productoEliminarView.getTxtCodigo().getText();
         if (!txtCod.isEmpty()) {
@@ -201,6 +300,10 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Busca un producto por código para la gestión de edición y lo muestra en la vista.
+     * No recibe parámetros ni retorna valores.
+     */
     private void buscarProductoGestion() {
         String txtCod = productoEditarView.getTxtCodigo().getText();
         if (!txtCod.isEmpty()) {
@@ -235,6 +338,10 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Busca un producto por código para añadirlo al carrito y lo muestra en la vista.
+     * No recibe parámetros ni retorna valores.
+     */
     private void buscarProductoEnCarrito() {
         String txtCod = carritoAnadirView.getLblCodeProductSearch().getText();
         if (!txtCod.isEmpty()) {
@@ -270,7 +377,12 @@ public class ProductoController {
         }
     }
 
-    private void actualizarProducto() {
+    /**
+     * Actualiza los datos de un producto existente si los datos son válidos.
+     * Muestra mensajes de confirmación y error según corresponda.
+     * No recibe parámetros ni retorna valores.
+     */
+    private void actualistreamzarProducto() {
         String txtCod = productoEditarView.getTxtCodigo().getText();
         if (!txtCod.isEmpty()) {
             try {
@@ -320,6 +432,11 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Elimina un producto por su código si existe y confirma la acción.
+     * Muestra mensajes de éxito o error según corresponda.
+     * No recibe parámetros ni retorna valores.
+     */
     private void eliminarProductoDelete() {
         String txtCod = productoEliminarView.getTxtCodigo().getText();
         if (!txtCod.isEmpty()) {
@@ -357,12 +474,21 @@ public class ProductoController {
         }
     }
 
+    /**
+     * Establece el nuevo ID para el producto a añadir, basado en el máximo actual.
+     * No recibe parámetros ni retorna valores.
+     */
     private void setearNuevoIdProducto() {
         int nuevoId = obtenerSiguienteIdProducto();
-        productoAnadirView.getLblCodeProduct().setText(String.valueOf(nuevoId));
-        productoAnadirView.getLblCodeProduct().setEditable(false);
+        productoAnadirView.getTxtCodigo().setText(String.valueOf(nuevoId));
+        productoAnadirView.getTxtCodigo().setEditable(false);
     }
 
+    /**
+     * Obtiene el siguiente ID disponible para un nuevo producto.
+     *
+     * @return Siguiente ID disponible como entero.
+     */
     private int obtenerSiguienteIdProducto() {
         int maxId = 0;
         for (Producto producto : productoDAO.listarTodos()) {

@@ -13,7 +13,13 @@ import java.awt.*;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Vista para editar un carrito de compras.
+ * Permite añadir, actualizar, eliminar productos, mostrar resumen de valores e internacionalización.
+ */
 public class CarritoEditarView extends JInternalFrame {
+
+    // Atributos
     private JPanel panelAll;
     private JTextField txtCodigoProducto;
     private JTextField txtNombre;
@@ -43,6 +49,7 @@ public class CarritoEditarView extends JInternalFrame {
     private JButton btnBuscarCarrito;
     private JButton btnClean;
     private JPanel panelFinal;
+    private JLabel lblItemsCarrito;
     private JLabel lblCordigocCarrito;
     private JTextField txtSub;
     private JLabel lblTot;
@@ -55,6 +62,11 @@ public class CarritoEditarView extends JInternalFrame {
     private double iva = 0.0;
     private double total = 0.0;
 
+    /**
+     * Constructor principal.
+     * Inicializa la vista, aplica idioma, configura tabla y combo.
+     * @param i18n Manejador de internacionalización.
+     */
     public CarritoEditarView(MensajeInternacionalizacionHandler i18n) {
         this.i18n = i18n;
         setContentPane(panelAll);
@@ -69,47 +81,43 @@ public class CarritoEditarView extends JInternalFrame {
         aplicarIdioma();
     }
 
+    /**
+     * Actualiza los campos de subtotal, IVA y total según el locale.
+     * @param locale Idioma y formato regional.
+     */
     public void refrescarResumenValores(Locale locale) {
         txtSub.setText(FormateadorUtils.formatearMoneda(subtotal, locale));
         txtIva.setText(FormateadorUtils.formatearMoneda(iva, locale));
         txtTot.setText(FormateadorUtils.formatearMoneda(total, locale));
     }
 
-    public void cargarDatosCombobox(){
+    /**
+     * Carga los números del 1 al 20 en el combobox de cantidad.
+     */
+    public void cargarDatosCombobox() {
         cbxCantidad.removeAllItems();
         for (int i = 1; i <= 20; i++) {
             cbxCantidad.addItem(i);
         }
     }
 
+    /**
+     * Muestra un cuadro de mensaje informativo, de advertencia o de error.
+     * @param mensaje Mensaje a mostrar.
+     * @param titulo Título de la ventana.
+     * @param tipo Tipo de mensaje (JOptionPane).
+     */
     public void mostrarMensaje(String mensaje, String titulo, int tipo) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, tipo);
     }
 
-    public void limpiarCampos() {
-        cbxCantidad.setSelectedIndex(0);
-        txtCodigoProducto.setText("");
-        txtNombre.setText("");
-        txtPrecio.setText("");
-    }
-
-    public void mostrarItemsCarrito(List<ItemCarrito> items) {
-        modelo.setRowCount(0);
-        Locale locale = i18n.getLocale();
-        for (ItemCarrito item : items) {
-            Producto p = item.getProducto();
-            String precioFormateado = FormateadorUtils.formatearMoneda(p.getPrecio(), locale);
-            String totalItemFormateado = FormateadorUtils.formatearMoneda(item.getTotalItem(), locale);
-            modelo.addRow(new Object[]{
-                    p.getCodigo(),
-                    p.getNombre(),
-                    precioFormateado,
-                    item.getCantidad(),
-                    totalItemFormateado
-            });
-        }
-    }
-
+    /**
+     * Muestra un cuadro de confirmación con opciones.
+     * @param mensaje Mensaje a mostrar.
+     * @param titulo Título de la ventana.
+     * @param tipo Tipo de mensaje.
+     * @return Índice de la opción seleccionada.
+     */
     public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
         Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
         return JOptionPane.showOptionDialog(
@@ -118,7 +126,10 @@ public class CarritoEditarView extends JInternalFrame {
                 null, botones, botones[0]);
     }
 
-    public void cargarTabla(){
+    /**
+     * Configura el modelo de la tabla, aplica estilos y alineación.
+     */
+    public void cargarTabla() {
         modelo = new DefaultTableModel(new Object[]{"Código", "Nombre", "Precio", "Cantidad", "Total Item"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -127,8 +138,8 @@ public class CarritoEditarView extends JInternalFrame {
         };
         tblProducts.setModel(modelo);
 
-        Color fondo = new Color(132, 148, 229);
-        Color letras = Color.BLACK;
+        Color fondo = new Color(29, 30, 32);
+        Color letras = Color.WHITE;
 
         if (panelAll != null) panelAll.setBackground(fondo);
         if (panelInferior != null) panelInferior.setBackground(fondo);
@@ -147,8 +158,8 @@ public class CarritoEditarView extends JInternalFrame {
         if (tblProducts != null) {
             tblProducts.setBackground(fondo);
             tblProducts.setForeground(letras);
-            tblProducts.setSelectionBackground(new Color(132, 148, 229));
-            tblProducts.setSelectionForeground(Color.BLACK);
+            tblProducts.setSelectionBackground(new Color(50, 50, 60));
+            tblProducts.setSelectionForeground(Color.WHITE);
             tblProducts.setGridColor(fondo);
 
             JTableHeader header = tblProducts.getTableHeader();
@@ -167,6 +178,40 @@ public class CarritoEditarView extends JInternalFrame {
         }
     }
 
+    /**
+     * Limpia los campos del producto actual.
+     */
+    public void limpiarCampos() {
+        cbxCantidad.setSelectedIndex(0);
+        txtCodigoProducto.setText("");
+        txtNombre.setText("");
+        txtPrecio.setText("");
+    }
+
+    /**
+     * Muestra en la tabla los items actuales del carrito.
+     * @param items Lista de items del carrito.
+     */
+    public void mostrarItemsCarrito(List<ItemCarrito> items) {
+        modelo.setRowCount(0);
+        Locale locale = i18n.getLocale();
+        for (ItemCarrito item : items) {
+            Producto p = item.getProducto();
+            String precioFormateado = FormateadorUtils.formatearMoneda(p.getPrecio(), locale);
+            String totalItemFormateado = FormateadorUtils.formatearMoneda(item.getTotalItem(), locale);
+            modelo.addRow(new Object[]{
+                    p.getCodigo(),
+                    p.getNombre(),
+                    precioFormateado,
+                    item.getCantidad(),
+                    totalItemFormateado
+            });
+        }
+    }
+
+    /**
+     * Aplica los textos traducidos según el idioma actual.
+     */
     public void aplicarIdioma() {
         setTitle(i18n.get("carrito.editar.tituloVentana"));
         lblTitulo.setText(i18n.get("carrito.editar.lbl.titulo"));
@@ -189,248 +234,416 @@ public class CarritoEditarView extends JInternalFrame {
         tblProducts.getTableHeader().repaint();
     }
 
+    /**
+     * Actualiza y repinta la tabla de productos.
+     */
     public void refrescarTabla() {
         ((DefaultTableModel) tblProducts.getModel()).fireTableDataChanged();
         tblProducts.getTableHeader().repaint();
     }
 
+    /**
+     * @return Panel principal de la vista.
+     */
     public JPanel getPanelAll() {
         return panelAll;
     }
+
+    /**
+     * @param panelAll Panel principal de la vista.
+     */
     public void setPanelAll(JPanel panelAll) {
         this.panelAll = panelAll;
     }
-    public JTextField getTxtCodigoProducto() {
-        return txtCodigoProducto;
-    }
-    public void setTxtCodigoProducto(JTextField txtCodigoProducto) {
-        this.txtCodigoProducto = txtCodigoProducto;
-    }
-    public JTextField getTxtNombre() {
-        return txtNombre;
-    }
-    public void setTxtNombre(JTextField txtNombre) {
-        this.txtNombre = txtNombre;
-    }
-    public JTextField getTxtPrecio() {
-        return txtPrecio;
-    }
-    public void setTxtPrecio(JTextField txtPrecio) {
-        this.txtPrecio = txtPrecio;
-    }
-    public JTable getTblProducts() {
-        return tblProducts;
-    }
-    public void setTblProducts(JTable tblProducts) {
-        this.tblProducts = tblProducts;
-    }
-    public JButton getBtnAnadir() {
-        return btnAnadir;
-    }
-    public void setBtnAnadir(JButton btnAnadir) {
-        this.btnAnadir = btnAnadir;
-    }
-    public JComboBox getCbxCantidad() {
-        return cbxCantidad;
-    }
-    public void setCbxCantidad(JComboBox cbxCantidad) {
-        this.cbxCantidad = cbxCantidad;
-    }
-    public JButton getBtnActualizar() {
-        return btnActualizar;
-    }
-    public void setBtnActualizar(JButton btnActualizar) {
-        this.btnActualizar = btnActualizar;
-    }
-    public JLabel getTxtTotal() {
-        return txtTotal;
-    }
-    public void setTxtTotal(JLabel txtTotal) {
-        this.txtTotal = txtTotal;
-    }
-    public JLabel getTxtShoppingCart() {
-        return txtShoppingCart;
-    }
-    public void setTxtShoppingCart(JLabel txtShoppingCart) {
-        this.txtShoppingCart = txtShoppingCart;
-    }
-    public JLabel getLblCodigoProducto() {
-        return lblCodigoProducto;
-    }
-    public void setLblCodigoProducto(JLabel lblCodigoProducto) {
-        this.lblCodigoProducto = lblCodigoProducto;
-    }
-    public JLabel getLblNombre() {
-        return lblNombre;
-    }
-    public void setLblNombre(JLabel lblNombre) {
-        this.lblNombre = lblNombre;
-    }
-    public JLabel getLblPrecio() {
-        return lblPrecio;
-    }
-    public void setLblPrecio(JLabel lblPrecio) {
-        this.lblPrecio = lblPrecio;
-    }
-    public JLabel getLblCantidad() {
-        return lblCantidad;
-    }
-    public void setLblCantidad(JLabel lblCantidad) {
-        this.lblCantidad = lblCantidad;
-    }
-    public JButton getBtnBuscarProducto() {
-        return btnBuscarProducto;
-    }
-    public void setBtnBuscarProducto(JButton btnBuscarProducto) {
-        this.btnBuscarProducto = btnBuscarProducto;
-    }
-    public JLabel getTxtTax() {
-        return txtTax;
-    }
-    public void setTxtTax(JLabel txtTax) {
-        this.txtTax = txtTax;
-    }
-    public JTextField getTxtIva() {
-        return txtIva;
-    }
-    public void setTxtIva(JTextField txtIva) {
-        this.txtIva = txtIva;
-    }
-    public JPanel getPanelInferior() {
-        return panelInferior;
-    }
-    public void setPanelInferior(JPanel panelInferior) {
-        this.panelInferior = panelInferior;
-    }
-    public JPanel getPanelItems() {
-        return panelItems;
-    }
-    public void setPanelItems(JPanel panelItems) {
-        this.panelItems = panelItems;
-    }
-    public JPanel getPanelProduct() {
-        return panelProduct;
-    }
-    public void setPanelProduct(JPanel panelProduct) {
-        this.panelProduct = panelProduct;
-    }
-    public JPanel getPanelTitle() {
-        return panelTitle;
-    }
-    public void setPanelTitle(JPanel panelTitle) {
-        this.panelTitle = panelTitle;
-    }
-    public JScrollPane getScroll() {
-        return scroll;
-    }
-    public void setScroll(JScrollPane scroll) {
-        this.scroll = scroll;
-    }
-    public JButton getBtnEliminarItem() {
-        return btnEliminarItem;
-    }
-    public void setBtnEliminarItem(JButton btnEliminarItem) {
-        this.btnEliminarItem = btnEliminarItem;
-    }
-    public JLabel getLblTitulo() {
-        return lblTitulo;
-    }
-    public void setLblTitulo(JLabel lblTitulo) {
-        this.lblTitulo = lblTitulo;
-    }
-    public DefaultTableModel getModelo() {
-        return modelo;
-    }
-    public void setModelo(DefaultTableModel modelo) {
-        this.modelo = modelo;
-    }
-    public JTextField getTxtCodigoCarrito() {
-        return txtCodigoCarrito;
-    }
-    public void setTxtCodigoCarrito(JTextField txtCodigoCarrito) {
-        this.txtCodigoCarrito = txtCodigoCarrito;
-    }
+
+    /**
+     * Obtiene el botón para buscar un carrito.
+     * @return btnBuscarCarrito botón para buscar
+     */
     public JButton getBtnBuscarCarrito() {
         return btnBuscarCarrito;
     }
+
+    /**
+     * Establece el botón para buscar un carrito.
+     * @param btnBuscarCarrito botón a asignar
+     */
     public void setBtnBuscarCarrito(JButton btnBuscarCarrito) {
         this.btnBuscarCarrito = btnBuscarCarrito;
     }
+
+    /**
+     * Obtiene el botón para limpiar los campos del formulario.
+     * @return btnClean botón para limpiar
+     */
     public JButton getBtnClean() {
         return btnClean;
     }
+
+    /**
+     * Establece el botón para limpiar los campos del formulario.
+     * @param btnClean botón a asignar
+     */
     public void setBtnClean(JButton btnClean) {
         this.btnClean = btnClean;
     }
-    public JPanel getPanelFinal() {
-        return panelFinal;
+
+    /**
+     * Obtiene el botón para eliminar un ítem del carrito.
+     * @return btnEliminarItem botón para eliminar ítem
+     */
+    public JButton getBtnEliminarItem() {
+        return btnEliminarItem;
     }
-    public void setPanelFinal(JPanel panelFinal) {
-        this.panelFinal = panelFinal;
+
+    /**
+     * Establece el botón para eliminar un ítem del carrito.
+     * @param btnEliminarItem botón a asignar
+     */
+    public void setBtnEliminarItem(JButton btnEliminarItem) {
+        this.btnEliminarItem = btnEliminarItem;
     }
-    public JLabel getLblCordigocCarrito() {
-        return lblCordigocCarrito;
+
+    /**
+     * Obtiene el campo de texto que contiene el código del carrito.
+     * @return txtCodigoCarrito campo de texto del código del carrito
+     */
+    public JTextField getTxtCodigoCarrito() {
+        return txtCodigoCarrito;
     }
-    public void setLblCordigocCarrito(JLabel lblCordigocCarrito) {
-        this.lblCordigocCarrito = lblCordigocCarrito;
+
+    /**
+     * Establece el campo de texto que contiene el código del carrito.
+     * @param txtCodigoCarrito campo de texto a asignar
+     */
+    public void setTxtCodigoCarrito(JTextField txtCodigoCarrito) {
+        this.txtCodigoCarrito = txtCodigoCarrito;
     }
+
+    /**
+     * @return Campo de texto para el código del producto.
+     */
+    public JTextField getTxtCodigoProducto() {
+        return txtCodigoProducto;
+    }
+
+    /**
+     * Obtiene el campo de texto que muestra el subtotal de la compra.
+     * @return txtSub campo de texto del subtotal
+     */
     public JTextField getTxtSub() {
         return txtSub;
     }
+
+    /**
+     * Establece el campo de texto que muestra el subtotal de la compra.
+     * @param txtSub campo de texto a asignar
+     */
     public void setTxtSub(JTextField txtSub) {
         this.txtSub = txtSub;
     }
-    public JLabel getLblTot() {
-        return lblTot;
-    }
-    public void setLblTot(JLabel lblTot) {
-        this.lblTot = lblTot;
-    }
+
+    /**
+     * Obtiene el campo de texto que muestra el total de la compra.
+     * @return txtTot campo de texto del total
+     */
     public JTextField getTxtTot() {
         return txtTot;
     }
+
+    /**
+     * Establece el campo de texto que muestra el total de la compra.
+     * @param txtTot campo de texto a asignar
+     */
     public void setTxtTot(JTextField txtTot) {
         this.txtTot = txtTot;
     }
-    public JLabel getLblIva() {
-        return lblIva;
+
+    /**
+     * @param txtCodigoProducto Campo de texto para el código del producto.
+     */
+    public void setTxtCodigoProducto(JTextField txtCodigoProducto) {
+        this.txtCodigoProducto = txtCodigoProducto;
     }
-    public void setLblIva(JLabel lblIva) {
-        this.lblIva = lblIva;
+
+    /**
+     * @return Campo de texto para el nombre del producto.
+     */
+    public JTextField getTxtNombre() {
+        return txtNombre;
     }
-    public JLabel getLblSubTot() {
-        return lblSubTot;
+
+    /**
+     * @param txtNombre Campo de texto para el nombre del producto.
+     */
+    public void setTxtNombre(JTextField txtNombre) {
+        this.txtNombre = txtNombre;
     }
-    public void setLblSubTot(JLabel lblSubTot) {
-        this.lblSubTot = lblSubTot;
+
+    /**
+     * @return Campo de texto para el precio del producto.
+     */
+    public JTextField getTxtPrecio() {
+        return txtPrecio;
     }
-    public JButton getBtnDelateItem() {
-        return btnDelateItem;
+
+    /**
+     * @param txtPrecio Campo de texto para el precio del producto.
+     */
+    public void setTxtPrecio(JTextField txtPrecio) {
+        this.txtPrecio = txtPrecio;
     }
-    public void setBtnDelateItem(JButton btnDelateItem) {
-        this.btnDelateItem = btnDelateItem;
+
+    /**
+     * @return Tabla de productos del carrito.
+     */
+    public JTable getTblProducts() {
+        return tblProducts;
     }
-    public MensajeInternacionalizacionHandler tipoIdioma() {return i18n;}
-    public void setI18n(MensajeInternacionalizacionHandler tipoIdioma) {
-        this.i18n = tipoIdioma;
+
+    /**
+     * @param tblProducts Tabla de productos del carrito.
+     */
+    public void setTblProducts(JTable tblProducts) {
+        this.tblProducts = tblProducts;
     }
+
+    /**
+     * @return Botón para añadir productos.
+     */
+    public JButton getBtnAnadir() {
+        return btnAnadir;
+    }
+
+    /**
+     * @param btnAnadir Botón para añadir productos.
+     */
+    public void setBtnAnadir(JButton btnAnadir) {
+        this.btnAnadir = btnAnadir;
+    }
+
+    /**
+     * @return ComboBox para seleccionar cantidad.
+     */
+    public JComboBox getCbxCantidad() {
+        return cbxCantidad;
+    }
+
+    /**
+     * @param cbxCantidad ComboBox para seleccionar cantidad.
+     */
+    public void setCbxCantidad(JComboBox cbxCantidad) {
+        this.cbxCantidad = cbxCantidad;
+    }
+
+    /**
+     * @return Botón para actualizar el carrito.
+     */
+    public JButton getBtnActualizar() {
+        return btnActualizar;
+    }
+
+    /**
+     * @param btnActualizar Botón para actualizar el carrito.
+     */
+    public void setBtnActualizar(JButton btnActualizar) {
+        this.btnActualizar = btnActualizar;
+    }
+
+    /**
+     * @return Etiqueta para mostrar el total.
+     */
+    public JLabel getTxtTotal() {
+        return txtTotal;
+    }
+
+    /**
+     * @param txtTotal Etiqueta para mostrar el total.
+     */
+    public void setTxtTotal(JLabel txtTotal) {
+        this.txtTotal = txtTotal;
+    }
+
+    /**
+     * @return Etiqueta del carrito de compras.
+     */
+    public JLabel getTxtShoppingCart() {
+        return txtShoppingCart;
+    }
+
+    /**
+     * @param txtShoppingCart Etiqueta del carrito de compras.
+     */
+    public void setTxtShoppingCart(JLabel txtShoppingCart) {
+        this.txtShoppingCart = txtShoppingCart;
+    }
+
+    /**
+     * @return Etiqueta del código de producto.
+     */
+    public JLabel getLblCodigoProducto() {
+        return lblCodigoProducto;
+    }
+
+    /**
+     * @param lblCodigoProducto Etiqueta del código de producto.
+     */
+    public void setLblCodigoProducto(JLabel lblCodigoProducto) {
+        this.lblCodigoProducto = lblCodigoProducto;
+    }
+
+    /**
+     * @return Etiqueta del nombre del producto.
+     */
+    public JLabel getLblNombre() {
+        return lblNombre;
+    }
+
+    /**
+     * @param lblNombre Etiqueta del nombre del producto.
+     */
+    public void setLblNombre(JLabel lblNombre) {
+        this.lblNombre = lblNombre;
+    }
+
+    /**
+     * @return Etiqueta del precio del producto.
+     */
+    public JLabel getLblPrecio() {
+        return lblPrecio;
+    }
+
+    /**
+     * @param lblPrecio Etiqueta del precio del producto.
+     */
+    public void setLblPrecio(JLabel lblPrecio) {
+        this.lblPrecio = lblPrecio;
+    }
+
+    /**
+     * @return Etiqueta de cantidad.
+     */
+    public JLabel getLblCantidad() {
+        return lblCantidad;
+    }
+
+    /**
+     * @param lblCantidad Etiqueta de cantidad.
+     */
+    public void setLblCantidad(JLabel lblCantidad) {
+        this.lblCantidad = lblCantidad;
+    }
+
+    /**
+     * @return Botón para buscar un producto.
+     */
+    public JButton getBtnBuscarProducto() {
+        return btnBuscarProducto;
+    }
+
+    /**
+     * @param btnBuscarProducto Botón para buscar un producto.
+     */
+    public void setBtnBuscarProducto(JButton btnBuscarProducto) {
+        this.btnBuscarProducto = btnBuscarProducto;
+    }
+
+    /**
+     * @return Etiqueta para mostrar el impuesto.
+     */
+    public JLabel getTxtTax() {
+        return txtTax;
+    }
+
+    /**
+     * @param txtTax Etiqueta para mostrar el impuesto.
+     */
+    public void setTxtTax(JLabel txtTax) {
+        this.txtTax = txtTax;
+    }
+
+    /**
+     * @return Campo de texto para mostrar IVA.
+     */
+    public JTextField getTxtIva() {
+        return txtIva;
+    }
+
+    /**
+     * @param txtIva Campo de texto para mostrar IVA.
+     */
+    public void setTxtIva(JTextField txtIva) {
+        this.txtIva = txtIva;
+    }
+
+    /**
+     * @return Modelo de la tabla.
+     */
+    public DefaultTableModel getModelo() {
+        return modelo;
+    }
+
+    /**
+     * @param modelo Modelo de la tabla.
+     */
+    public void setModelo(DefaultTableModel modelo) {
+        this.modelo = modelo;
+    }
+
+    /**
+     * @return Subtotal del carrito.
+     */
     public double getSubtotal() {
         return subtotal;
     }
+
+    /**
+     * @param subtotal Subtotal del carrito.
+     */
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
     }
+
+    /**
+     * @return IVA del carrito.
+     */
     public double getIva() {
         return iva;
     }
+
+    /**
+     * @param iva IVA del carrito.
+     */
     public void setIva(double iva) {
         this.iva = iva;
     }
+
+    /**
+     * @return Total del carrito.
+     */
     public double getTotal() {
         return total;
     }
+
+    /**
+     * @param total Total del carrito.
+     */
     public void setTotal(double total) {
         this.total = total;
     }
 
+    /**
+     * @return Manejador de internacionalización.
+     */
+    public MensajeInternacionalizacionHandler getI18n() {
+        return i18n;
+    }
+
+    /**
+     * @param i18n Manejador de internacionalización.
+     */
+    public void setI18n(MensajeInternacionalizacionHandler i18n) {
+        this.i18n = i18n;
+    }
 }
+
