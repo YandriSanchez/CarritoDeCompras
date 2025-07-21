@@ -45,11 +45,23 @@ public class MenuPrincipalController {
     private final UsuarioAnadirView usuarioAnadirView;
     private final UsuarioListarView usuarioListarView;
     private final UsuarioEditarView usuarioEditarView;
-    private final UsuarioElimiarView usuarioElimiarView;
+    private final UsuarioEliminarView usuarioEliminarView;
 
     private String rutaCarpetaDatos;
     private int tipoAlmacenamientoIndex;
 
+    /**
+     * Constructor que inicializa todas las vistas, DAOs, controladores y configura eventos y permisos.
+     *
+     * @param usuario Usuario autenticado
+     * @param usuarioDAO DAO de usuarios
+     * @param preguntaDAO DAO de preguntas
+     * @param productoDAO DAO de productos
+     * @param carritoDAO DAO de carritos
+     * @param i18n Manejador de internacionalización
+     * @param rutaCarpetaDatos Ruta de la carpeta de datos
+     * @param tipoAlmacenamientoIndex Tipo de almacenamiento seleccionado
+     */
     public MenuPrincipalController(
             Usuario usuario,
             UsuarioDAO usuarioDAO,
@@ -85,7 +97,7 @@ public class MenuPrincipalController {
         this.usuarioAnadirView = new UsuarioAnadirView(i18n);
         this.usuarioListarView = new UsuarioListarView(i18n);
         this.usuarioEditarView = new UsuarioEditarView(i18n);
-        this.usuarioElimiarView = new UsuarioElimiarView(i18n);
+        this.usuarioEliminarView = new UsuarioEliminarView(i18n);
 
         this.usuarioController = new UsuarioController(usuarioDAO, preguntaDAO, i18n);
         this.productoController = new ProductoController(
@@ -113,6 +125,9 @@ public class MenuPrincipalController {
         principalView.setVisible(true);
     }
 
+    /**
+     * Configura los permisos de la vista principal según el rol del usuario.
+     */
     private void configurarPermisosPorRol() {
         if (usuario.getRol() == Rol.USUARIO) {
             // PRODUCTOS
@@ -134,107 +149,58 @@ public class MenuPrincipalController {
 
             principalView.getMenuIdioma().setEnabled(true);
         }
-        // Si tienes otros roles, aquí puedes agregar más lógica.
     }
 
+    /**
+     * Configura todos los eventos (listeners) de la vista principal para productos, carritos, usuarios y logout.
+     */
     private void configurarEventos() {
         // PRODUCTOS
-        principalView.getMenuItemCrearProducto().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                abrirInternalFrame(productoAnadirView);
-            }
-        });
-        principalView.getMenuItemBuscarProducto().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                abrirInternalFrame(productoListaView);
-            }
-        });
-        principalView.getMenuItemEditarProducto().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                abrirInternalFrame(productoGestionView);
-            }
-        });
-        principalView.getMenuItemEliminarProducto().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                abrirInternalFrame(productoEliminarView);
-            }
-        });
+        principalView.getMenuItemCrearProducto().addActionListener(e -> abrirInternalFrame(productoAnadirView));
+        principalView.getMenuItemBuscarProducto().addActionListener(e -> abrirInternalFrame(productoListaView));
+        principalView.getMenuItemEditarProducto().addActionListener(e -> abrirInternalFrame(productoGestionView));
+        principalView.getMenuItemEliminarProducto().addActionListener(e -> abrirInternalFrame(productoEliminarView));
 
         // CARRITOS
-        principalView.getMenuItemCrearCarrito().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                abrirInternalFrame(carritoAnadirView);
-            }
+        principalView.getMenuItemCrearCarrito().addActionListener(e -> abrirInternalFrame(carritoAnadirView));
+        principalView.getMenuItemEditarCarrito().addActionListener(e -> abrirInternalFrame(carritoEditarView));
+        principalView.getMenuItemEliminarCarrito().addActionListener(e -> {
+            carritoController.configurarEventosEliminar(carritoEliminarView);
+            abrirInternalFrame(carritoEliminarView);
         });
-        principalView.getMenuItemEditarCarrito().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                abrirInternalFrame(carritoEditarView);
-            }
-        });
-        principalView.getMenuItemEliminarCarrito().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carritoController.configurarEventosEliminar(carritoEliminarView);
-                abrirInternalFrame(carritoEliminarView);
-            }
-        });
-        principalView.getMenuItemListarCarritos().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carritoController.configurarEventosListar(carritoListarView);
-                abrirInternalFrame(carritoListarView);;
-            }
+        principalView.getMenuItemListarCarritos().addActionListener(e -> {
+            carritoController.configurarEventosListar(carritoListarView);
+            abrirInternalFrame(carritoListarView);
         });
 
         // USUARIOS
-        principalView.getMenuItemCrearUsuario().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                usuarioController.configurarUsuarioCrearView(usuarioAnadirView);
-                abrirInternalFrame(usuarioAnadirView);
-            }
+        principalView.getMenuItemCrearUsuario().addActionListener(e -> {
+            usuarioController.configurarUsuarioCrearView(usuarioAnadirView);
+            abrirInternalFrame(usuarioAnadirView);
         });
-        principalView.getMenuItemEditarUsuario().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                usuarioController.configurarUsuarioEditarView(usuarioEditarView, usuario);
-                abrirInternalFrame(usuarioEditarView);
-            }
+        principalView.getMenuItemEditarUsuario().addActionListener(e -> {
+            usuarioController.configurarUsuarioEditarView(usuarioEditarView, usuario);
+            abrirInternalFrame(usuarioEditarView);
         });
-        principalView.getMenuItemEliminarUsuario().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                usuarioController.configurarUsuarioEliminarView(usuarioElimiarView);
-                abrirInternalFrame(usuarioElimiarView);
-            }
+        principalView.getMenuItemEliminarUsuario().addActionListener(e -> {
+            usuarioController.configurarUsuarioEliminarView(usuarioEliminarView);
+            abrirInternalFrame(usuarioEliminarView);
         });
-        principalView.getMenuItemListarUsuarios().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                usuarioController.configurarUsuarioListarView(usuarioListarView);
-                abrirInternalFrame(usuarioListarView);
-            }
+        principalView.getMenuItemListarUsuarios().addActionListener(e -> {
+            usuarioController.configurarUsuarioListarView(usuarioListarView);
+            abrirInternalFrame(usuarioListarView);
         });
 
         // LOGOUT
-        principalView.getMenuItemLogout().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                principalView.dispose();
-                SwingUtilities.invokeLater(() -> {
-                    LogInView logInView = new LogInView(i18n);
-                    logInView.getTxtRuta().setText(rutaCarpetaDatos);
-                    logInView.getCbxUbicacionGuardar().setSelectedIndex(tipoAlmacenamientoIndex);
-                    logInView.setVisible(true);
-                    new LogInController(logInView, i18n);
-                });
-            }
+        principalView.getMenuItemLogout().addActionListener(e -> {
+            principalView.dispose();
+            SwingUtilities.invokeLater(() -> {
+                LogInView logInView = new LogInView(i18n);
+                logInView.getTxtRuta().setText(rutaCarpetaDatos);
+                logInView.getCbxUbicacionGuardar().setSelectedIndex(tipoAlmacenamientoIndex);
+                logInView.setVisible(true);
+                new LogInController(logInView, i18n);
+            });
         });
 
         // Cambios de idioma
@@ -243,6 +209,11 @@ public class MenuPrincipalController {
         principalView.getMenuItemFrances().addActionListener(this::cambiarIdiomaAFrances);
     }
 
+    /**
+     * Abre un internal frame dentro del desktop pane si no está visible.
+     *
+     * @param frame InternalFrame a mostrar
+     */
     private void abrirInternalFrame(JInternalFrame frame) {
         if (!frame.isVisible()) {
             frame.setVisible(true);
@@ -250,13 +221,18 @@ public class MenuPrincipalController {
         }
     }
 
+    /**
+     * Cambia el idioma a español y aplica el cambio a todas las vistas.
+     *
+     * @param event Evento de acción recibido.
+     */
     private void cambiarIdiomaAEspanol(ActionEvent event) {
         i18n.setLenguaje("es", "EC");
         aplicarIdiomaATodo();
     }
 
     /**
-     * Cambia el idioma de la aplicación a inglés y actualiza todas las vistas.
+     * Cambia el idioma a inglés y aplica el cambio a todas las vistas.
      *
      * @param event Evento de acción recibido.
      */
@@ -265,11 +241,19 @@ public class MenuPrincipalController {
         aplicarIdiomaATodo();
     }
 
+    /**
+     * Cambia el idioma a francés y aplica el cambio a todas las vistas.
+     *
+     * @param event Evento de acción recibido.
+     */
     private void cambiarIdiomaAFrances(ActionEvent event) {
         i18n.setLenguaje("fr", "FR");
         aplicarIdiomaATodo();
     }
 
+    /**
+     * Aplica el idioma actual configurado a todas las vistas y actualiza tablas y resúmenes.
+     */
     private void aplicarIdiomaATodo() {
         principalView.aplicarIdioma();
         productoAnadirView.aplicarIdiomas();
@@ -283,7 +267,7 @@ public class MenuPrincipalController {
         usuarioAnadirView.aplicarIdioma();
         usuarioListarView.aplicaraIdioma();
         usuarioEditarView.aplicarIdioma();
-        usuarioElimiarView.aplicarIdioma();
+        usuarioEliminarView.aplicarIdioma();
 
         carritoAnadirView.refrescarResumenValores(i18n.getLocale());
         carritoEditarView.refrescarResumenValores(i18n.getLocale());

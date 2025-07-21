@@ -6,12 +6,15 @@ import ec.edu.ups.poo.util.MensajeInternacionalizacionHandler;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Vista principal del sistema que muestra el menú principal con opciones
+ * para gestionar productos, carritos, usuarios, idiomas y la sesión.
+ */
 public class MenuPrincipalView extends JFrame {
-    private JMenuBar menuBar;
     private JMenu menuProducto;
     private JMenu menuCarrito;
     private JMenu menuUsuarios;
-    private JMenu menuSesion;
+    private final JMenu menuSesion;
     private JMenu menuIdioma;
     private JMenuItem menuItemLogout;
 
@@ -34,31 +37,34 @@ public class MenuPrincipalView extends JFrame {
     private JMenuItem menuItemIngles;
     private JMenuItem menuItemFrances;
 
-    private JLabel lblBienvenida;
-
+    private final JLabel lblBienvenida;
     private MiJDesktopPane desktop;
+    private final MensajeInternacionalizacionHandler i18n;
+    private final Usuario usuarioAutenticado;
 
-    private MensajeInternacionalizacionHandler i18n;
-
-    private Usuario usuarioAutenticado;
-
+    /**
+     * Construye la ventana principal del sistema, inicializando los componentes
+     * y configurando la interfaz gráfica con el idioma especificado y el usuario autenticado.
+     *
+     * @param usuarioAutenticado Usuario actualmente autenticado en el sistema.
+     * @param i18n Manejador de internacionalización para la traducción de textos.
+     */
     public MenuPrincipalView(Usuario usuarioAutenticado, MensajeInternacionalizacionHandler i18n) {
         this.usuarioAutenticado = usuarioAutenticado;
         this.i18n = i18n;
         setLayout(new BorderLayout());
 
         desktop = new MiJDesktopPane();
-        desktop.setBackground(new Color(33, 37, 43));
+        desktop.setBackground(new Color(132, 148, 229));
 
         JPanel panelNorth = new JPanel(new BorderLayout());
-        panelNorth.setBackground(new Color(35, 38, 43));
+        panelNorth.setBackground(new Color(132, 148, 229));
 
         JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         centerPanel.setOpaque(false);
 
-
         lblBienvenida = new JLabel();
-        lblBienvenida.setFont(new Font("Arial", Font.BOLD, 26));
+        lblBienvenida.setFont(new Font("Century", Font.BOLD, 36));
         lblBienvenida.setForeground(Color.WHITE);
         lblBienvenida.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));
         lblBienvenida.setOpaque(false);
@@ -66,8 +72,8 @@ public class MenuPrincipalView extends JFrame {
 
         panelNorth.add(centerPanel, BorderLayout.CENTER);
 
-        menuBar = new JMenuBar();
-        menuBar.setBackground(new Color(29, 30, 32));
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.setBackground(new Color(0, 3, 229));
         menuBar.setForeground(Color.WHITE);
 
         menuProducto = new JMenu("Producto");
@@ -137,12 +143,17 @@ public class MenuPrincipalView extends JFrame {
         add(panelNorth, BorderLayout.NORTH);
         add(desktop, BorderLayout.CENTER);
 
+        setTitle("Sistema de Carrito de Compras");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
 
         aplicarIdioma();
     }
 
+    /**
+     * Aplica las traducciones de texto a todos los componentes visibles del menú
+     * según el idioma seleccionado en el manejador de internacionalización.
+     */
     public void aplicarIdioma(){
 
         setTitle(i18n.get("menu.titulo"));

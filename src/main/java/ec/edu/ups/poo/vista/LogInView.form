@@ -130,6 +130,7 @@
             <properties>
               <background color="-16776219"/>
               <foreground color="-394241"/>
+              <icon value="icons/register.png"/>
               <text value="Registrarse"/>
             </properties>
           </component>
@@ -160,6 +161,7 @@
             <properties>
               <background color="-16776219"/>
               <foreground color="-394241"/>
+              <icon value="icons/logIn.png"/>
               <text value="Iniciar Sesion"/>
             </properties>
           </component>
@@ -191,6 +193,7 @@
               <background color="-394241"/>
               <editable value="false"/>
               <foreground color="-16777216"/>
+              <text value=""/>
             </properties>
           </component>
           <component id="51f57" class="javax.swing.JButton" binding="btnUbicacion">

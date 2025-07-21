@@ -28,10 +28,16 @@ public class ProductoDAOArchivoBinario implements ProductoDAO {
         productos = new ArrayList<>();
         cargarProductos();
         if (productos.isEmpty()) {
-            crear(new Producto(1, "Laptop", 1200.00));
-            crear(new Producto(2, "Manzana", 0.50));
-            crear(new Producto(3, "Tablet", 400.00));
-            crear(new Producto(4, "Zapatos", 125.00));
+            crear(new Producto(1, "Arroz", 1.20));
+            crear(new Producto(2, "Leche", 0.99));
+            crear(new Producto(3, "Pan", 1.00));
+            crear(new Producto(4, "Huevos", 2.50));
+            crear(new Producto(5, "Jabón de baño", 0.80));
+            crear(new Producto(6, "Detergente", 3.50));
+            crear(new Producto(7, "Aceite de cocina", 2.75));
+            crear(new Producto(8, "Azúcar", 1.10));
+            crear(new Producto(9, "Sal", 0.40));
+            crear(new Producto(10, "Papel higiénico", 2.00));
         }
     }
 

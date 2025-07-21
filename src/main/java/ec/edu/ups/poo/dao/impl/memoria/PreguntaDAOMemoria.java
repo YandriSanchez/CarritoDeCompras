@@ -24,16 +24,16 @@ public class PreguntaDAOMemoria implements PreguntaDAO {
      */
     public PreguntaDAOMemoria(MensajeInternacionalizacionHandler i18n) {
         this.i18n = i18n;
-        preguntas.add(new Pregunta(1, "pregunta.primer_mascota"));
-        preguntas.add(new Pregunta(2, "pregunta.ciudad_nacimiento"));
-        preguntas.add(new Pregunta(3, "pregunta.comida_favorita"));
-        preguntas.add(new Pregunta(4, "pregunta.mejor_amigo_infancia"));
-        preguntas.add(new Pregunta(5, "pregunta.escuela_primaria"));
-        preguntas.add(new Pregunta(6, "pregunta.color_favorito"));
-        preguntas.add(new Pregunta(7, "pregunta.segundo_apellido_madre"));
-        preguntas.add(new Pregunta(8, "pregunta.primer_profesor"));
-        preguntas.add(new Pregunta(9, "pregunta.primer_trabajo"));
-        preguntas.add(new Pregunta(10, "pregunta.pelicula_favorita"));
+        preguntas.add(new Pregunta(1, "pregunta.libro_favorito"));
+        preguntas.add(new Pregunta(2, "pregunta.deporte_favorito"));
+        preguntas.add(new Pregunta(3, "pregunta.lugar_vacaciones"));
+        preguntas.add(new Pregunta(4, "pregunta.apodo_infancia"));
+        preguntas.add(new Pregunta(5, "pregunta.cancion_favorita"));
+        preguntas.add(new Pregunta(6, "pregunta.heroe_infancia"));
+        preguntas.add(new Pregunta(7, "pregunta.primer_concierto"));
+        preguntas.add(new Pregunta(8, "pregunta.postre_favorito"));
+        preguntas.add(new Pregunta(9, "pregunta.primer_auto"));
+        preguntas.add(new Pregunta(10, "pregunta.nombre_mascota_actual"));
     }
 
     /**

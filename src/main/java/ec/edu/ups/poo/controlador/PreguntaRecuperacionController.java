@@ -1,14 +1,10 @@
 package ec.edu.ups.poo.controlador;
 
-import ec.edu.ups.poo.dao.CarritoDAO;
-import ec.edu.ups.poo.dao.PreguntaDAO;
-import ec.edu.ups.poo.dao.ProductoDAO;
 import ec.edu.ups.poo.dao.UsuarioDAO;
 import ec.edu.ups.poo.modelo.Usuario;
 import ec.edu.ups.poo.modelo.PreguntaUsuario;
 import ec.edu.ups.poo.vista.PreguntasValidacionView;
 import ec.edu.ups.poo.vista.LogInView;
-import ec.edu.ups.poo.vista.PreguntasValidacionView;
 import ec.edu.ups.poo.util.MensajeInternacionalizacionHandler;
 
 import javax.swing.*;
@@ -24,20 +20,13 @@ public class PreguntaRecuperacionController {
 
     private final Usuario usuario;
     private final UsuarioDAO usuarioDAO;
-    private final PreguntaDAO preguntaDAO;
-    private final ProductoDAO productoDAO;
-    private final CarritoDAO carritoDAO;
     private final PreguntasValidacionView preguntasView;
     private final MensajeInternacionalizacionHandler i18n;
     private final List<PreguntaUsuario> preguntasGuardadas;
-
-    // Para recordar el modo y ruta de almacenamiento
     private final String rutaCarpetaDatos;
     private final int tipoAlmacenamientoIndex;
-
     private int preguntaActual = 0;
     private int cicloIntentos = 0;
-    private final int intentos = 3;
     private boolean puedeCambiarContrasena = false;
 
     /**
@@ -47,9 +36,6 @@ public class PreguntaRecuperacionController {
      *
      * @param usuario Usuario que recupera la contraseña.
      * @param usuarioDAO DAO para operaciones de usuario.
-     * @param preguntaDAO DAO para operaciones de preguntas.
-     * @param productoDAO DAO para operaciones de producto.
-     * @param carritoDAO DAO para operaciones de carrito.
      * @param preguntasView Vista de validación de preguntas.
      * @param i18n Manejador de internacionalización de mensajes.
      * @param rutaCarpetaDatos Ruta de la carpeta de datos.
@@ -58,9 +44,6 @@ public class PreguntaRecuperacionController {
     public PreguntaRecuperacionController(
             Usuario usuario,
             UsuarioDAO usuarioDAO,
-            PreguntaDAO preguntaDAO,
-            ProductoDAO productoDAO,
-            CarritoDAO carritoDAO,
             PreguntasValidacionView preguntasView,
             MensajeInternacionalizacionHandler i18n,
             String rutaCarpetaDatos,
@@ -68,9 +51,6 @@ public class PreguntaRecuperacionController {
     ) {
         this.usuario = usuario;
         this.usuarioDAO = usuarioDAO;
-        this.preguntaDAO = preguntaDAO;
-        this.productoDAO = productoDAO;
-        this.carritoDAO = carritoDAO;
         this.preguntasView = preguntasView;
         this.i18n = i18n;
         this.preguntasGuardadas = usuario.getPreguntaValidacion();
@@ -85,7 +65,6 @@ public class PreguntaRecuperacionController {
 
     /**
      * Inicializa la vista de preguntas de recuperación, ocultando y mostrando los campos necesarios.
-     * No recibe parámetros ni retorna valores.
      */
     private void inicializarVista() {
         preguntaActual = 0;
@@ -112,7 +91,6 @@ public class PreguntaRecuperacionController {
     /**
      * Configura los eventos de la vista de preguntas de recuperación.
      * Asocia acciones a los botones y controles de la vista.
-     * No recibe parámetros ni retorna valores.
      */
     private void configurarEventos() {
         preguntasView.getBtnsiguientePregunta().addActionListener(new ActionListener() {
@@ -149,7 +127,6 @@ public class PreguntaRecuperacionController {
 
     /**
      * Muestra la pregunta de seguridad actual en la vista.
-     * No recibe parámetros ni retorna valores.
      */
     private void mostrarPreguntaActual() {
         if (preguntaActual < preguntasGuardadas.size()) {
@@ -165,7 +142,6 @@ public class PreguntaRecuperacionController {
     /**
      * Comprueba la respuesta ingresada por el usuario para la pregunta actual.
      * Gestiona los intentos y habilita el cambio de contraseña si la respuesta es correcta.
-     * No recibe parámetros ni retorna valores.
      */
     private void comprobarRespuesta() {
         if (puedeCambiarContrasena) return;
@@ -187,6 +163,7 @@ public class PreguntaRecuperacionController {
             preguntaActual++;
             if (preguntaActual >= preguntasGuardadas.size()) {
                 cicloIntentos++;
+                int intentos = 3;
                 if (cicloIntentos < intentos) {
                     int intentosRestantes = intentos - cicloIntentos;
                     preguntasView.mostrarMensaje(
@@ -226,7 +203,6 @@ public class PreguntaRecuperacionController {
 
     /**
      * Habilita los campos para el cambio de contraseña si la respuesta es correcta.
-     * No recibe parámetros ni retorna valores.
      */
     private void habilitarCambioContrasena() {
         preguntasView.getBtnsiguientePregunta().setVisible(false);
@@ -250,7 +226,6 @@ public class PreguntaRecuperacionController {
     /**
      * Cambia la contraseña del usuario si la nueva contraseña es válida.
      * Muestra mensajes de éxito o error según corresponda.
-     * No recibe parámetros ni retorna valores.
      */
     private void cambiarContrasena() {
         String nuevaContrasena = preguntasView.getTxtNuevaContra().getText().trim();
@@ -282,7 +257,6 @@ public class PreguntaRecuperacionController {
 
     /**
      * Limpia los campos de respuesta o nueva contraseña en la vista, según el estado actual.
-     * No recibe parámetros ni retorna valores.
      */
     private void limpiarCampos() {
         if (!puedeCambiarContrasena) {
@@ -293,14 +267,11 @@ public class PreguntaRecuperacionController {
     }
 
     /**
-     * Cambia el idioma de la vista según la selección del usuario.
-     * Aplica el idioma y actualiza la pregunta mostrada.
-     * No recibe parámetros ni retorna valores.
+     * Cambia el idioma de la vista según la selección del usuario y actualiza la pregunta mostrada.
      */
     private void cambioDeIdiomaDesdeCbx() {
         int selectedIndex = preguntasView.getCbxIdioma().getSelectedIndex();
         switch (selectedIndex) {
-            case 0: i18n.setLenguaje("es", "EC"); break;
             case 1: i18n.setLenguaje("en", "US"); break;
             case 2: i18n.setLenguaje("fr", "FR"); break;
             default: i18n.setLenguaje("es", "EC");
@@ -311,7 +282,6 @@ public class PreguntaRecuperacionController {
 
     /**
      * Regresa a la vista de login y restablece la configuración de almacenamiento.
-     * No recibe parámetros ni retorna valores.
      */
     private void regresarAlLogin(){
         preguntasView.dispose();

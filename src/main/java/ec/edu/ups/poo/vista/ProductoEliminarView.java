@@ -1,8 +1,16 @@
 package ec.edu.ups.poo.vista;
 
+import ec.edu.ups.poo.modelo.Producto;
 import ec.edu.ups.poo.util.MensajeInternacionalizacionHandler;
 import javax.swing.*;
+import java.util.List;
 
+/**
+ * Clase ProductoEliminarView.
+ * <p>Vista gráfica para eliminar productos en la aplicación.
+ * Permite buscar un producto por código, mostrar sus datos, eliminarlo,
+ * y aplicar textos según el idioma configurado.
+ */
 public class ProductoEliminarView extends JInternalFrame {
     private JPanel panelTop;
     private JLabel lblTitulo;
@@ -19,6 +27,12 @@ public class ProductoEliminarView extends JInternalFrame {
     private JPanel panelAll;
     private MensajeInternacionalizacionHandler i18n;
 
+    /**
+     * Constructor que inicializa la vista, configura el diseño
+     * y aplica la internacionalización.
+     *
+     * @param i18n Manejador de internacionalización
+     */
     public ProductoEliminarView(MensajeInternacionalizacionHandler i18n) {
         this.i18n = i18n;
         setContentPane(panelAll);
@@ -30,10 +44,26 @@ public class ProductoEliminarView extends JInternalFrame {
         setResizable(true);
         aplicarIdioma();
     }
+
+    /**
+     * Muestra un mensaje emergente al usuario.
+     *
+     * @param mensaje Mensaje que se mostrará
+     * @param titulo  Título de la ventana del mensaje
+     * @param tipo    Tipo de mensaje (información, error, advertencia, etc.)
+     */
     public void mostrarMensaje(String mensaje, String titulo, int tipo) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, tipo);
     }
 
+    /**
+     * Muestra un cuadro de confirmación y devuelve la opción elegida.
+     *
+     * @param mensaje Mensaje a mostrar
+     * @param titulo  Título del cuadro de confirmación
+     * @param tipo    Tipo de mensaje
+     * @return Entero con la opción seleccionada
+     */
     public int mostrarMensajeConfirmacion(String mensaje, String titulo, int tipo) {
         Object[] botones = {i18n.get("mensaje.confirmacion"), i18n.get("mensaje.cancelacion")};
         return JOptionPane.showOptionDialog(
@@ -42,6 +72,9 @@ public class ProductoEliminarView extends JInternalFrame {
                 null, botones, botones[0]);
     }
 
+    /**
+     * Aplica los textos a los componentes de la vista según el idioma configurado.
+     */
     public void aplicarIdioma() {
 
         setTitle(i18n.get("producto.eliminar.titulo"));
@@ -53,115 +86,190 @@ public class ProductoEliminarView extends JInternalFrame {
         btnEliminar.setText(i18n.get("producto.eliminar.btn.eliminar"));
     }
 
-    public JPanel getPanelTop() {
-        return panelTop;
+    /**
+     * Limpia los campos de texto de la vista.
+     */
+    public void limpiarCampos() {
+        txtCodigo.setText("");
+        txtNombre.setText("");
+        txtPrecio.setText("");
     }
 
-    public void setPanelTop(JPanel panelTop) {
-        this.panelTop = panelTop;
+    /**
+     * Muestra la información de un producto en los campos de texto.
+     *
+     * @param productos Lista de productos a mostrar (se usa el primero)
+     */
+    public void mostrarProductos(List<Producto> productos) {
+        txtNombre.setText(productos.get(0).getNombre());
+        txtPrecio.setText(String.valueOf(productos.get(0).getPrecio()));
     }
 
-    public JLabel getLblTitulo() {
-        return lblTitulo;
-    }
+    /**
+     * Obtiene el panel superior.
+     * @return panel superior
+     */
+    public JPanel getPanelTop() { return panelTop; }
 
-    public void setLblTitulo(JLabel lblTitulo) {
-        this.lblTitulo = lblTitulo;
-    }
+    /**
+     * Establece el panel superior.
+     * @param panelTop nuevo panel superior
+     */
+    public void setPanelTop(JPanel panelTop) { this.panelTop = panelTop; }
 
-    public JPanel getPanelCenter() {
-        return panelCenter;
-    }
+    /**
+     * Obtiene la etiqueta del título.
+     * @return etiqueta del título
+     */
+    public JLabel getLblTitulo() { return lblTitulo; }
 
-    public void setPanelCenter(JPanel panelCenter) {
-        this.panelCenter = panelCenter;
-    }
+    /**
+     * Establece la etiqueta del título.
+     * @param lblTitulo nueva etiqueta
+     */
+    public void setLblTitulo(JLabel lblTitulo) { this.lblTitulo = lblTitulo; }
 
-    public JLabel getLblCodigo() {
-        return lblCodigo;
-    }
+    /**
+     * Obtiene el panel central.
+     * @return panel central
+     */
+    public JPanel getPanelCenter() { return panelCenter; }
 
-    public void setLblCodigo(JLabel lblCodigo) {
-        this.lblCodigo = lblCodigo;
-    }
+    /**
+     * Establece el panel central.
+     * @param panelCenter nuevo panel central
+     */
+    public void setPanelCenter(JPanel panelCenter) { this.panelCenter = panelCenter; }
 
-    public JTextField getTxtCodigo() {
-        return txtCodigo;
-    }
+    /**
+     * Obtiene la etiqueta del código.
+     * @return etiqueta del código
+     */
+    public JLabel getLblCodigo() { return lblCodigo; }
 
-    public void setTxtCodigo(JTextField txtCodigo) {
-        this.txtCodigo = txtCodigo;
-    }
+    /**
+     * Establece la etiqueta del código.
+     * @param lblCodigo nueva etiqueta
+     */
+    public void setLblCodigo(JLabel lblCodigo) { this.lblCodigo = lblCodigo; }
 
-    public JButton getBtnBuscar() {
-        return btnBuscar;
-    }
+    /**
+     * Obtiene el campo de texto del código.
+     * @return campo de texto del código
+     */
+    public JTextField getTxtCodigo() { return txtCodigo; }
 
-    public void setBtnBuscar(JButton btnBuscar) {
-        this.btnBuscar = btnBuscar;
-    }
+    /**
+     * Establece el campo de texto del código.
+     * @param txtCodigo nuevo campo de texto
+     */
+    public void setTxtCodigo(JTextField txtCodigo) { this.txtCodigo = txtCodigo; }
 
-    public JPanel getPanelMenor() {
-        return panelMenor;
-    }
+    /**
+     * Obtiene el botón para buscar productos.
+     * @return botón buscar
+     */
+    public JButton getBtnBuscar() { return btnBuscar; }
 
-    public void setPanelMenor(JPanel panelMenor) {
-        this.panelMenor = panelMenor;
-    }
+    /**
+     * Establece el botón para buscar productos.
+     * @param btnBuscar nuevo botón buscar
+     */
+    public void setBtnBuscar(JButton btnBuscar) { this.btnBuscar = btnBuscar; }
 
-    public JLabel getLblNombre() {
-        return lblNombre;
-    }
+    /**
+     * Obtiene el panel menor.
+     * @return panel menor
+     */
+    public JPanel getPanelMenor() { return panelMenor; }
 
-    public void setLblNombre(JLabel lblNombre) {
-        this.lblNombre = lblNombre;
-    }
+    /**
+     * Establece el panel menor.
+     * @param panelMenor nuevo panel menor
+     */
+    public void setPanelMenor(JPanel panelMenor) { this.panelMenor = panelMenor; }
 
-    public JLabel getLblPrecio() {
-        return lblPrecio;
-    }
+    /**
+     * Obtiene la etiqueta del nombre.
+     * @return etiqueta del nombre
+     */
+    public JLabel getLblNombre() { return lblNombre; }
 
-    public void setLblPrecio(JLabel lblPrecio) {
-        this.lblPrecio = lblPrecio;
-    }
+    /**
+     * Establece la etiqueta del nombre.
+     * @param lblNombre nueva etiqueta
+     */
+    public void setLblNombre(JLabel lblNombre) { this.lblNombre = lblNombre; }
 
-    public JTextField getTxtNombre() {
-        return txtNombre;
-    }
+    /**
+     * Obtiene la etiqueta del precio.
+     * @return etiqueta del precio
+     */
+    public JLabel getLblPrecio() { return lblPrecio; }
 
-    public void setTxtNombre(JTextField txtNombre) {
-        this.txtNombre = txtNombre;
-    }
+    /**
+     * Establece la etiqueta del precio.
+     * @param lblPrecio nueva etiqueta
+     */
+    public void setLblPrecio(JLabel lblPrecio) { this.lblPrecio = lblPrecio; }
 
-    public JTextField getTxtPrecio() {
-        return txtPrecio;
-    }
+    /**
+     * Obtiene el campo de texto del nombre.
+     * @return campo de texto del nombre
+     */
+    public JTextField getTxtNombre() { return txtNombre; }
 
-    public void setTxtPrecio(JTextField txtPrecio) {
-        this.txtPrecio = txtPrecio;
-    }
+    /**
+     * Establece el campo de texto del nombre.
+     * @param txtNombre nuevo campo de texto
+     */
+    public void setTxtNombre(JTextField txtNombre) { this.txtNombre = txtNombre; }
 
-    public JButton getBtnEliminar() {
-        return btnEliminar;
-    }
+    /**
+     * Obtiene el campo de texto del precio.
+     * @return campo de texto del precio
+     */
+    public JTextField getTxtPrecio() { return txtPrecio; }
 
-    public void setBtnEliminar(JButton btnEliminar) {
-        this.btnEliminar = btnEliminar;
-    }
+    /**
+     * Establece el campo de texto del precio.
+     * @param txtPrecio nuevo campo de texto
+     */
+    public void setTxtPrecio(JTextField txtPrecio) { this.txtPrecio = txtPrecio; }
 
-    public JPanel getPanelAll() {
-        return panelAll;
-    }
+    /**
+     * Obtiene el botón para eliminar productos.
+     * @return botón eliminar
+     */
+    public JButton getBtnEliminar() { return btnEliminar; }
 
-    public void setPanelAll(JPanel panelAll) {
-        this.panelAll = panelAll;
-    }
+    /**
+     * Establece el botón para eliminar productos.
+     * @param btnEliminar nuevo botón eliminar
+     */
+    public void setBtnEliminar(JButton btnEliminar) { this.btnEliminar = btnEliminar; }
 
-    public MensajeInternacionalizacionHandler getI18n() {
-        return i18n;
-    }
+    /**
+     * Obtiene el panel principal que contiene todos los elementos.
+     * @return panel principal
+     */
+    public JPanel getPanelAll() { return panelAll; }
 
-    public void setI18n(MensajeInternacionalizacionHandler i18n) {
-        this.i18n = i18n;
-    }
+    /**
+     * Establece el panel principal que contiene todos los elementos.
+     * @param panelAll nuevo panel principal
+     */
+    public void setPanelAll(JPanel panelAll) { this.panelAll = panelAll; }
+
+    /**
+     * Obtiene el manejador de internacionalización.
+     * @return manejador de internacionalización
+     */
+    public MensajeInternacionalizacionHandler getI18n() { return i18n; }
+
+    /**
+     * Establece el manejador de internacionalización.
+     * @param i18n nuevo manejador
+     */
+    public void setI18n(MensajeInternacionalizacionHandler i18n) { this.i18n = i18n; }
 }

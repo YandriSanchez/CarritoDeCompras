@@ -18,7 +18,8 @@ import java.util.*;
 
 /**
  * Controlador para la gestión de usuarios.
- * Permite autenticar, registrar, editar, eliminar y listar usuarios, así como configurar las vistas correspondientes.
+ * Permite autenticar, registrar, editar, eliminar y listar usuarios, así como configurar las vistas
+ * correspondientes.
  */
 public class UsuarioController {
 
@@ -139,7 +140,7 @@ public class UsuarioController {
         if (usuarioAutenticado.getRol().equals(Rol.USUARIO)) {
             setCamposUsuarioAutenticado(view, usuarioAutenticado, cbxRol);
         } else {
-            view.getTxtUsuario().setEditable(true);
+            view.getTxtCedula().setEditable(true);
             view.getBtnBuscar().setEnabled(true);
             view.getBtnBuscar().addActionListener(new ActionListener() {
                 @Override
@@ -168,7 +169,7 @@ public class UsuarioController {
      *
      * @param view Vista de eliminar usuario.
      */
-    public void configurarUsuarioEliminarView(UsuarioElimiarView view) {
+    public void configurarUsuarioEliminarView(UsuarioEliminarView view) {
         view.getBtnBuscar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -211,7 +212,7 @@ public class UsuarioController {
      * @param cbxRol ComboBox de roles.
      */
     private void registrarUsuarioDesdeView(UsuarioAnadirView view, JComboBox cbxRol) {
-        String username = view.getTxtUsuario().getText().trim();
+        String username = view.getTxtCedula().getText().trim();
         String password = view.getTxtContrasena().getText().trim();
         Rol rol = (Rol) cbxRol.getSelectedItem();
         String nombreCompleto = view.getTxtNombreCompleto().getText().trim();
@@ -253,8 +254,8 @@ public class UsuarioController {
      * @param cbxRol ComboBox de roles.
      */
     private void setCamposUsuarioAutenticado(UsuarioEditarView view, Usuario usuarioAutenticado, JComboBox cbxRol) {
-        view.getTxtUsuario().setText(usuarioAutenticado.getCedula());
-        view.getTxtUsuario().setEditable(false);
+        view.getTxtCedula().setText(usuarioAutenticado.getCedula());
+        view.getTxtCedula().setEditable(false);
         view.getTxtContrasena().setText(usuarioAutenticado.getContrasena());
         view.getTxtNombreCompleto().setText(usuarioAutenticado.getNombreCompleto());
 
@@ -284,7 +285,7 @@ public class UsuarioController {
      * @param cbxRol ComboBox de roles.
      */
     private void buscarUsuarioParaEditar(UsuarioEditarView view, JComboBox cbxRol) {
-        String usernameBuscar = view.getTxtUsuario().getText().trim();
+        String usernameBuscar = view.getTxtCedula().getText().trim();
         if (usernameBuscar.isEmpty()) {
             view.mostrarMensaje(i18n.get("usuario.error.ingrese_usuario_buscar"), i18n.get("global.error"), JOptionPane.ERROR_MESSAGE);
             return;
@@ -295,7 +296,7 @@ public class UsuarioController {
             limpiarCamposEditar(view, cbxRol);
         } else {
             setCamposUsuarioAutenticado(view, usuarioEncontrado, cbxRol);
-            view.getTxtUsuario().setEditable(false);
+            view.getTxtCedula().setEditable(false);
             cbxRol.setEnabled(true);
         }
     }
@@ -308,7 +309,7 @@ public class UsuarioController {
      * @param cbxRol ComboBox de roles.
      */
     private void actualizarUsuarioDesdeView(UsuarioEditarView view, JComboBox cbxRol) {
-        String username = view.getTxtUsuario().getText().trim();
+        String username = view.getTxtCedula().getText().trim();
         String password = view.getTxtContrasena().getText().trim();
         String correo = view.getTxtCorreo().getText().trim();
         String telefono = view.getTxtTelefono().getText().trim();
@@ -352,7 +353,7 @@ public class UsuarioController {
      *
      * @param view Vista de eliminar usuario.
      */
-    private void buscarUsuarioParaEliminar(UsuarioElimiarView view) {
+    private void buscarUsuarioParaEliminar(UsuarioEliminarView view) {
         String username = view.getTxtUsuario().getText().trim();
         if (username.isEmpty()) {
             view.mostrarMensaje(i18n.get("usuario.error.ingrese_usuario_eliminar"), i18n.get("global.error"), JOptionPane.ERROR_MESSAGE);
@@ -376,7 +377,7 @@ public class UsuarioController {
      * @param view Vista de eliminar usuario.
      * @param usuario Usuario cuyos datos se mostrarán.
      */
-    private void setCamposUsuarioEliminar(UsuarioElimiarView view, Usuario usuario) {
+    private void setCamposUsuarioEliminar(UsuarioEliminarView view, Usuario usuario) {
         view.getTxtContrasena().setText(usuario.getContrasena());
         view.getTxtNombreCompleto().setText(usuario.getNombreCompleto());
         Date fecha = usuario.getFechaNacimiento();
@@ -394,7 +395,7 @@ public class UsuarioController {
      *
      * @param view Vista de eliminar usuario.
      */
-    private void eliminarUsuarioDesdeView(UsuarioElimiarView view) {
+    private void eliminarUsuarioDesdeView(UsuarioEliminarView view) {
         String username = view.getTxtUsuario().getText().trim();
         if (username.isEmpty()) {
             view.mostrarMensaje(i18n.get("usuario.error.no_usuario_eliminar"), i18n.get("global.error"), JOptionPane.ERROR_MESSAGE);
@@ -429,7 +430,7 @@ public class UsuarioController {
         String username = view.getTxtUsuario().getText().trim();
         Object selectedRol = view.getCbxRol().getSelectedItem();
 
-        boolean isTodos = selectedRol instanceof String && "Todos".equals(selectedRol);
+        boolean isTodos = "Todos".equals(selectedRol);
 
         if (!username.isEmpty()) {
             Usuario usuario = usuarioDAO.buscarUsuario(username);
@@ -465,7 +466,7 @@ public class UsuarioController {
      * @param cbxRol ComboBox de roles.
      */
     private void limpiarCamposCrear(UsuarioAnadirView view, JComboBox cbxRol) {
-        view.getTxtUsuario().setText("");
+        view.getTxtCedula().setText("");
         view.getTxtContrasena().setText("");
         view.getTxtCorreo().setText("");
         view.getTxtTelefono().setText("");
@@ -483,7 +484,7 @@ public class UsuarioController {
      * @param cbxRol ComboBox de roles.
      */
     private void limpiarCamposEditar(UsuarioEditarView view, JComboBox cbxRol) {
-        view.getTxtUsuario().setText("");
+        view.getTxtCedula().setText("");
         view.getTxtContrasena().setText("");
         view.getTxtCorreo().setText("");
         view.getTxtTelefono().setText("");
@@ -492,7 +493,7 @@ public class UsuarioController {
         view.getCbxMes().setSelectedIndex(0);
         view.getCbxAnio().setSelectedIndex(0);
         if (cbxRol.getItemCount() > 0) cbxRol.setSelectedIndex(0);
-        view.getTxtUsuario().setEditable(true);
+        view.getTxtCedula().setEditable(true);
     }
 
     /**
@@ -500,7 +501,7 @@ public class UsuarioController {
      *
      * @param view Vista de eliminar usuario.
      */
-    private void limpiarCamposEliminar(UsuarioElimiarView view) {
+    private void limpiarCamposEliminar(UsuarioEliminarView view) {
         view.getTxtUsuario().setText("");
         view.getTxtContrasena().setText("");
         view.getTxtCorreo().setText("");

@@ -1,7 +1,5 @@
 package ec.edu.ups.poo.controlador;
 
-import ec.edu.ups.poo.dao.CarritoDAO;
-import ec.edu.ups.poo.dao.ProductoDAO;
 import ec.edu.ups.poo.dao.UsuarioDAO;
 import ec.edu.ups.poo.dao.PreguntaDAO;
 import ec.edu.ups.poo.dao.impl.texto.UsuarioDAOArchivoTexto;
@@ -26,8 +24,6 @@ public class PreguntaValidacionController {
     private final Usuario usuario;
     private final UsuarioDAO usuarioDAO;
     private final PreguntaDAO preguntaDAO;
-    private final ProductoDAO productoDAO;
-    private final CarritoDAO carritoDAO;
     private final PreguntasValidacionView preguntasView;
     private final MensajeInternacionalizacionHandler i18n;
     private List<Pregunta> listaPreguntas;
@@ -44,8 +40,6 @@ public class PreguntaValidacionController {
      * @param usuario Usuario que responde las preguntas de validación.
      * @param usuarioDAO DAO para operaciones de usuario.
      * @param preguntaDAO DAO para operaciones de preguntas.
-     * @param productoDAO DAO para operaciones de producto.
-     * @param carritoDAO DAO para operaciones de carrito.
      * @param preguntasView Vista de validación de preguntas.
      * @param i18n Manejador de internacionalización de mensajes.
      * @param rutaCarpetaDatos Ruta de la carpeta de datos.
@@ -55,8 +49,6 @@ public class PreguntaValidacionController {
             Usuario usuario,
             UsuarioDAO usuarioDAO,
             PreguntaDAO preguntaDAO,
-            ProductoDAO productoDAO,
-            CarritoDAO carritoDAO,
             PreguntasValidacionView preguntasView,
             MensajeInternacionalizacionHandler i18n,
             String rutaCarpetaDatos,
@@ -65,8 +57,6 @@ public class PreguntaValidacionController {
         this.usuario = usuario;
         this.usuarioDAO = usuarioDAO;
         this.preguntaDAO = preguntaDAO;
-        this.productoDAO = productoDAO;
-        this.carritoDAO = carritoDAO;
         this.preguntasView = preguntasView;
         this.i18n = i18n;
         this.rutaCarpetaDatos = rutaCarpetaDatos;
@@ -122,7 +112,7 @@ public class PreguntaValidacionController {
      * No recibe parámetros ni retorna valores.
      */
     private void mostrarPreguntasEnVista() {
-        JComboBox<String> cbxPreguntas = preguntasView.getCbxPreguntas();
+        JComboBox cbxPreguntas = preguntasView.getCbxPreguntas();
         cbxPreguntas.removeAllItems();
 
         List<Pregunta> todasLasPreguntas = preguntaDAO.listarTodas();
@@ -146,9 +136,9 @@ public class PreguntaValidacionController {
         }
 
         if (!listaPreguntas.isEmpty()) {
-            Pregunta primeraPregunta = listaPreguntas.get(0);
+            Pregunta primeraPregunta = listaPreguntas.getFirst();
             preguntasView.getLblQuestion().setText(i18n.get(
-                    primeraPregunta.getTexto() != null ? primeraPregunta.getTexto() : primeraPregunta.getTexto()
+                    primeraPregunta.getTexto()
             ));
         } else {
             preguntasView.getLblQuestion().setText("");
@@ -164,7 +154,7 @@ public class PreguntaValidacionController {
         if (index >= 0 && index < listaPreguntas.size()) {
             Pregunta preguntaSeleccionada = listaPreguntas.get(index);
             preguntasView.getLblQuestion().setText(i18n.get(
-                    preguntaSeleccionada.getTexto() != null ? preguntaSeleccionada.getTexto() : preguntaSeleccionada.getTexto()
+                    preguntaSeleccionada.getTexto()
             ));
         }
     }
@@ -185,11 +175,10 @@ public class PreguntaValidacionController {
                         i18n.get("global.error"),
                         JOptionPane.ERROR_MESSAGE
                 );
-                return;
             } else {
                 confirmarFinalizarPreguntas();
-                return;
             }
+            return;
         }
 
         Pregunta preguntaSeleccionada = listaPreguntas.get(index);
@@ -210,11 +199,11 @@ public class PreguntaValidacionController {
         preguntasView.getCbxPreguntas().removeItemAt(index);
         listaPreguntas.remove(index);
 
-        if (listaPreguntas.size() > 0) {
+        if (!listaPreguntas.isEmpty()) {
             preguntasView.getCbxPreguntas().setSelectedIndex(0);
-            Pregunta sigPregunta = listaPreguntas.get(0);
+            Pregunta sigPregunta = listaPreguntas.getFirst();
             preguntasView.getLblQuestion().setText(i18n.get(
-                    sigPregunta.getTexto() != null ? sigPregunta.getTexto() : sigPregunta.getTexto()
+                    sigPregunta.getTexto()
             ));
         } else {
             preguntasView.getLblQuestion().setText("");
@@ -305,7 +294,6 @@ public class PreguntaValidacionController {
         int selectedIndex = preguntasView.getCbxIdioma().getSelectedIndex();
         switch (selectedIndex) {
             case 0: i18n.setLenguaje("es", "EC"); break;
-            case 1: i18n.setLenguaje("en", "US"); break;
             case 2: i18n.setLenguaje("fr", "FR"); break;
             default: i18n.setLenguaje("en", "US");
         }

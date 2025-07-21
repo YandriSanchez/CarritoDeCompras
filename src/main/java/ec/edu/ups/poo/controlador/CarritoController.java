@@ -20,6 +20,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Controlador para gestionar las operaciones relacionadas con el carrito de compras,
+ * incluyendo agregar productos, editar, eliminar, listar y guardar carritos.
+ * Se encarga de interactuar entre la vista, el modelo y los DAOs correspondientes.
+ */
 public class CarritoController {
 
     private final CarritoDAO carritoDAO;
@@ -34,6 +39,17 @@ public class CarritoController {
     private List<ItemCarrito> copiaItemsEdit = null;
     public CarritoListarItemsView itemsView = null;
 
+    /**
+     * Constructor para inicializar el controlador del carrito.
+     *
+     * @param carritoDAO            DAO para operaciones del carrito
+     * @param productoDAO           DAO para operaciones de productos
+     * @param carritoView           Vista para añadir productos al carrito
+     * @param carritoEditarView     Vista para editar carritos
+     * @param usuarioAutenticado    Usuario actualmente autenticado
+     * @param i18n                  Handler para internacionalización de mensajes
+     * @param usuarioDAO            DAO para operaciones de usuarios
+     */
     public CarritoController(
             CarritoDAO carritoDAO,
             ProductoDAO productoDAO,
@@ -53,6 +69,9 @@ public class CarritoController {
         configurarEventos();
     }
 
+    /**
+     * Configura los listeners de los botones en las vistas de añadir y editar carrito.
+     */
     private void configurarEventos() {
         carritoView.getBtnAnadir().addActionListener(new ActionListener() {
             @Override
@@ -117,6 +136,11 @@ public class CarritoController {
         });
     }
 
+    /**
+     * Configura los eventos de la vista de listar carritos.
+     *
+     * @param carritoListarView Vista de listar carritos
+     */
     public void configurarEventosListar(CarritoListarView carritoListarView) {
         carritoListarView.getBtnBuscar().addActionListener(new ActionListener() {
             @Override
@@ -138,6 +162,11 @@ public class CarritoController {
         });
     }
 
+    /**
+     * Configura los eventos de la vista para eliminar carritos.
+     *
+     * @param eliminarView Vista de eliminar carrito
+     */
     public void configurarEventosEliminar(CarritoEliminarView eliminarView) {
         eliminarView.getBtnBuscar().addActionListener(new ActionListener() {
             @Override
@@ -153,6 +182,9 @@ public class CarritoController {
         });
     }
 
+    /**
+     * Agrega un producto seleccionado al carrito actual.
+     */
     private void agregarAlCarrito() {
         String codigoTexto = carritoView.getLblCodeProductSearch().getText();
         Object cantidadObj = carritoView.getCbxCantidad().getSelectedItem();
@@ -187,6 +219,10 @@ public class CarritoController {
         actualizarTabla();
     }
 
+
+    /**
+     * Elimina el ítem seleccionado del carrito en la vista de añadir.
+     */
     private void eliminarItemSeleccionado() {
         int fila = carritoView.getTblProducts().getSelectedRow();
         if (fila != -1) {
@@ -204,11 +240,17 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Vacía completamente el carrito en la vista de añadir.
+     */
     private void vaciarCarrito() {
         carritoDAO.vaciarCarrito();
         actualizarTabla();
     }
 
+    /**
+     * Actualiza la tabla de productos en el carrito y recalcula subtotal, IVA y total.
+     */
     private void actualizarTabla() {
         List<ItemCarrito> items = carritoDAO.obtenerItems();
         carritoView.mostrarItemsCarrito(items);
@@ -222,9 +264,8 @@ public class CarritoController {
     }
 
     /**
-     * Guarda el carrito actual en el sistema y lo asocia al usuario autenticado.
-     * Muestra mensajes de éxito o error según corresponda.
-     * No recibe parámetros ni retorna valores.
+     * Guarda el carrito actual: calcula totales, crea objeto Carrito, lo asocia al usuario
+     * autenticado y persiste la información.
      */
     private void guardarCarrito() {
         if (carritoDAO.estaVacio()) {
@@ -252,6 +293,11 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Lista todos los carritos: dependiendo del rol, lista solo los del usuario o todos.
+     *
+     * @param carritoListarView Vista de listado
+     */
     private void listarCarritos(CarritoListarView carritoListarView) {
         List<Carrito> carritos;
         if (usuarioAutenticado.getRol() == Rol.USUARIO) {
@@ -275,6 +321,11 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Busca y muestra un carrito por su ID ingresado en la vista de listar.
+     *
+     * @param carritoListarView Vista de listado
+     */
     private void buscarYMostrarCarritoPorId(CarritoListarView carritoListarView) {
         String idText = carritoListarView.getTxtCodigo().getText().trim();
         if (idText.isEmpty()) {
@@ -306,6 +357,11 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Muestra los detalles de un carrito seleccionado en la tabla de la vista de listar.
+     *
+     * @param carritoListarView Vista de listado
+     */
     private void verCarrito(CarritoListarView carritoListarView) {
         int fila = carritoListarView.getTblCarritos().getSelectedRow();
         if (fila == -1) {
@@ -331,7 +387,7 @@ public class CarritoController {
                 );
                 itemsView.setVisible(true);
                 if (carritoListarView.getParent() instanceof JDesktopPane) {
-                    ((JDesktopPane) carritoListarView.getParent()).add(itemsView);
+                    carritoListarView.getParent().add(itemsView);
                 }
             } else {
                 itemsView.mostrarDatos(
@@ -352,6 +408,9 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Busca y carga un carrito para su edición en la vista de editar.
+     */
     private void buscarYMostrarCarritoEditar() {
         String codigoTexto = carritoEditarView.getTxtCodigoCarrito().getText().trim();
         if (codigoTexto.isEmpty()) {
@@ -385,6 +444,9 @@ public class CarritoController {
         actualizarResumenEditar(carritoCargado.getSubtotal(), carritoCargado.getIva(), carritoCargado.getTotal());
     }
 
+    /**
+     * Guarda los cambios realizados al carrito cargado en la vista de editar.
+     */
     private void guardarCambiosEdicion() {
         if (carritoCargado == null || copiaItemsEdit == null) {
             carritoEditarView.mostrarMensaje(i18n.get("carrito.error.no_carrito_para_editar"), i18n.get("global.error"), JOptionPane.ERROR_MESSAGE);
@@ -432,6 +494,9 @@ public class CarritoController {
         actualizarResumenEditar(carritoCargado.getSubtotal(), carritoCargado.getIva(), carritoCargado.getTotal());
     }
 
+    /**
+     * Elimina el ítem seleccionado en la tabla de la vista de editar.
+     */
     private void eliminarItemSeleccionadoEditar() {
         if (copiaItemsEdit == null) {
             carritoEditarView.mostrarMensaje(i18n.get("carrito.error.no_carrito_para_editar"), i18n.get("global.error"), JOptionPane.ERROR_MESSAGE);
@@ -458,6 +523,9 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Limpia los datos y la tabla de productos en la vista de editar.
+     */
     private void limpiarCarritoEditar() {
         if (copiaItemsEdit != null) {
             copiaItemsEdit.clear();
@@ -466,6 +534,9 @@ public class CarritoController {
         actualizarResumenEditar(0, 0, 0);
     }
 
+    /**
+     * Busca un producto por su código y muestra su información en la vista de editar.
+     */
     private void buscarProductoParaEditar() {
         String codigoTexto = carritoEditarView.getTxtCodigoProducto().getText().trim();
         if (codigoTexto.isEmpty()) {
@@ -491,6 +562,9 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Agrega un producto al carrito que se está editando.
+     */
     private void agregarProductoAlCarritoEditar() {
         if (copiaItemsEdit == null) {
             carritoEditarView.mostrarMensaje(i18n.get("carrito.error.no_carrito_para_editar"), i18n.get("global.error"), JOptionPane.ERROR_MESSAGE);
@@ -536,6 +610,9 @@ public class CarritoController {
         carritoEditarView.limpiarCampos();
     }
 
+    /**
+     * Recalcula subtotal, IVA y total de manera temporal mientras se edita un carrito.
+     */
     private void recalcularTotalesEdicionTemporal() {
         if (copiaItemsEdit != null && carritoEditarView != null) {
             double subtotal = sumarSubtotal(copiaItemsEdit);
@@ -545,6 +622,9 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Recalcula y actualiza los totales del carrito cargado en edición.
+     */
     private void recalcularTotalesCarritoCargado() {
         if (carritoCargado == null) return;
         double subtotal = 0;
@@ -558,6 +638,12 @@ public class CarritoController {
         carritoCargado.setTotal(total);
     }
 
+    /**
+     * Calcula el subtotal sumando los totales de todos los ítems de la lista.
+     *
+     * @param items Lista de ítems
+     * @return Subtotal calculado
+     */
     private double sumarSubtotal(List<ItemCarrito> items) {
         double subtotal = 0;
         for (ItemCarrito item : items) {
@@ -566,6 +652,13 @@ public class CarritoController {
         return subtotal;
     }
 
+    /**
+     * Actualiza en la vista de editar los campos de subtotal, IVA y total con valores formateados.
+     *
+     * @param subtotal Subtotal del carrito
+     * @param iva IVA calculado
+     * @param total Total final
+     */
     private void actualizarResumenEditar(double subtotal, double iva, double total) {
         if (carritoEditarView.getTxtSub() != null) {
             carritoEditarView.getTxtSub().setText(FormateadorUtils.formatearMoneda(subtotal, i18n.getLocale()));
@@ -578,6 +671,11 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Busca y muestra en la vista de eliminar los detalles del carrito por ID.
+     *
+     * @param eliminarView Vista para eliminar carrito
+     */
     private void mostrarCarritoAEliminar(CarritoEliminarView eliminarView) {
         String idText = eliminarView.getTxtCodigo().getText().trim();
         if (idText.isEmpty()) {
@@ -617,6 +715,11 @@ public class CarritoController {
         eliminarView.getTxtTotal().setText(FormateadorUtils.formatearMoneda(carrito.getTotal(), i18n.getLocale()));
     }
 
+    /**
+     * Elimina el carrito seleccionado de la base de datos y del usuario autenticado.
+     *
+     * @param eliminarView Vista para eliminar carrito
+     */
     private void eliminarCarrito(CarritoEliminarView eliminarView) {
         String idText = eliminarView.getTxtCodigo().getText().trim();
         if (idText.isEmpty()) {
@@ -645,6 +748,11 @@ public class CarritoController {
         }
     }
 
+    /**
+     * Limpia todos los campos y la tabla de la vista de eliminar carrito.
+     *
+     * @param eliminarView Vista para eliminar carrito
+     */
     private void limpiarCamposEliminarCarrito(CarritoEliminarView eliminarView) {
         eliminarView.getTxtCodigo().setText("");
         eliminarView.getLblSubTotal().setText("");

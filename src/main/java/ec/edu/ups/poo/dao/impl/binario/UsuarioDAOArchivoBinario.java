@@ -305,13 +305,13 @@ public class UsuarioDAOArchivoBinario implements UsuarioDAO {
         List<Usuario> usuarios = listarUsuariosTodos();
 
         String nombreAdmin = "Administrador General";
-        Date fechaAdmin = new GregorianCalendar(2006, Calendar.JUNE, 16).getTime();
-        String correoAdmin = "admin@admin.com";
-        String telefonoAdmin = "0999999999";
+        Date fechaAdmin = new GregorianCalendar(1992, Calendar.MARCH, 22).getTime();
+        String correoAdmin = "administrado@store.com";
+        String telefonoAdmin = "0980604092";
         try {
             Usuario usuarioAdmin = new Usuario(
-                    "0150303923",
-                    "Admin@1",
+                    "1720882685",
+                    "Admin@123",
                     Rol.ADMINISTRADOR,
                     nombreAdmin,
                     fechaAdmin,
@@ -320,28 +320,35 @@ public class UsuarioDAOArchivoBinario implements UsuarioDAO {
             );
             List<PreguntaUsuario> preguntasAdmin = new ArrayList<>();
             if (preguntas != null && preguntas.size() >= 3) {
-                preguntasAdmin.add(new PreguntaUsuario(preguntas.get(0), "Rocko"));
-                preguntasAdmin.add(new PreguntaUsuario(preguntas.get(1), "Cuenca"));
-                preguntasAdmin.add(new PreguntaUsuario(preguntas.get(2), "Pizza"));
+                preguntasAdmin.add(new PreguntaUsuario(preguntas.get(0), "odisea"));
+                preguntasAdmin.add(new PreguntaUsuario(preguntas.get(1), "ciclismo"));
+                preguntasAdmin.add(new PreguntaUsuario(preguntas.get(2), "montañita"));
             }
             usuarioAdmin.setPreguntaValidacion(preguntasAdmin);
             usuarios.add(usuarioAdmin);
         } catch (ContrasenaInvalidaException | CedulaInvalidaException e) { }
 
         String nombreUser = "Usuario General";
-        Date fechaUser = new GregorianCalendar(2000, Calendar.JANUARY, 1).getTime();
-        String correoUser = "user@user.com";
-        String telefonoUser = "0987654321";
+        Date fechaUser = new GregorianCalendar(2003, Calendar.JULY, 12).getTime();
+        String correoUser = "usuario@store.com";
+        String telefonoUser = "0981402280";
         try {
             Usuario usuarioUser = new Usuario(
-                    "0706338340",
-                    "User@1",
+                    "1400403331",
+                    "User@123",
                     Rol.USUARIO,
                     nombreUser,
                     fechaUser,
                     correoUser,
                     telefonoUser
             );
+            List<PreguntaUsuario> preguntasUser = new ArrayList<>();
+            if (preguntas != null && preguntas.size() >= 3) {
+                preguntasUser.add(new PreguntaUsuario(preguntas.get(0), "quijote"));
+                preguntasUser.add(new PreguntaUsuario(preguntas.get(1), "futbol"));
+                preguntasUser.add(new PreguntaUsuario(preguntas.get(2), "quito"));
+            }
+            usuarioUser.setPreguntaValidacion(preguntasUser);
             usuarios.add(usuarioUser);
         } catch (ContrasenaInvalidaException | CedulaInvalidaException e) { }
 

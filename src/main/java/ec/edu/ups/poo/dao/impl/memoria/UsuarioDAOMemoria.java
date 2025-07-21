@@ -8,11 +8,7 @@ import ec.edu.ups.poo.modelo.Usuario;
 import ec.edu.ups.poo.excepciones.ContrasenaInvalidaException;
 import ec.edu.ups.poo.excepciones.CedulaInvalidaException;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Implementación en memoria del DAO de Usuario.
@@ -32,13 +28,13 @@ public class UsuarioDAOMemoria implements UsuarioDAO {
         usuarios = new ArrayList<>();
 
         String nombreAdmin = "Administrador General";
-        Date fechaAdmin = getDate(2006, 6, 16);
-        String correoAdmin = "admin@admin.com";
-        String telefonoAdmin = "0999999999";
+        Date fechaAdmin = new GregorianCalendar(1992, Calendar.MARCH, 22).getTime();
+        String correoAdmin = "administrado@store.com";
+        String telefonoAdmin = "0980604092";
         try {
             Usuario usuarioAdmin = new Usuario(
-                    "0150303923",
-                    "Admin@1",
+                    "1720882685",
+                    "Admin@123",
                     Rol.ADMINISTRADOR,
                     nombreAdmin,
                     fechaAdmin,
@@ -46,33 +42,38 @@ public class UsuarioDAOMemoria implements UsuarioDAO {
                     telefonoAdmin
             );
             List<PreguntaUsuario> preguntasAdmin = new ArrayList<>();
-            preguntasAdmin.add(new PreguntaUsuario(preguntas.get(0), "Rocko"));
-            preguntasAdmin.add(new PreguntaUsuario(preguntas.get(1), "Cuenca"));
-            preguntasAdmin.add(new PreguntaUsuario(preguntas.get(2), "Pizza"));
+            if (preguntas != null && preguntas.size() >= 3) {
+                preguntasAdmin.add(new PreguntaUsuario(preguntas.get(0), "odisea"));
+                preguntasAdmin.add(new PreguntaUsuario(preguntas.get(1), "ciclismo"));
+                preguntasAdmin.add(new PreguntaUsuario(preguntas.get(2), "montañita"));
+            }
             usuarioAdmin.setPreguntaValidacion(preguntasAdmin);
-            crearUsuario(usuarioAdmin);
-        } catch (ContrasenaInvalidaException | CedulaInvalidaException e) {
-            e.printStackTrace();
-        }
+            usuarios.add(usuarioAdmin);
+        } catch (ContrasenaInvalidaException | CedulaInvalidaException e) { }
 
-        String nombreUser = "Usuario de Prueba";
-        Date fechaUser = getDate(1990, 5, 15);
-        String correoUser = "user@user.com";
-        String telefonoUser = "0888888888";
+        String nombreUser = "Usuario General";
+        Date fechaUser = new GregorianCalendar(2003, Calendar.JULY, 12).getTime();
+        String correoUser = "usuario@store.com";
+        String telefonoUser = "0981402280";
         try {
-            Usuario usuarioNormal = new Usuario(
-                    "0150303923",
-                    "User_2a",
+            Usuario usuarioUser = new Usuario(
+                    "1400403331",
+                    "User@123",
                     Rol.USUARIO,
                     nombreUser,
                     fechaUser,
                     correoUser,
                     telefonoUser
             );
-            crearUsuario(usuarioNormal);
-        } catch (ContrasenaInvalidaException | CedulaInvalidaException e) {
-            e.printStackTrace();
-        }
+            List<PreguntaUsuario> preguntasUser = new ArrayList<>();
+            if (preguntas != null && preguntas.size() >= 3) {
+                preguntasUser.add(new PreguntaUsuario(preguntas.get(0), "quijote"));
+                preguntasUser.add(new PreguntaUsuario(preguntas.get(1), "futbol"));
+                preguntasUser.add(new PreguntaUsuario(preguntas.get(2), "quito"));
+            }
+            usuarioUser.setPreguntaValidacion(preguntasUser);
+            usuarios.add(usuarioUser);
+        } catch (ContrasenaInvalidaException | CedulaInvalidaException e) { }
     }
 
     /**

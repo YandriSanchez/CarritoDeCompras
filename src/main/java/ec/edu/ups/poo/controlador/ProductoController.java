@@ -10,7 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-
+/**
+ * Controlador para gestionar las operaciones CRUD de productos y su interacción con las vistas.
+ * Administra el añadir, listar, editar, eliminar productos y buscar productos para añadir al carrito.
+ * Coordina los eventos de las vistas correspondientes.
+ */
 public class ProductoController {
 
     private final ProductoDAO productoDAO;
@@ -21,6 +25,19 @@ public class ProductoController {
     private final CarritoAnadirView carritoAnadirView;
     private final MensajeInternacionalizacionHandler i18n;
 
+    /**
+     * Constructor de ProductoController.
+     * Inicializa DAOs, vistas y el manejador de internacionalización.
+     * Configura los eventos para todas las vistas relacionadas con productos.
+     *
+     * @param productoDAO DAO para operaciones de productos.
+     * @param productoAnadirView Vista para añadir productos.
+     * @param productoListarView Vista para listar productos.
+     * @param productoEditarView Vista para editar productos.
+     * @param productoEliminarView Vista para eliminar productos.
+     * @param carritoAnadirView Vista para añadir productos al carrito.
+     * @param i18n Manejador de internacionalización de mensajes.
+     */
     public ProductoController(
             ProductoDAO productoDAO,
             ProductoAnadirView productoAnadirView,
@@ -40,6 +57,10 @@ public class ProductoController {
         configurarEventos();
     }
 
+    /**
+     * Configura todos los eventos de las distintas vistas relacionadas con productos.
+     * Llama a los métodos que configuran eventos específicos de cada vista.
+     */
     private void configurarEventos() {
         configurarEventosAnadir();
         configurarEventosListar();
@@ -48,15 +69,18 @@ public class ProductoController {
         configurarEventosCarrito();
     }
 
-
+    /**
+     * Configura los eventos de la vista para añadir un nuevo producto.
+     * No recibe parámetros ni retorna valores.
+     */
     private void configurarEventosAnadir() {
-        productoAnadirView.getBtnRegisterNewProduct().addActionListener(new ActionListener() {
+        productoAnadirView.getBtnGuardar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 guardarProducto();
             }
         });
-        productoAnadirView.getBtnCleanInputs().addActionListener(new ActionListener() {
+        productoAnadirView.getBtnNuevo().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 productoAnadirView.limpiarCampos();
@@ -72,13 +96,13 @@ public class ProductoController {
      * No recibe parámetros ni retorna valores.
      */
     private void configurarEventosListar() {
-        productoListarView.getBtnSearch().addActionListener(new ActionListener() {
+        productoListarView.getBtnBuscar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buscarProducto(productoListarView.getLblNameProdcutSearch().getText());
+                buscarProducto(productoListarView.getTxtNombre().getText());
             }
         });
-        productoListarView.getBtnListProducts().addActionListener(new ActionListener() {
+        productoListarView.getBtnListar().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 listarProductos();
@@ -144,9 +168,9 @@ public class ProductoController {
      */
     private void guardarProducto() {
         try {
-            int codigo = Integer.parseInt(productoAnadirView.getLblCodeProduct().getText());
-            String nombre = productoAnadirView.getLblNameProduct().getText();
-            double precio = Double.parseDouble(productoAnadirView.getLblPriceProduct().getText());
+            int codigo = Integer.parseInt(productoAnadirView.getTxtCodigo().getText());
+            String nombre = productoAnadirView.getTxtNombre().getText();
+            double precio = Double.parseDouble(productoAnadirView.getLblPrecio().getText());
 
             if (codigo <= 0) {
                 productoAnadirView.mostrarMensaje(
@@ -456,8 +480,8 @@ public class ProductoController {
      */
     private void setearNuevoIdProducto() {
         int nuevoId = obtenerSiguienteIdProducto();
-        productoAnadirView.getLblCodeProduct().setText(String.valueOf(nuevoId));
-        productoAnadirView.getLblCodeProduct().setEditable(false);
+        productoAnadirView.getTxtCodigo().setText(String.valueOf(nuevoId));
+        productoAnadirView.getTxtCodigo().setEditable(false);
     }
 
     /**

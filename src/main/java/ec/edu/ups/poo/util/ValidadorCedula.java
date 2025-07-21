@@ -1,7 +1,19 @@
 package ec.edu.ups.poo.util;
 
+/**
+ * Clase utilitaria para validar la estructura y dígito verificador
+ * de una cédula ecuatoriana.
+ */
 public class ValidadorCedula {
 
+    /**
+     * Valida si una cédula ecuatoriana es correcta según su formato
+     * y dígito verificador.
+     *
+     * @param cedula Cadena de texto que representa la cédula a validar,
+     *               debe tener exactamente 10 dígitos numéricos.
+     * @return true si la cédula es válida, false en caso contrario.
+     */
     public static boolean esCedulaValida(String cedula) {
         if (cedula == null || !cedula.matches("\\d{10}")) return false;
 

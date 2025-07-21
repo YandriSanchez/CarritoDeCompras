@@ -25,13 +25,9 @@ import java.util.*;
 public class RegisterController {
     private final UsuarioDAO usuarioDAO;
     private final PreguntaDAO preguntaDAO;
-    private final ProductoDAO productoDAO;
     private final RegisterView registerView;
-    private final CarritoDAO carritoDAO;
     private final List<Pregunta> preguntasRandom;
     private final MensajeInternacionalizacionHandler i18n;
-
-    // NUEVO: para recordar la ruta y el tipo de almacenamiento
     private final String rutaCarpetaDatos;
     private final int tipoAlmacenamientoIndex;
 
@@ -68,8 +64,6 @@ public class RegisterController {
 
         this.usuarioDAO = usuarioDAO;
         this.preguntaDAO = preguntaDAO;
-        this.productoDAO = productoDAO;
-        this.carritoDAO = carritoDAO;
         this.registerView = registerView;
         this.i18n = i18n;
         this.rutaCarpetaDatos = rutaCarpetaDatos;
@@ -134,7 +128,6 @@ public class RegisterController {
         String respuesta2 = registerView.getTxtPregunta2().getText().trim();
         String respuesta3 = registerView.getTxtPregunta3().getText().trim();
 
-        // Validaciones
         if (camposVacios(username, password, respuesta1, respuesta2, respuesta3)) {
             registerView.mostrarMensaje(
                     i18n.get("register.error.llenar_todos"),
@@ -258,7 +251,6 @@ public class RegisterController {
     private void cambioDeIdiomaDesdeCbx() {
         int selectedIndex = registerView.getCbxIdioma().getSelectedIndex();
         switch (selectedIndex) {
-            case 0: i18n.setLenguaje("es", "EC"); break;
             case 1: i18n.setLenguaje("en", "US"); break;
             case 2: i18n.setLenguaje("fr", "FR"); break;
             default: i18n.setLenguaje("es", "EC");

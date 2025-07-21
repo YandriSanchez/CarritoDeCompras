@@ -133,6 +133,7 @@
             <properties>
               <background color="-16776219"/>
               <foreground color="-394241"/>
+              <icon value="icons/Buscar.svg.png"/>
               <text value="Buscar"/>
             </properties>
           </component>
@@ -285,6 +286,7 @@
             <properties>
               <background color="-16776219"/>
               <foreground color="-394241"/>
+              <icon value="icons/register.png"/>
               <text value="Registrar"/>
             </properties>
           </component>
